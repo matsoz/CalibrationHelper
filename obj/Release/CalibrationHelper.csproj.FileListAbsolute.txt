@@ -1,0 +1,14 @@
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Release\CalibrationHelper.exe.config
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Release\CalibrationHelper.exe
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Release\CalibrationHelper.pdb
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.MainForm.resources
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.Properties.Resources.resources
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.TableForm.resources
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.csproj.GenerateResource.cache
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.exe
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.pdb
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.csprojAssemblyReference.cache
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.DataForm.resources
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Release\MathNet.Numerics.dll
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Release\MathNet.Numerics.xml
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.csproj.CopyComplete
