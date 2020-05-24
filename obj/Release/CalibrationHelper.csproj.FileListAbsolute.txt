@@ -12,3 +12,4 @@ C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\Ca
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Release\MathNet.Numerics.dll
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Release\MathNet.Numerics.xml
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.csproj.CopyComplete
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Release\CalibrationHelper.CalibrationDataForm.resources

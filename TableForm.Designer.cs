@@ -48,7 +48,7 @@
             this.TableBox.Name = "TableBox";
             this.TableBox.Size = new System.Drawing.Size(370, 176);
             this.TableBox.TabIndex = 0;
-            this.TableBox.Text = "  123 456  789 \r\n\r\n\r\n 147 258 369  \r\n\r\n  963  852 741\r\n";
+            this.TableBox.Text = "1 2 3 4\r\n5 6 7 8\r\n9 10 11 12\r\n13 14 15 16\r\n\r\n";
             // 
             // XArrayBox
             // 
@@ -57,7 +57,7 @@
             this.XArrayBox.Name = "XArrayBox";
             this.XArrayBox.Size = new System.Drawing.Size(370, 20);
             this.XArrayBox.TabIndex = 1;
-            this.XArrayBox.Text = "  123    456 789  ";
+            this.XArrayBox.Text = "1 2 3 4";
             // 
             // YArrayBox
             // 
@@ -68,7 +68,7 @@
             this.YArrayBox.Name = "YArrayBox";
             this.YArrayBox.Size = new System.Drawing.Size(51, 176);
             this.YArrayBox.TabIndex = 2;
-            this.YArrayBox.Text = "321   \r\n   654\r\n\r\n\r\n 987\r\n\r\n";
+            this.YArrayBox.Text = "1\r\n2\r\n3\r\n4\r\n\r\n";
             // 
             // SubmitButton
             // 

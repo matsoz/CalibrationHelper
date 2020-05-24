@@ -8,13 +8,15 @@ using MathNet.Numerics.Interpolation;
 
 namespace CalibrationHelper
 {
-    static class Program
+    public class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// 
         [STAThread]
-        static void Main()
+
+        static public void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -22,6 +24,7 @@ namespace CalibrationHelper
         }
     }
 
+   
     static public class TabManagement
     {
         static public double LinearInterpolation(double XSel, double[] XBkpt, double[] ZTab)
@@ -58,7 +61,7 @@ namespace CalibrationHelper
             XIndexInt = (int)Math.Truncate(XIndex);
             XIndexFrac = XIndex - XIndexInt;
 
-            double ZValueA, ZValueB, ZValueC, ZValueD, ZValue;
+            double ZValueA, ZValueB, ZValue;
 
             ZValueA = ZTab[XIndexInt];
             ZValueB = ZTab[XIndexInt + X_BDOffset];
@@ -253,4 +256,28 @@ namespace CalibrationHelper
             return TableVal;
         }
     }
+
+    static public class CalibrationMethods
+    {
+        static public double[] CalibrationRatioArrayCalculation(double[] DataX, double[] DataY, double[] DataZ, double[] XBkpt, double[] YBkpt, double[,] ZTab)
+        {
+            if (DataX.Length == DataY.Length && DataY.Length == DataZ.Length) //Check Data size plausibility
+            {
+                double[] ZRatioArray = new double[DataX.Length];
+
+                for (int i = 0; i < DataX.Length; i++)
+                {
+                    ZRatioArray[i] = DataZ[i] / TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab);
+                }
+
+                return ZRatioArray;
+            }
+            else
+            {
+                throw new System.ArgumentException("The X, Y and Z data arrays are not the same size", "original");
+            }
+        }
+
+    }
+
 }

@@ -12,12 +12,17 @@ namespace CalibrationHelper
 {
     public partial class TableForm : Form
     {
+        //Parent MainForm declaration for data return
+        public MainForm ParentApp;
+
         public double[] XVect, YVect;
         public double[,] Table2DVect;
         
-        public TableForm()
+        public TableForm(MainForm aParent)
         {
             InitializeComponent();
+
+            this.ParentApp = aParent;
         }
               
         private void CancelButton_Click(object sender, EventArgs e)
@@ -28,6 +33,11 @@ namespace CalibrationHelper
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             ConvertText2DoubleArrays();
+
+            ParentApp.XCalArray = this.XVect;
+            ParentApp.YCalArray = this.YVect;
+            ParentApp.ZCalTab = this.Table2DVect;
+
             this.Hide();
         }
 

@@ -12,16 +12,26 @@ namespace CalibrationHelper
 {
     public partial class DataForm : Form
     {
+        //Parent MainForm declaration for data return
+        public MainForm ParentApp;
+
         public double[] XVect, YVect, ZVect;
 
-        public DataForm()
+        public DataForm(MainForm aParent)
         {
             InitializeComponent();
+
+            this.ParentApp = aParent;
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             ConvertText2DoubleArrays();
+
+            ParentApp.XDataArray = this.XVect;
+            ParentApp.YDataArray = this.YVect;
+            ParentApp.ZDataArray = this.ZVect;
+
             this.Hide();
         }
 
