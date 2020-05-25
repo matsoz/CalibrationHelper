@@ -14,8 +14,10 @@ namespace CalibrationHelper
     {
         //Parent MainForm declaration for data return
         public MainForm ParentApp;
+
+        public double[,] ZTabOptm;
         public double[] ZRatioArray;
-       // public event CalibrationDataForm_Shown;
+        public double ZRatioMean, ZRatioStdDev;
 
         public CalibrationDataForm(MainForm aParent)
         {
@@ -23,20 +25,34 @@ namespace CalibrationHelper
             this.ParentApp = aParent;
         }
        
-
         private void CalibrationDataForm_Load(object sender, EventArgs e)
         {
-            // ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(
-            //     ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
-            //     ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
+            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(
+                 ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
+                 ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
 
-            //MessageBox.Show("TestShown");
+            ZRatioMean = StatBasic.Mean(ZRatioArray);
+            ZRatioStdDev = StatBasic.StdDev(ZRatioArray);
 
-            //this.CurrMeanLabel.Text =  StatBasic.Mean(ZRatioArray).ToString();
-            //this.CurrStdDevLabel.Text =  StatBasic.StdDev(ZRatioArray).ToString() ;
-
-            CurrMeanLabel.Text = "ABC";
-            CurrStdDevLabel.Text = "ABC";
+            this.CurrMeanLabel.Text = ZRatioMean.ToString();
+            this.CurrStdDevLabel.Text = ZRatioStdDev.ToString();
         }
+
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            ZTabOptm = CalibrationMethods.CalibrationTabOptimization(double.Parse(this.MeanTarBox.Text), double.Parse(this.StdDevTarBox.Text),
+                        int.Parse(this.Phase1IterBox.Text), int.Parse(this.Phase2IterBox.Text), int.Parse(this.Phase3IterBox.Text),
+                        ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
+                        ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
+
+            this.Hide();
+        }
+      
     }
 }

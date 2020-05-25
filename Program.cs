@@ -259,7 +259,10 @@ namespace CalibrationHelper
 
     static public class CalibrationMethods
     {
-        static public double[] CalibrationRatioArrayCalculation(double[] DataX, double[] DataY, double[] DataZ, double[] XBkpt, double[] YBkpt, double[,] ZTab)
+        private const double Quantum = 0.001;
+
+        static public double[] CalibrationRatioArrayCalculation(double[] DataX, double[] DataY, double[] DataZ,
+                                                            double[] XBkpt, double[] YBkpt, double[,] ZTab)
         {
             if (DataX.Length == DataY.Length && DataY.Length == DataZ.Length) //Check Data size plausibility
             {
@@ -267,7 +270,16 @@ namespace CalibrationHelper
 
                 for (int i = 0; i < DataX.Length; i++)
                 {
-                    ZRatioArray[i] = DataZ[i] / TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab);
+                    if(TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab) != 0)
+                    {
+                        ZRatioArray[i] = DataZ[i] / TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab);
+                    }
+                    else
+                    {
+                        ZRatioArray[i] = 0;
+                    }
+
+
                 }
 
                 return ZRatioArray;
@@ -278,6 +290,125 @@ namespace CalibrationHelper
             }
         }
 
+        static public double[,] CalibrationTabOptimization(double MeanTar, double StdDevTar,
+                                                            int Phase1Iter, int Phase2Iter, int Phase3Iter,
+                                                            double[] DataX, double[] DataY, double[] DataZ,
+                                                            double[] XBkpt, double[] YBkpt, double[,] ZTab)
+        {
+            double CurMean, CurStdDev, OldMean, OldStdDev;
+            double[] ZRatioArray;
+            double QFactor = 1000;
+            short QSig = 1;
+
+            //1.1 First calculation of Mean and StdDev for optimization Phase 1 purpose
+            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(
+             DataX, DataY, DataZ,
+             XBkpt, YBkpt, ZTab);
+
+            CurMean = StatBasic.Mean(ZRatioArray);
+            CurStdDev = StatBasic.StdDev(ZRatioArray);
+
+            //1.2 Loop function for Phase 1 optimization
+            short Phase1St = 0;
+            for (int P1 = 0; P1 < Phase1Iter; P1++)
+            {
+                //1.2.1 Increment or decrement all table values by an amount, gross approach
+                for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++)
+                {
+                    for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)
+                    {
+                        ZTab[i, j] += QFactor * Quantum * QSig;
+                    }
+                }
+
+                //1.2.2 Recalculate Mean value (CurMean) to compare with OldMean
+                ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(
+                 DataX, DataY, DataZ,
+                 XBkpt, YBkpt, ZTab);
+
+                OldMean = CurMean;
+                CurMean = StatBasic.Mean(ZRatioArray);
+
+                //1.2.3 Compare Step result and define next step
+                //If First iteration approached to target value, PhaseSt1 = 1, keep direction and step size. Else, PhaseSt=0
+                if ((Math.Abs(CurMean - MeanTar) < Math.Abs(OldMean - MeanTar)) && (Phase1St == 0 || Phase1St == 1))
+                {
+                    Phase1St = 1;
+                }
+                //If last iter. didn't approach and PhaseSt1 = 0, only invert direction.
+                else if ((Math.Abs(CurMean - MeanTar) >= Math.Abs(OldMean - MeanTar)) && Phase1St == 0)
+                {
+                    QSig *= -1;
+                }
+                //If last iter. didn't approach and PhaseSt1 = 1, invert direction and diminish step
+                else if ((Math.Abs(CurMean - MeanTar) >= Math.Abs(OldMean - MeanTar)) && Phase1St == 1)
+                {
+                    QSig *= -1;
+                    QFactor /= 2;
+                }
+
+                //1.2.4 If Target achieved, finish loop earlier.
+                if(Math.Abs(CurMean-MeanTar) < Quantum)
+                {
+                    break;
+                }
+            }
+
+            QFactor = 100;
+            //2.1 Loop function for Phase 2 optimization
+            short Phase2St = 0;
+            for (int P2 = 0; P2 < Phase2Iter; P2++)
+            {
+                //2.1.1 Increment or decrement individual table value by an amount, fine approach
+                int ZRatio_Temp = 0;
+                for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++)
+                {
+                    for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)
+                    {
+                        for(int P2B=0; P2B < Phase2Iter; P2B++) //Explore same Tab Point many times after changing
+                        {
+                            ZTab[i, j] += QFactor * Quantum * QSig;
+
+                            //2.1.1.1 Recalculate Mean value (CurMean) to compare with OldMean
+
+                            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(
+                                                                                 DataX, DataY, DataZ,
+                                                                                 XBkpt, YBkpt, ZTab);
+
+                            OldMean = CurMean;
+                            CurMean = StatBasic.Mean(ZRatioArray);
+
+                            //2.1.1.2 Compare Step result and define next step
+                            //If First iteration approached to target value, PhaseSt1 = 1, keep direction and step size. Else, PhaseSt=0
+                            if ((Math.Abs(CurMean - MeanTar) < Math.Abs(OldMean - MeanTar)) && (Phase2St == 0 || Phase2St == 1))
+                            {
+                                Phase2St = 1;
+                            }
+                            //If last iter. didn't approach and PhaseSt1 = 0, only invert direction.
+                            else if ((Math.Abs(CurMean - MeanTar) >= Math.Abs(OldMean - MeanTar)) && Phase2St == 0)
+                            {
+                                QSig *= -1;
+                            }
+                            //If last iter. didn't approach and PhaseSt1 = 1, invert direction and diminish step
+                            else if ((Math.Abs(CurMean - MeanTar) >= Math.Abs(OldMean - MeanTar)) && Phase2St == 1)
+                            {
+                                QSig *= -1;
+                                QFactor /= 2;
+                            }
+
+                        }
+                    }
+                }
+
+                //1.2.4 If Target achieved, finish loop earlier.
+                if (Math.Abs(CurMean - MeanTar) < Quantum)
+                {
+                    break;
+                }
+            }
+
+            return ZTab;
+        }
     }
 
 }

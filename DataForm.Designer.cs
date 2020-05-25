@@ -67,7 +67,8 @@
             this.YArrayBox.Name = "YArrayBox";
             this.YArrayBox.Size = new System.Drawing.Size(60, 300);
             this.YArrayBox.TabIndex = 7;
-            this.YArrayBox.Text = "1\r\n2\r\n4\r\n\r\n";
+            this.YArrayBox.Text = " 1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r" +
+    "\n";
             // 
             // XArrayBox
             // 
@@ -78,7 +79,8 @@
             this.XArrayBox.Name = "XArrayBox";
             this.XArrayBox.Size = new System.Drawing.Size(60, 300);
             this.XArrayBox.TabIndex = 8;
-            this.XArrayBox.Text = "1\r\n4\r\n4\r\n\r\n";
+            this.XArrayBox.Text = "1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n" +
+    "";
             // 
             // ZArrayBox
             // 
@@ -89,7 +91,8 @@
             this.ZArrayBox.Name = "ZArrayBox";
             this.ZArrayBox.Size = new System.Drawing.Size(60, 300);
             this.ZArrayBox.TabIndex = 9;
-            this.ZArrayBox.Text = "1\r\n5\r\n16\r\n\r\n";
+            this.ZArrayBox.Text = "1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n4\r\n4\r\n4\r\n0\r\n0\r\n0\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n" +
+    "\r\n";
             // 
             // XArrayLabel
             // 
