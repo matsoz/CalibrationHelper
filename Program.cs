@@ -158,6 +158,27 @@ namespace CalibrationHelper
             
         }
 
+        static public double MeanWeighted(double[] Array, double[] Weight)
+        {
+            if (Array.Length > 0)
+            {
+                double AccumDen=0, AccumNum=0;
+                
+                for (int i=0; i<Array.Length; i++)
+                {
+                    AccumNum += Array[i] * Weight[i];
+                    AccumDen += Weight[i];
+                }
+
+                return AccumNum / AccumDen;
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
         static public double StdDev(double[] Array)
         {
             if (Array.Length > 0)
@@ -313,8 +334,9 @@ namespace CalibrationHelper
         {
             
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
+            short[,] ZTabStatus = new short[1 + ZTab.GetUpperBound(0),1 + ZTab.GetUpperBound(1)];
 
-            //1 Sweep each table point
+            //1. Sweep each table point and get average
             for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++) //i sweeps Y
             {
                 for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)//j sweeps X
@@ -434,6 +456,15 @@ namespace CalibrationHelper
 
                     //1.5 Input mean optimized value in ZTab
                     ZTab[i, j] = ZMeanInterval;
+                    
+                    if(b_A + b_B + b_C + b_D == 0)
+                    {
+                        ZTabStatus[i, j] = 0;
+                    }
+                    else
+                    {
+                        ZTabStatus[i, j] = 1;
+                    }
                 }
             }
             return ZTab;
