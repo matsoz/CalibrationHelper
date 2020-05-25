@@ -27,6 +27,12 @@ namespace CalibrationHelper
    
     static public class TabManagement
     {
+        
+        static public double PointsDist2D(double Xa, double Ya, double Xb, double Yb)
+        {
+            return Math.Sqrt( Math.Pow(Xa - Xb, 2) + Math.Pow(Ya - Yb, 2) );
+        }
+
         static public double LinearInterpolation(double XSel, double[] XBkpt, double[] ZTab)
         {
             double XIndex = 0;
@@ -158,9 +164,9 @@ namespace CalibrationHelper
             
         }
 
-        static public double MeanWeighted(double[] Array, double[] Weight)
+        static public double MeanWeighted(double[] Array, double[] Weight, short Type)
         {
-            if (Array.Length > 0)
+            if (Array.Length > 0 && Type == 1 )
             {
                 double AccumDen=0, AccumNum=0;
                 
@@ -172,12 +178,36 @@ namespace CalibrationHelper
 
                 return AccumNum / AccumDen;
             }
+            else if (Array.Length > 0 && Type == 2)
+            {
+                double AccumDen = 0, AccumNum = 0;
+
+                for (int i = 0; i < Array.Length; i++)
+                {
+                    AccumNum += (Array[i] * Weight[i] * Weight[i]);
+                    AccumDen += (Weight[i] * Weight[i]);
+                }
+
+                return AccumNum / AccumDen;
+            }
+            else if (Array.Length > 0 && Type == 3)
+            {
+                double AccumDen = 0, AccumNum = 0;
+
+                for (int i = 0; i < Array.Length; i++)
+                {
+                    AccumNum += (Array[i] * Weight[i] *Weight[i] * Weight[i]);
+                    AccumDen += (Weight[i] * Weight[i] * Weight[i]);
+                }
+
+                return AccumNum / AccumDen;
+            }
             else
             {
                 return 0;
             }
 
-        }
+        } //Type 1 for linear, 2 for  Quadratic
 
         static public double StdDev(double[] Array)
         {
@@ -296,8 +326,6 @@ namespace CalibrationHelper
 
     static public class CalibrationMethods
     {
-        private const double Quantum = 0.001;
-
         static public double[] CalibrationRatioArrayCalculation(double[] DataX, double[] DataY, double[] DataZ,
                                                             double[] XBkpt, double[] YBkpt, double[,] ZTab)
         {
@@ -332,7 +360,6 @@ namespace CalibrationHelper
                                                             double[] DataX, double[] DataY, double[] DataZ,
                                                             double[] XBkpt, double[] YBkpt, double[,] ZTab)
         {
-            
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
             short[,] ZTabStatus = new short[1 + ZTab.GetUpperBound(0),1 + ZTab.GetUpperBound(1)];
 
@@ -344,13 +371,13 @@ namespace CalibrationHelper
                     //1.1 Select interval around table current point - X Values
                     if (j == 0)
                     {
-                        X_A = XBkpt[j];
+                        X_A = XBkpt[j] - ((XBkpt[j + 1] - XBkpt[j]) / 2);
                         X_B = (XBkpt[j + 1] + XBkpt[j]) / 2;
                     }
                     else if(j == ZTab.GetUpperBound(1))
                     {
                         X_A = (XBkpt[j] + XBkpt[j-1] )/ 2;
-                        X_B = XBkpt[j];
+                        X_B = XBkpt[j] + ((XBkpt[j] - XBkpt[j - 1]) / 2);
                     }
                     else
                     {
@@ -361,13 +388,13 @@ namespace CalibrationHelper
                     //1.2 Select interval around table current point - Y Values
                     if (i == 0)
                     {
-                        Y_A = YBkpt[i];
+                        Y_A = YBkpt[i] - ((YBkpt[i + 1] - YBkpt[i]) / 2);
                         Y_B = (YBkpt[i + 1] + YBkpt[i]) / 2;
                     }
                     else if (i == ZTab.GetUpperBound(0))
                     {
                         Y_A = (YBkpt[i] + YBkpt[i - 1]) / 2;
-                        Y_B = YBkpt[i];
+                        Y_B =  YBkpt[i] + ((YBkpt[i] - YBkpt[i - 1]) / 2);
                     }
                     else
                     {
@@ -377,6 +404,7 @@ namespace CalibrationHelper
 
                     //1.3 Collect data corresponding to the targeted interval
                     int m_A=0, m_B=0, m_C=0, m_D=0;
+                    //1.3.1 Num. of positions needed for each array
                     for (int k=0 ; k<DataX.Length ; k++)
                     {
                         if(DataX[k]>=X_A && DataX[k]<= XBkpt[j] && DataY[k] >= Y_A && DataY[k] <= YBkpt[i])
@@ -398,33 +426,55 @@ namespace CalibrationHelper
                     }
 
                     double[] DataZSel_A = new double[m_A];
+                    double[] DataZWei_A = new double[m_A];
+                    
                     double[] DataZSel_B = new double[m_B];
+                    double[] DataZWei_B = new double[m_B];
+                    
                     double[] DataZSel_C = new double[m_C];
+                    double[] DataZWei_C = new double[m_C];
+                    
                     double[] DataZSel_D = new double[m_D];
+                    double[] DataZWei_D = new double[m_D];
+                   
                     m_A = 0;
                     m_B = 0; 
                     m_C = 0;
                     m_D = 0;
+                  
+                    //1.3.2 - Z values and weight calculation for each interval
                     for (int k = 0; k < DataX.Length; k++)
                     {
-                        if (DataX[k] >= X_A && DataX[k] <= XBkpt[j] && DataY[k] >= Y_A && DataY[k] <= YBkpt[i])
+                        if (DataX[k] > X_A && DataX[k] <= XBkpt[j] && DataY[k] > Y_A && DataY[k] <= YBkpt[i])
                         {
                             DataZSel_A[m_A] = DataZ[k];
+                            DataZWei_A[m_A] = TabManagement.PointsDist2D((DataX[k] - X_A) / (XBkpt[j] - X_A) ,
+                                                                                (DataY[k] - Y_A) / (YBkpt[i] - Y_A),
+                                                                                0, 0);
                             m_A++;
                         }
-                        else if (DataX[k] >= XBkpt[j] && DataX[k] <= X_B && DataY[k] >= Y_A && DataY[k] <= YBkpt[i])
+                        else if (DataX[k] > XBkpt[j] && DataX[k] <= X_B && DataY[k] > Y_A && DataY[k] <= YBkpt[i])
                         {
                             DataZSel_B[m_B] = DataZ[k];
+                            DataZWei_B[m_B] = TabManagement.PointsDist2D((DataX[k] - X_B) / (XBkpt[j] - X_B),
+                                                                                (DataY[k] - Y_A) / (YBkpt[i] - Y_A),
+                                                                                0, 0);
                             m_B++;
                         }
-                        else if (DataX[k] >= X_A && DataX[k] <= XBkpt[j] && DataY[k] >= YBkpt[i] && DataY[k] <= Y_B)
+                        else if (DataX[k] > X_A && DataX[k] <= XBkpt[j] && DataY[k] > YBkpt[i] && DataY[k] <= Y_B)
                         {
                             DataZSel_C[m_C] = DataZ[k];
+                            DataZWei_C[m_C] = TabManagement.PointsDist2D((DataX[k] - X_A) / (XBkpt[j] - X_A),
+                                                                                (DataY[k] - Y_B) / (YBkpt[i] - Y_B),
+                                                                                0, 0);
                             m_C++;
                         }
-                        else if (DataX[k] >= XBkpt[j] && DataX[k] <= X_B && DataY[k] >= YBkpt[i] && DataY[k] <= Y_B)
+                        else if (DataX[k] > XBkpt[j] && DataX[k] <= X_B && DataY[k] > YBkpt[i] && DataY[k] <= Y_B)
                         {
                             DataZSel_D[m_D] = DataZ[k];
+                            DataZWei_D[m_D] = TabManagement.PointsDist2D((DataX[k] - X_B) / (XBkpt[j] - X_B),
+                                                                                (DataY[k] - Y_B) / (YBkpt[i] - Y_B),
+                                                                                0, 0);
                             m_D++;
                         }
                     }
@@ -449,15 +499,15 @@ namespace CalibrationHelper
                         b_D = 0;
                     }
 
-                    ZMeanInterval = (b_A * StatBasic.Mean(DataZSel_A) +
-                        b_B * StatBasic.Mean(DataZSel_B) + 
-                        b_C * StatBasic.Mean(DataZSel_C) + 
-                        b_D * StatBasic.Mean(DataZSel_D)) / (b_A + b_B + b_C + b_D);
+                    ZMeanInterval = (b_A * StatBasic.MeanWeighted(DataZSel_A,DataZWei_A,3) +
+                        b_B * StatBasic.MeanWeighted(DataZSel_B,DataZWei_B,3) + 
+                        b_C * StatBasic.MeanWeighted(DataZSel_C,DataZWei_C,3) + 
+                        b_D * StatBasic.MeanWeighted(DataZSel_D,DataZWei_D,3)) / (b_A + b_B + b_C + b_D);
 
                     //1.5 Input mean optimized value in ZTab
                     ZTab[i, j] = ZMeanInterval;
                     
-                    if(b_A + b_B + b_C + b_D == 0)
+                    if(b_A + b_B + b_C + b_D == 0) //Track table fields which didn't have associated data to create virtual values
                     {
                         ZTabStatus[i, j] = 0;
                     }
