@@ -67,8 +67,8 @@
             this.YArrayBox.Name = "YArrayBox";
             this.YArrayBox.Size = new System.Drawing.Size(60, 300);
             this.YArrayBox.TabIndex = 7;
-            this.YArrayBox.Text = " 1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r" +
-    "\n";
+            this.YArrayBox.Text = "1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n" +
+    "1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n2.2\r\n1.9\r\n1.6\r\n2.9\r\n2.8\r\n";
             // 
             // XArrayBox
             // 
@@ -80,7 +80,7 @@
             this.XArrayBox.Size = new System.Drawing.Size(60, 300);
             this.XArrayBox.TabIndex = 8;
             this.XArrayBox.Text = "1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n" +
-    "";
+    "1.1\r\n1.1\r\n1.1\r\n1.9\r\n1.9\r\n1.9\r\n2.1\r\n2.2\r\n2.2\r\n1.9\r\n1.6\r\n2.9\r\n2.8\r\n";
             // 
             // ZArrayBox
             // 
@@ -91,8 +91,9 @@
             this.ZArrayBox.Name = "ZArrayBox";
             this.ZArrayBox.Size = new System.Drawing.Size(60, 300);
             this.ZArrayBox.TabIndex = 9;
-            this.ZArrayBox.Text = "1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n4\r\n4\r\n4\r\n0\r\n0\r\n0\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n" +
-    "\r\n";
+            this.ZArrayBox.Text = "10\r\n15\r\n20\r\n25\r\n30\r\n35\r\n40\r\n45\r\n55\r\n10\r\n15\r\n20\r\n25\r\n30\r\n35\r\n40\r\n45\r\n55\r\n10\r\n15\r\n2" +
+    "0\r\n25\r\n30\r\n35\r\n40\r\n45\r\n55\r\n10.5\r\n10.5\r\n10.5\r\n14.5\r\n14.5\r\n14.5\r\n15.5\r\n16\r\n34.2\r\n2" +
+    "8\r\n22\r\n52.05\r\n49.2\r\n";
             // 
             // XArrayLabel
             // 

@@ -147,12 +147,28 @@ namespace CalibrationHelper
     {
         static public double Mean (double[] Array)
         {
-            return Statistics.Mean(Array);
+            if (Array.Length > 0)
+            {
+                return Statistics.Mean(Array);
+            }
+            else
+            {
+                return 0;
+            }
+            
         }
 
         static public double StdDev(double[] Array)
         {
-            return Statistics.StandardDeviation(Array); ;
+            if (Array.Length > 0)
+            {
+                return Statistics.StandardDeviation(Array);
+            }
+            else
+            {
+                return 0;
+            }
+            
         }
     }
 
@@ -338,34 +354,83 @@ namespace CalibrationHelper
                     }
 
                     //1.3 Collect data corresponding to the targeted interval
-                    int m = 0;
+                    int m_A=0, m_B=0, m_C=0, m_D=0;
                     for (int k=0 ; k<DataX.Length ; k++)
                     {
-                        if(DataX[k]>=X_A && DataX[k]<=X_B)
+                        if(DataX[k]>=X_A && DataX[k]<= XBkpt[j] && DataY[k] >= Y_A && DataY[k] <= YBkpt[i])
                         {
-                            if (DataY[k] >= Y_A && DataY[k] <= Y_B)
-                            {
-                                m++;
-                            }
+                            m_A++;
+                        }
+                        else if (DataX[k] >= XBkpt[j] && DataX[k] <= X_B && DataY[k] >= Y_A && DataY[k] <= YBkpt[i])
+                        {
+                            m_B++;
+                        }
+                        else if (DataX[k] >= X_A && DataX[k] <= XBkpt[j] && DataY[k] >= YBkpt[i] && DataY[k] <= Y_B)
+                        {
+                            m_C++;
+                        }
+                        else if (DataX[k] >= XBkpt[j] && DataX[k] <= X_B && DataY[k] >= YBkpt[i] && DataY[k] <= Y_B)
+                        {
+                            m_D++;
                         }
                     }
 
-                    double[] DataZSel = new double[m];
-                    m = 0;
+                    double[] DataZSel_A = new double[m_A];
+                    double[] DataZSel_B = new double[m_B];
+                    double[] DataZSel_C = new double[m_C];
+                    double[] DataZSel_D = new double[m_D];
+                    m_A = 0;
+                    m_B = 0; 
+                    m_C = 0;
+                    m_D = 0;
                     for (int k = 0; k < DataX.Length; k++)
                     {
-                        if (DataX[k] >= X_A && DataX[k] <= X_B)
+                        if (DataX[k] >= X_A && DataX[k] <= XBkpt[j] && DataY[k] >= Y_A && DataY[k] <= YBkpt[i])
                         {
-                            if (DataY[k] >= Y_A && DataY[k] <= Y_B)
-                            {
-                                DataZSel[m] = DataZ[k];
-                                m++;
-                            }
+                            DataZSel_A[m_A] = DataZ[k];
+                            m_A++;
+                        }
+                        else if (DataX[k] >= XBkpt[j] && DataX[k] <= X_B && DataY[k] >= Y_A && DataY[k] <= YBkpt[i])
+                        {
+                            DataZSel_B[m_B] = DataZ[k];
+                            m_B++;
+                        }
+                        else if (DataX[k] >= X_A && DataX[k] <= XBkpt[j] && DataY[k] >= YBkpt[i] && DataY[k] <= Y_B)
+                        {
+                            DataZSel_C[m_C] = DataZ[k];
+                            m_C++;
+                        }
+                        else if (DataX[k] >= XBkpt[j] && DataX[k] <= X_B && DataY[k] >= YBkpt[i] && DataY[k] <= Y_B)
+                        {
+                            DataZSel_D[m_D] = DataZ[k];
+                            m_D++;
                         }
                     }
 
                     //1.4 Calculate ZMean, within selected interval
-                    ZMeanInterval = StatBasic.Mean(DataZSel);
+                    short b_A=1, b_B=1, b_C=1, b_D=1;
+
+                    if (DataZSel_A.Length == 0)
+                    {
+                        b_A = 0;
+                    }
+                    if (DataZSel_B.Length == 0)
+                    {
+                        b_B = 0;
+                    }
+                    if (DataZSel_C.Length == 0)
+                    {
+                        b_C = 0;
+                    }
+                    if (DataZSel_D.Length == 0)
+                    {
+                        b_D = 0;
+                    }
+
+                    ZMeanInterval = (b_A * StatBasic.Mean(DataZSel_A) +
+                        b_B * StatBasic.Mean(DataZSel_B) + 
+                        b_C * StatBasic.Mean(DataZSel_C) + 
+                        b_D * StatBasic.Mean(DataZSel_D)) / (b_A + b_B + b_C + b_D);
 
                     //1.5 Input mean optimized value in ZTab
                     ZTab[i, j] = ZMeanInterval;
