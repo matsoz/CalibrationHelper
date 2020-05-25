@@ -295,118 +295,82 @@ namespace CalibrationHelper
                                                             double[] DataX, double[] DataY, double[] DataZ,
                                                             double[] XBkpt, double[] YBkpt, double[,] ZTab)
         {
-            double CurMean, CurStdDev, OldMean, OldStdDev;
-            double[] ZRatioArray;
-            double QFactor = 1000;
-            short QSig = 1;
+            
+            double X_A, X_B, Y_A, Y_B, ZMeanInterval;
 
-            //1.1 First calculation of Mean and StdDev for optimization Phase 1 purpose
-            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(
-             DataX, DataY, DataZ,
-             XBkpt, YBkpt, ZTab);
-
-            CurMean = StatBasic.Mean(ZRatioArray);
-            CurStdDev = StatBasic.StdDev(ZRatioArray);
-
-            //1.2 Loop function for Phase 1 optimization
-            short Phase1St = 0;
-            for (int P1 = 0; P1 < Phase1Iter; P1++)
+            //1 Sweep each table point
+            for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++) //i sweeps Y
             {
-                //1.2.1 Increment or decrement all table values by an amount, gross approach
-                for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++)
+                for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)//j sweeps X
                 {
-                    for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)
+                    //1.1 Select interval around table current point - X Values
+                    if (j == 0)
                     {
-                        ZTab[i, j] += QFactor * Quantum * QSig;
+                        X_A = XBkpt[j];
+                        X_B = (XBkpt[j + 1] + XBkpt[j]) / 2;
                     }
-                }
-
-                //1.2.2 Recalculate Mean value (CurMean) to compare with OldMean
-                ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(
-                 DataX, DataY, DataZ,
-                 XBkpt, YBkpt, ZTab);
-
-                OldMean = CurMean;
-                CurMean = StatBasic.Mean(ZRatioArray);
-
-                //1.2.3 Compare Step result and define next step
-                //If First iteration approached to target value, PhaseSt1 = 1, keep direction and step size. Else, PhaseSt=0
-                if ((Math.Abs(CurMean - MeanTar) < Math.Abs(OldMean - MeanTar)) && (Phase1St == 0 || Phase1St == 1))
-                {
-                    Phase1St = 1;
-                }
-                //If last iter. didn't approach and PhaseSt1 = 0, only invert direction.
-                else if ((Math.Abs(CurMean - MeanTar) >= Math.Abs(OldMean - MeanTar)) && Phase1St == 0)
-                {
-                    QSig *= -1;
-                }
-                //If last iter. didn't approach and PhaseSt1 = 1, invert direction and diminish step
-                else if ((Math.Abs(CurMean - MeanTar) >= Math.Abs(OldMean - MeanTar)) && Phase1St == 1)
-                {
-                    QSig *= -1;
-                    QFactor /= 2;
-                }
-
-                //1.2.4 If Target achieved, finish loop earlier.
-                if(Math.Abs(CurMean-MeanTar) < Quantum)
-                {
-                    break;
-                }
-            }
-
-            QFactor = 100;
-            //2.1 Loop function for Phase 2 optimization
-            short Phase2St = 0;
-            for (int P2 = 0; P2 < Phase2Iter; P2++)
-            {
-                //2.1.1 Increment or decrement individual table value by an amount, fine approach
-                int ZRatio_Temp = 0;
-                for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++)
-                {
-                    for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)
+                    else if(j == ZTab.GetUpperBound(1))
                     {
-                        for(int P2B=0; P2B < Phase2Iter; P2B++) //Explore same Tab Point many times after changing
+                        X_A = (XBkpt[j] + XBkpt[j-1] )/ 2;
+                        X_B = XBkpt[j];
+                    }
+                    else
+                    {
+                        X_A = (XBkpt[j] + XBkpt[j - 1]) / 2;
+                        X_B = (XBkpt[j + 1] + XBkpt[j]) / 2;
+                    }
+
+                    //1.2 Select interval around table current point - Y Values
+                    if (i == 0)
+                    {
+                        Y_A = YBkpt[i];
+                        Y_B = (YBkpt[i + 1] + YBkpt[i]) / 2;
+                    }
+                    else if (i == ZTab.GetUpperBound(0))
+                    {
+                        Y_A = (YBkpt[i] + YBkpt[i - 1]) / 2;
+                        Y_B = YBkpt[i];
+                    }
+                    else
+                    {
+                        Y_A = (YBkpt[i] + YBkpt[i - 1]) / 2;
+                        Y_B = (YBkpt[i + 1] + YBkpt[i]) / 2;
+                    }
+
+                    //1.3 Collect data corresponding to the targeted interval
+                    int m = 0;
+                    for (int k=0 ; k<DataX.Length ; k++)
+                    {
+                        if(DataX[k]>=X_A && DataX[k]<=X_B)
                         {
-                            ZTab[i, j] += QFactor * Quantum * QSig;
-
-                            //2.1.1.1 Recalculate Mean value (CurMean) to compare with OldMean
-
-                            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(
-                                                                                 DataX, DataY, DataZ,
-                                                                                 XBkpt, YBkpt, ZTab);
-
-                            OldMean = CurMean;
-                            CurMean = StatBasic.Mean(ZRatioArray);
-
-                            //2.1.1.2 Compare Step result and define next step
-                            //If First iteration approached to target value, PhaseSt1 = 1, keep direction and step size. Else, PhaseSt=0
-                            if ((Math.Abs(CurMean - MeanTar) < Math.Abs(OldMean - MeanTar)) && (Phase2St == 0 || Phase2St == 1))
+                            if (DataY[k] >= Y_A && DataY[k] <= Y_B)
                             {
-                                Phase2St = 1;
+                                m++;
                             }
-                            //If last iter. didn't approach and PhaseSt1 = 0, only invert direction.
-                            else if ((Math.Abs(CurMean - MeanTar) >= Math.Abs(OldMean - MeanTar)) && Phase2St == 0)
-                            {
-                                QSig *= -1;
-                            }
-                            //If last iter. didn't approach and PhaseSt1 = 1, invert direction and diminish step
-                            else if ((Math.Abs(CurMean - MeanTar) >= Math.Abs(OldMean - MeanTar)) && Phase2St == 1)
-                            {
-                                QSig *= -1;
-                                QFactor /= 2;
-                            }
-
                         }
                     }
-                }
 
-                //1.2.4 If Target achieved, finish loop earlier.
-                if (Math.Abs(CurMean - MeanTar) < Quantum)
-                {
-                    break;
+                    double[] DataZSel = new double[m];
+                    m = 0;
+                    for (int k = 0; k < DataX.Length; k++)
+                    {
+                        if (DataX[k] >= X_A && DataX[k] <= X_B)
+                        {
+                            if (DataY[k] >= Y_A && DataY[k] <= Y_B)
+                            {
+                                DataZSel[m] = DataZ[k];
+                                m++;
+                            }
+                        }
+                    }
+
+                    //1.4 Calculate ZMean, within selected interval
+                    ZMeanInterval = StatBasic.Mean(DataZSel);
+
+                    //1.5 Input mean optimized value in ZTab
+                    ZTab[i, j] = ZMeanInterval;
                 }
             }
-
             return ZTab;
         }
     }
