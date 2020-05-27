@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataForm));
             this.CancelButton = new System.Windows.Forms.Button();
             this.SubmitButton = new System.Windows.Forms.Button();
             this.YArrayBox = new System.Windows.Forms.TextBox();
@@ -91,9 +92,7 @@
             this.ZArrayBox.Name = "ZArrayBox";
             this.ZArrayBox.Size = new System.Drawing.Size(60, 300);
             this.ZArrayBox.TabIndex = 9;
-            this.ZArrayBox.Text = "10\r\n15\r\n20\r\n25\r\n30\r\n35\r\n40\r\n45\r\n55\r\n10\r\n15\r\n20\r\n25\r\n30\r\n35\r\n40\r\n45\r\n55\r\n10\r\n15\r\n2" +
-    "0\r\n25\r\n30\r\n35\r\n40\r\n45\r\n55\r\n10.5\r\n10.5\r\n10.5\r\n14.5\r\n14.5\r\n14.5\r\n15.5\r\n16\r\n34.2\r\n2" +
-    "8\r\n22\r\n52.05\r\n49.2\r\n";
+            this.ZArrayBox.Text = resources.GetString("ZArrayBox.Text");
             // 
             // XArrayLabel
             // 

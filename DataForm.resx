@@ -117,4 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ZArrayBox.Text" xml:space="preserve">
+    <value>10.123
+15.456
+20.789
+25.123
+30.456
+35.789
+40.123
+45.456
+55.789
+10.123
+15.456
+20.789
+25.123
+30.456
+35.789
+40.123
+45.456
+55.789
+10.123
+15.456
+20.789
+25.123
+30.456
+35.789
+40.123
+45.456
+55.789
+10.6563
+10.6563
+10.6563
+14.9227
+14.9227
+14.9227
+15.9893
+16.5226
+34.7226
+28.4227
+22.3228
+52.8057
+49.9224
+</value>
+  </data>
 </root>

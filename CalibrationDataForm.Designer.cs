@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalibrationDataForm));
             this.FormGenLabel = new System.Windows.Forms.Label();
             this.CurrMeanLabel = new System.Windows.Forms.Label();
             this.CurrStdDevLabel = new System.Windows.Forms.Label();
@@ -37,10 +38,10 @@
             this.FormTitleLabel1 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.MeanTarBox = new System.Windows.Forms.TextBox();
-            this.StdDevTarBox = new System.Windows.Forms.TextBox();
-            this.Phase1IterBox = new System.Windows.Forms.TextBox();
-            this.Phase2IterBox = new System.Windows.Forms.TextBox();
-            this.Phase3IterBox = new System.Windows.Forms.TextBox();
+            this.PrecisionTarBox = new System.Windows.Forms.TextBox();
+            this.WeightBox = new System.Windows.Forms.TextBox();
+            this.FineTuneIterBox = new System.Windows.Forms.TextBox();
+            this.FineTuneSubIterBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // FormGenLabel
@@ -95,10 +96,9 @@
             this.FormGenLabel2.AutoSize = true;
             this.FormGenLabel2.Location = new System.Drawing.Point(12, 107);
             this.FormGenLabel2.Name = "FormGenLabel2";
-            this.FormGenLabel2.Size = new System.Drawing.Size(157, 130);
+            this.FormGenLabel2.Size = new System.Drawing.Size(212, 130);
             this.FormGenLabel2.TabIndex = 9;
-            this.FormGenLabel2.Text = "Target Data Fit - Mean Value:\r\n\r\nTarget Data Fit - Std. Deviation:\r\n\r\nPhase 1 Ite" +
-    "ration Limit:\r\n\r\nPhase 2 Iteration Limit:\r\n\r\nPhase 3 Iteration Limit:\r\n\r\n";
+            this.FormGenLabel2.Text = resources.GetString("FormGenLabel2.Text");
             // 
             // FormTitleLabel1
             // 
@@ -124,53 +124,54 @@
             // 
             // MeanTarBox
             // 
-            this.MeanTarBox.Location = new System.Drawing.Point(201, 104);
+            this.MeanTarBox.Location = new System.Drawing.Point(240, 104);
             this.MeanTarBox.Name = "MeanTarBox";
-            this.MeanTarBox.Size = new System.Drawing.Size(100, 20);
+            this.MeanTarBox.Size = new System.Drawing.Size(50, 20);
             this.MeanTarBox.TabIndex = 12;
             this.MeanTarBox.Text = "1";
             // 
-            // StdDevTarBox
+            // PrecisionTarBox
             // 
-            this.StdDevTarBox.Location = new System.Drawing.Point(201, 130);
-            this.StdDevTarBox.Name = "StdDevTarBox";
-            this.StdDevTarBox.Size = new System.Drawing.Size(100, 20);
-            this.StdDevTarBox.TabIndex = 13;
-            this.StdDevTarBox.Text = "0";
+            this.PrecisionTarBox.Location = new System.Drawing.Point(240, 130);
+            this.PrecisionTarBox.Name = "PrecisionTarBox";
+            this.PrecisionTarBox.Size = new System.Drawing.Size(50, 20);
+            this.PrecisionTarBox.TabIndex = 13;
+            this.PrecisionTarBox.Text = "3";
             // 
-            // Phase1IterBox
+            // WeightBox
             // 
-            this.Phase1IterBox.Location = new System.Drawing.Point(201, 156);
-            this.Phase1IterBox.Name = "Phase1IterBox";
-            this.Phase1IterBox.Size = new System.Drawing.Size(100, 20);
-            this.Phase1IterBox.TabIndex = 14;
-            this.Phase1IterBox.Text = "20";
+            this.WeightBox.Location = new System.Drawing.Point(240, 156);
+            this.WeightBox.Name = "WeightBox";
+            this.WeightBox.Size = new System.Drawing.Size(50, 20);
+            this.WeightBox.TabIndex = 14;
+            this.WeightBox.Text = "3";
+            this.WeightBox.TextChanged += new System.EventHandler(this.Phase1IterBox_TextChanged);
             // 
-            // Phase2IterBox
+            // FineTuneIterBox
             // 
-            this.Phase2IterBox.Location = new System.Drawing.Point(201, 182);
-            this.Phase2IterBox.Name = "Phase2IterBox";
-            this.Phase2IterBox.Size = new System.Drawing.Size(100, 20);
-            this.Phase2IterBox.TabIndex = 15;
-            this.Phase2IterBox.Text = "20";
+            this.FineTuneIterBox.Location = new System.Drawing.Point(240, 182);
+            this.FineTuneIterBox.Name = "FineTuneIterBox";
+            this.FineTuneIterBox.Size = new System.Drawing.Size(50, 20);
+            this.FineTuneIterBox.TabIndex = 15;
+            this.FineTuneIterBox.Text = "20";
             // 
-            // Phase3IterBox
+            // FineTuneSubIterBox
             // 
-            this.Phase3IterBox.Location = new System.Drawing.Point(201, 208);
-            this.Phase3IterBox.Name = "Phase3IterBox";
-            this.Phase3IterBox.Size = new System.Drawing.Size(100, 20);
-            this.Phase3IterBox.TabIndex = 16;
-            this.Phase3IterBox.Text = "20";
+            this.FineTuneSubIterBox.Location = new System.Drawing.Point(240, 208);
+            this.FineTuneSubIterBox.Name = "FineTuneSubIterBox";
+            this.FineTuneSubIterBox.Size = new System.Drawing.Size(50, 20);
+            this.FineTuneSubIterBox.TabIndex = 16;
+            this.FineTuneSubIterBox.Text = "20";
             // 
             // CalibrationDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(324, 294);
-            this.Controls.Add(this.Phase3IterBox);
-            this.Controls.Add(this.Phase2IterBox);
-            this.Controls.Add(this.Phase1IterBox);
-            this.Controls.Add(this.StdDevTarBox);
+            this.Controls.Add(this.FineTuneSubIterBox);
+            this.Controls.Add(this.FineTuneIterBox);
+            this.Controls.Add(this.WeightBox);
+            this.Controls.Add(this.PrecisionTarBox);
             this.Controls.Add(this.MeanTarBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.FormTitleLabel1);
@@ -199,9 +200,9 @@
         private System.Windows.Forms.Label FormTitleLabel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox MeanTarBox;
-        private System.Windows.Forms.TextBox StdDevTarBox;
-        private System.Windows.Forms.TextBox Phase1IterBox;
-        private System.Windows.Forms.TextBox Phase2IterBox;
-        private System.Windows.Forms.TextBox Phase3IterBox;
+        private System.Windows.Forms.TextBox PrecisionTarBox;
+        private System.Windows.Forms.TextBox WeightBox;
+        private System.Windows.Forms.TextBox FineTuneIterBox;
+        private System.Windows.Forms.TextBox FineTuneSubIterBox;
     }
 }

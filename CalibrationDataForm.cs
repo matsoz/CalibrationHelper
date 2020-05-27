@@ -44,10 +44,15 @@ namespace CalibrationHelper
             this.Hide();
         }
 
+        private void Phase1IterBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            ZTabOptm = CalibrationMethods.CalibrationTabOptimization(double.Parse(this.MeanTarBox.Text), double.Parse(this.StdDevTarBox.Text),
-                        int.Parse(this.Phase1IterBox.Text), int.Parse(this.Phase2IterBox.Text), int.Parse(this.Phase3IterBox.Text),
+            ZTabOptm = CalibrationMethods.CalibrationTabOptimization(double.Parse(this.MeanTarBox.Text), int.Parse(this.PrecisionTarBox.Text),
+                        int.Parse(this.WeightBox.Text), int.Parse(this.FineTuneIterBox.Text), int.Parse(this.FineTuneSubIterBox.Text),
                         ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                         ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
 
