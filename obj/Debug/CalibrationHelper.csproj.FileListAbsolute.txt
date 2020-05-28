@@ -1,7 +1,6 @@
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\CalibrationHelper.exe.config
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\CalibrationHelper.exe
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\CalibrationHelper.pdb
-C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csprojAssemblyReference.cache
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.Properties.Resources.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csproj.GenerateResource.cache
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.exe
@@ -13,3 +12,6 @@ C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\Math
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.DataForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csproj.CopyComplete
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.CalibrationDataForm.resources
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csprojAssemblyReference.cache
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csproj.CoreCompileInputs.cache
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ResultsForm.resources

@@ -12,14 +12,17 @@ namespace CalibrationHelper
 {
     public partial class MainForm : Form
     {
-        Form Step1Form, Step2Form, Step3Form;
+        //1. Basic Form instances
+        Form Step1Form, Step2Form, Step3Form, Step4Form;
+        public byte FormStatus = 0;
         
-        //1. Calibration related types
+        //2. Calibration related types - Pre and Post optimization
         public double[] XCalArray, YCalArray;
-        public double [,] ZCalTab;
+        public double [,] ZCalTab, ZCalTabOptm;
 
-        //2. Data Related Types
+        //3. Data Related Types
         public double[] XDataArray, YDataArray, ZDataArray;
+
 
         public MainForm()
         {
@@ -28,6 +31,7 @@ namespace CalibrationHelper
             Step1Form = new TableForm(this);
             Step2Form = new DataForm(this);
             Step3Form = new CalibrationDataForm(this);
+            Step4Form = new ResultsForm(this);
         }
 
         private void Step1Button_Click(object sender, EventArgs e)
@@ -37,13 +41,17 @@ namespace CalibrationHelper
         
         private void Step2Button_Click(object sender, EventArgs e)
         {
-            Step2Form.Show();
+            if ((FormStatus & 0x01) == 0x01) Step2Form.Show();
         }
 
         private void Step3Button_Click(object sender, EventArgs e)
         {
-            Step3Form.Show();
+            if ((FormStatus & 0x02) == 0x02) Step3Form.Show();
         }
 
+        private void Step4Button_Click(object sender, EventArgs e)
+        {
+            if ((FormStatus & 0x04) == 0x04) Step4Form.Show();
+        }
     }
 }

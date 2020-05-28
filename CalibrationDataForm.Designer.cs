@@ -145,7 +145,6 @@
             this.WeightBox.Size = new System.Drawing.Size(50, 20);
             this.WeightBox.TabIndex = 14;
             this.WeightBox.Text = "3";
-            this.WeightBox.TextChanged += new System.EventHandler(this.Phase1IterBox_TextChanged);
             // 
             // FineTuneIterBox
             // 
@@ -194,8 +193,6 @@
         private System.Windows.Forms.Label FormGenLabel;
         private System.Windows.Forms.Label CurrMeanLabel;
         private System.Windows.Forms.Label CurrStdDevLabel;
-        private System.Windows.Forms.Button CancelButton;
-        private System.Windows.Forms.Button SubmitButton;
         private System.Windows.Forms.Label FormGenLabel2;
         private System.Windows.Forms.Label FormTitleLabel1;
         private System.Windows.Forms.Label label1;
@@ -204,5 +201,7 @@
         private System.Windows.Forms.TextBox WeightBox;
         private System.Windows.Forms.TextBox FineTuneIterBox;
         private System.Windows.Forms.TextBox FineTuneSubIterBox;
+        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button SubmitButton;
     }
 }

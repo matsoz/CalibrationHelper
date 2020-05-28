@@ -143,13 +143,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Button CancelButton;
-        private System.Windows.Forms.Button SubmitButton;
-        private System.Windows.Forms.TextBox YArrayBox;
-        private System.Windows.Forms.TextBox XArrayBox;
-        private System.Windows.Forms.TextBox ZArrayBox;
         private System.Windows.Forms.Label XArrayLabel;
         private System.Windows.Forms.Label YArrayLabel;
         private System.Windows.Forms.Label ZArrayLabel;
+        private System.Windows.Forms.TextBox XArrayBox;
+        private System.Windows.Forms.TextBox YArrayBox;
+        private System.Windows.Forms.TextBox ZArrayBox;
+        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button SubmitButton;
     }
 }

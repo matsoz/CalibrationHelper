@@ -337,12 +337,13 @@ namespace CalibrationHelper
                                                             double[] XBkpt, double[] YBkpt, double[,] ZTab)
         {
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
+            double[,] ZWorkTab = new double[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
             bool [,] ZTabStatus = new bool[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
             
             //1. Sweep each table point and get average value from delivered data
-            for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++) //i sweeps Y
+            for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
             {
-                for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)//j sweeps X
+                for (int j = 0; j < 1 + ZWorkTab.GetUpperBound(1); j++)//j sweeps X
                 {
                     //1.1 Select interval around table current point - X Values
                     if (j == 0)
@@ -350,7 +351,7 @@ namespace CalibrationHelper
                         X_A = XBkpt[j] - ((XBkpt[j + 1] - XBkpt[j]) / 2);
                         X_B = (XBkpt[j + 1] + XBkpt[j]) / 2;
                     }
-                    else if (j == ZTab.GetUpperBound(1))
+                    else if (j == ZWorkTab.GetUpperBound(1))
                     {
                         X_A = (XBkpt[j] + XBkpt[j - 1]) / 2;
                         X_B = XBkpt[j] + ((XBkpt[j] - XBkpt[j - 1]) / 2);
@@ -367,7 +368,7 @@ namespace CalibrationHelper
                         Y_A = YBkpt[i] - ((YBkpt[i + 1] - YBkpt[i]) / 2);
                         Y_B = (YBkpt[i + 1] + YBkpt[i]) / 2;
                     }
-                    else if (i == ZTab.GetUpperBound(0))
+                    else if (i == ZWorkTab.GetUpperBound(0))
                     {
                         Y_A = (YBkpt[i] + YBkpt[i - 1]) / 2;
                         Y_B = YBkpt[i] + ((YBkpt[i] - YBkpt[i - 1]) / 2);
@@ -456,8 +457,8 @@ namespace CalibrationHelper
                         b_C * StatBasic.MeanWeighted(DataZSel_C, DataZWei_C, WeightBox) +
                         b_D * StatBasic.MeanWeighted(DataZSel_D, DataZWei_D, WeightBox)) / (b_A + b_B + b_C + b_D);
 
-                    //1.5 Input mean optimized value (based on data) in ZTab
-                    ZTab[i, j] = ZMeanInterval;
+                    //1.5 Input mean optimized value (based on data) in ZWorkTab
+                    ZWorkTab[i, j] = ZMeanInterval;
 
                     //1.6 Track/Flag the table values which didn't have associated data to be calculated
                     ZTabStatus[i, j] = (b_A + b_B + b_C + b_D == 0) ? false : true;
@@ -467,29 +468,29 @@ namespace CalibrationHelper
 
             //2. Sweep each tale point and adjust to dimish Z Ratio average deviation
             double MFactor = 1.01, ZStdDevOld;
-            double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZTab);
+            double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
             double ZStdDev = StatBasic.StdDev(ZRatioArray);
 
             for (int P2A = 0; P2A < FineTuneIterBox; P2A++)
             {
-                for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++) //i sweeps Y
+                for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
                 {
-                    for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)//j sweeps X
+                    for (int j = 0; j < 1 + ZWorkTab.GetUpperBound(1); j++)//j sweeps X
                     {
                         int LoopSkip = 0;
                         for (int P2B = 0; P2B < FineTuneSubIterBox; P2B++)
                         {
                             // Increment or Decrement a Table value by a specific percent
-                            ZTab[i, j] *=  MFactor;
+                            ZWorkTab[i, j] *=  MFactor;
 
                             // Evaluate the results of the value increment/decrement
-                            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZTab);
+                            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
                             ZStdDevOld = ZStdDev;
                             ZStdDev = StatBasic.StdDev(ZRatioArray);
 
                             // If the result didn't optimize the StdDev, undo operation and change direction
                             MFactor = (ZStdDev > ZStdDevOld) ? 1/MFactor : MFactor;
-                            ZTab[i, j] *= (ZStdDev > ZStdDevOld) ? MFactor : 1;
+                            ZWorkTab[i, j] *= (ZStdDev > ZStdDevOld) ? MFactor : 1;
 
                             // When a second direction change is required (optm reached), break loop and goto next Table position
                             LoopSkip = (P2B == 1 && LoopSkip == 0) ? 1 : LoopSkip;
@@ -497,7 +498,6 @@ namespace CalibrationHelper
                             if (LoopSkip == 2) break;
 
                         }
-
                     }
                 }
                  
@@ -506,24 +506,20 @@ namespace CalibrationHelper
                 MFactor = ((MFactor - 1) / 2) + 1;
             }
 
-            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZTab);
+            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
             double ZMean = StatBasic.Mean(ZRatioArray);
 
             //3. Adjust Calibration Table values - MeanTar, Decimal Places, Round Values
-            for (int i = 0; i < 1 + ZTab.GetUpperBound(0); i++) //i sweeps Y
+            for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
             {
-                for (int j = 0; j < 1 + ZTab.GetUpperBound(1); j++)//j sweeps X
+                for (int j = 0; j < 1 + ZWorkTab.GetUpperBound(1); j++)//j sweeps X
                 {
-                    ZTab[i, j] *= ZMean * MeanTar;
-                    ZTab[i, j] = Math.Round(ZTab[i, j], PrecisionTar);
+                    ZWorkTab[i, j] *= ZMean * MeanTar;
+                    ZWorkTab[i, j] = Math.Round(ZWorkTab[i, j], PrecisionTar);
                 }
             }
 
-            ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZTab);
-            ZMean = StatBasic.Mean(ZRatioArray);
-            ZStdDev = StatBasic.StdDev(ZRatioArray);
-
-            return ZTab;
+            return ZWorkTab;
         
         }
     }

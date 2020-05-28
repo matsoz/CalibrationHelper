@@ -38,15 +38,9 @@ namespace CalibrationHelper
             this.CurrStdDevLabel.Text = ZRatioStdDev.ToString();
         }
 
-
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Hide();
-        }
-
-        private void Phase1IterBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
@@ -55,6 +49,9 @@ namespace CalibrationHelper
                         int.Parse(this.WeightBox.Text), int.Parse(this.FineTuneIterBox.Text), int.Parse(this.FineTuneSubIterBox.Text),
                         ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                         ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
+
+            ParentApp.ZCalTabOptm = ZTabOptm;
+            ParentApp.FormStatus = (byte)(ParentApp.FormStatus | 0x04);
 
             this.Hide();
         }

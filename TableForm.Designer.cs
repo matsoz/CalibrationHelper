@@ -140,13 +140,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox TableBox;
+        private System.Windows.Forms.Label XLabel;
+        private System.Windows.Forms.Label YLabel;
+        private System.Windows.Forms.Label TableLabel;
         private System.Windows.Forms.TextBox XArrayBox;
         private System.Windows.Forms.TextBox YArrayBox;
+        private System.Windows.Forms.TextBox TableBox;
         private System.Windows.Forms.Button SubmitButton;
         private System.Windows.Forms.Button CancelButton;
-        private System.Windows.Forms.Label YLabel;
-        private System.Windows.Forms.Label XLabel;
-        private System.Windows.Forms.Label TableLabel;
     }
 }

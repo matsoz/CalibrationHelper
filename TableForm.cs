@@ -38,6 +38,8 @@ namespace CalibrationHelper
             ParentApp.YCalArray = this.YVect;
             ParentApp.ZCalTab = this.Table2DVect;
 
+            ParentApp.FormStatus = (byte)(ParentApp.FormStatus | 0x01);
+
             this.Hide();
         }
 
@@ -47,10 +49,6 @@ namespace CalibrationHelper
             XVect = TransformationMethods.TextLin2VectorLin(this.XArrayBox.Text);
             YVect = TransformationMethods.TextCol2VectorCol(this.YArrayBox.Text);
             Table2DVect = TransformationMethods.TextTable2VectorTable(this.TableBox.Text);
-                    
         }
-
-    
-
     }
 }

@@ -32,6 +32,8 @@ namespace CalibrationHelper
             ParentApp.YDataArray = this.YVect;
             ParentApp.ZDataArray = this.ZVect;
 
+            ParentApp.FormStatus = (byte)(ParentApp.FormStatus | 0x02);
+
             this.Hide();
         }
 
