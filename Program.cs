@@ -364,7 +364,8 @@ namespace CalibrationHelper
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
             double[,] ZWorkTab = new double[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
             byte [,] ZTabStatus = new byte[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
-            
+            WaitBoxForm ProgressBox = new WaitBoxForm(FineTuneIterBox * FineTuneSubIterBox);
+
             //1. Sweep each table point and get average value from delivered data
             for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
             {
@@ -529,6 +530,8 @@ namespace CalibrationHelper
             double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
             double ZStdDev = StatBasic.StdDev(ZRatioArray);
 
+            //ProgressBox.Show();
+
             for (int P2A = 0; P2A < FineTuneIterBox; P2A++)
             {
                 for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
@@ -553,12 +556,17 @@ namespace CalibrationHelper
                             // When a second direction change is required (optm reached), break loop and goto next Table position
                             LoopSkip = (P2B == 1 && LoopSkip == 0) ? 1 : LoopSkip;
                             LoopSkip += (ZStdDev >= ZStdDevOld) ? 1 : 0 ;
+
+                            //ProgressBox.CalculateStep(P2A * P2B);
+                                                        
                             if (LoopSkip == 2) break;
 
                         }
                     }
                 }
-                 
+
+                //ProgressBox.Close();
+
                 if (MFactor < 1) MFactor = 1/MFactor;
 
                 MFactor = ((MFactor - 1) / 2) + 1;
