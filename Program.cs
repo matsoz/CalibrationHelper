@@ -205,6 +205,10 @@ namespace CalibrationHelper
        static public double[] TextLin2VectorLin(string TextVal)
         {
             //Pre treatment of "TextVal" string, removing doubled space characters
+            while (TextVal.Contains("\t"))
+            {
+                TextVal = TextVal.Replace("\t", " ");
+            }
             while (TextVal.Contains("  "))
             {
                 TextVal = TextVal.Replace("  ", " ");
@@ -227,6 +231,10 @@ namespace CalibrationHelper
        static public double[] TextCol2VectorCol(string TextVal)
         {
             //Pre treatment of "TextVal" string, removing space characters and doubled linebreaks
+            while (TextVal.Contains("\t"))
+            {
+                TextVal = TextVal.Replace("\t", " ");
+            }
             while (TextVal.Contains(" "))
             {
                 TextVal = TextVal.Replace(" ", "");
@@ -261,6 +269,10 @@ namespace CalibrationHelper
         {
 
             //Pre treatment of "TextVal" string, removing doubled space characters and doubled linebreaks
+            while (TextVal.Contains("\t"))
+            {
+                TextVal = TextVal.Replace("\t", " ");
+            }
             while (TextVal.Contains("  "))
             {
                 TextVal = TextVal.Replace("  ", " ");
@@ -298,6 +310,21 @@ namespace CalibrationHelper
 
             return TableVal;
         }
+
+       static public string VectorTable2TextTable(double[,] VectorTable)
+        {
+            string TextTable = "" ; //= new string[2 * (VectorTable.GetUpperBound(0)+1) * (VectorTable.GetUpperBound(1)+1)];
+
+            for (int i = 0; i < 1 + VectorTable.GetUpperBound(0); i++) //i sweeps Y
+            {
+                for (int j = 0; j < 1 + VectorTable.GetUpperBound(1); j++)//j sweeps X
+                {
+                    TextTable = String.Concat(TextTable, VectorTable[i, j], "\t");
+                }
+                TextTable = String.Concat(TextTable, "\r\n");
+            }
+            return TextTable;
+        }
     }
 
     static public class CalibrationMethods
@@ -319,8 +346,6 @@ namespace CalibrationHelper
                     {
                         ZRatioArray[i] = 0;
                     }
-
-
                 }
 
                 return ZRatioArray;
@@ -338,7 +363,7 @@ namespace CalibrationHelper
         {
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
             double[,] ZWorkTab = new double[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
-            bool [,] ZTabStatus = new bool[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
+            byte [,] ZTabStatus = new byte[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
             
             //1. Sweep each table point and get average value from delivered data
             for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
@@ -461,12 +486,45 @@ namespace CalibrationHelper
                     ZWorkTab[i, j] = ZMeanInterval;
 
                     //1.6 Track/Flag the table values which didn't have associated data to be calculated
-                    ZTabStatus[i, j] = (b_A + b_B + b_C + b_D == 0) ? false : true;
+                    ZTabStatus[i, j] = (b_A + b_B + b_C + b_D == 0) ? (byte)0 : (byte)1;
+                    ZWorkTab[i, j] = (b_A + b_B + b_C + b_D == 0) ? Math.Pow(10, -1 * (PrecisionTar + 1)) : ZWorkTab[i,j];
 
                 }
             }
 
-            //2. Sweep each tale point and adjust to dimish Z Ratio average deviation
+
+            //2. Sweep empty table points (due to lack of data) and estimate value by neighbors
+            for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
+            {
+                for (int j = 0; j < 1 + ZWorkTab.GetUpperBound(1); j++)//j sweeps X
+                {
+                    ZWorkTab[i, j] += (ZWorkTab[i, j] == 0) ? Math.Pow(10, -1 * (PrecisionTar + 1)) : 0 ;
+                    
+                    if(ZTabStatus[i,j] == 0)// Empty position gotten
+                    {
+                        double Z_Ya = 0, Z_Yb = 0, Z_Xa = 0, Z_Xb = 0;
+                        byte b_Ya = 0, b_Yb = 0, b_Xa = 0, b_Xb = 0;
+                        
+                        Z_Ya = (i == 0) ? 0 : ZWorkTab[i - 1, j];
+                        Z_Yb = (i == ZWorkTab.GetUpperBound(0)) ? 0 : ZWorkTab[i + 1, j];
+                        Z_Xa = (j == 0) ? 0 : ZWorkTab[i, j - 1];
+                        Z_Xb = (j == ZWorkTab.GetUpperBound(1)) ? 0 : ZWorkTab[i, j + 1];
+
+                        b_Ya = (byte)((i == 0) ? 0 : ZTabStatus[i - 1, j]);
+                        b_Yb = (byte)((i == ZWorkTab.GetUpperBound(0)) ? 0 : ZTabStatus[i + 1, j]);
+                        b_Xa = (byte)((j == 0) ? 0 : ZTabStatus[i, j - 1]);
+                        b_Xb = (byte)((j == ZWorkTab.GetUpperBound(1)) ? 0 : ZTabStatus[i, j + 1]);
+
+
+                        ZWorkTab[i, j] = (b_Ya * Z_Ya + b_Yb * Z_Yb + b_Xa * Z_Xa + b_Xb * Z_Xb) /
+                                         (b_Ya + b_Yb + b_Xa + b_Xb);
+                        
+                        ZWorkTab[i, j] += Math.Pow(10, -1 * (PrecisionTar+1));
+                    }
+                }
+            }
+
+            //3. Sweep each table point and adjust to dimish Z Ratio average deviation
             double MFactor = 1.01, ZStdDevOld;
             double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
             double ZStdDev = StatBasic.StdDev(ZRatioArray);
@@ -489,12 +547,12 @@ namespace CalibrationHelper
                             ZStdDev = StatBasic.StdDev(ZRatioArray);
 
                             // If the result didn't optimize the StdDev, undo operation and change direction
-                            MFactor = (ZStdDev > ZStdDevOld) ? 1/MFactor : MFactor;
+                            MFactor = (ZStdDev >= ZStdDevOld) ? 1/MFactor : MFactor;
                             ZWorkTab[i, j] *= (ZStdDev > ZStdDevOld) ? MFactor : 1;
 
                             // When a second direction change is required (optm reached), break loop and goto next Table position
                             LoopSkip = (P2B == 1 && LoopSkip == 0) ? 1 : LoopSkip;
-                            LoopSkip += (ZStdDev > ZStdDevOld) ? 1 : 0 ;
+                            LoopSkip += (ZStdDev >= ZStdDevOld) ? 1 : 0 ;
                             if (LoopSkip == 2) break;
 
                         }

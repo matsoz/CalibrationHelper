@@ -68,8 +68,7 @@
             this.YArrayBox.Name = "YArrayBox";
             this.YArrayBox.Size = new System.Drawing.Size(60, 300);
             this.YArrayBox.TabIndex = 7;
-            this.YArrayBox.Text = "1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n1\r\n1\r\n1\r\n2\r\n2\r\n2\r\n3\r\n3\r\n3\r\n" +
-    "1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n2.2\r\n1.9\r\n1.6\r\n2.9\r\n2.8\r\n";
+            this.YArrayBox.Text = resources.GetString("YArrayBox.Text");
             // 
             // XArrayBox
             // 
@@ -80,8 +79,7 @@
             this.XArrayBox.Name = "XArrayBox";
             this.XArrayBox.Size = new System.Drawing.Size(60, 300);
             this.XArrayBox.TabIndex = 8;
-            this.XArrayBox.Text = "1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n1\r\n2\r\n3\r\n" +
-    "1.1\r\n1.1\r\n1.1\r\n1.9\r\n1.9\r\n1.9\r\n2.1\r\n2.2\r\n2.2\r\n1.9\r\n1.6\r\n2.9\r\n2.8\r\n";
+            this.XArrayBox.Text = resources.GetString("XArrayBox.Text");
             // 
             // ZArrayBox
             // 

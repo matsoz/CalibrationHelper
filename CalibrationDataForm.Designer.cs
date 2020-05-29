@@ -136,7 +136,7 @@
             this.PrecisionTarBox.Name = "PrecisionTarBox";
             this.PrecisionTarBox.Size = new System.Drawing.Size(50, 20);
             this.PrecisionTarBox.TabIndex = 13;
-            this.PrecisionTarBox.Text = "3";
+            this.PrecisionTarBox.Text = "2";
             // 
             // WeightBox
             // 
@@ -152,7 +152,7 @@
             this.FineTuneIterBox.Name = "FineTuneIterBox";
             this.FineTuneIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneIterBox.TabIndex = 15;
-            this.FineTuneIterBox.Text = "20";
+            this.FineTuneIterBox.Text = "100";
             // 
             // FineTuneSubIterBox
             // 
@@ -160,7 +160,7 @@
             this.FineTuneSubIterBox.Name = "FineTuneSubIterBox";
             this.FineTuneSubIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneSubIterBox.TabIndex = 16;
-            this.FineTuneSubIterBox.Text = "20";
+            this.FineTuneSubIterBox.Text = "100";
             // 
             // CalibrationDataForm
             // 

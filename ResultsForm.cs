@@ -41,6 +41,7 @@ namespace CalibrationHelper
             this.OptmMeanLabel.Text = ZMeanOptm.ToString();
             this.OptmStdDevLabel.Text = ZStdDevOptm.ToString();
 
+            this.TableBox.Text = TransformationMethods.VectorTable2TextTable(ParentApp.ZCalTabOptm);
 
         }
     }
