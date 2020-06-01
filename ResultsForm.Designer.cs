@@ -133,7 +133,7 @@
             // TableLabel
             // 
             this.TableLabel.AutoSize = true;
-            this.TableLabel.Location = new System.Drawing.Point(601, 61);
+            this.TableLabel.Location = new System.Drawing.Point(586, 58);
             this.TableLabel.Name = "TableLabel";
             this.TableLabel.Size = new System.Drawing.Size(149, 13);
             this.TableLabel.TabIndex = 24;
@@ -142,7 +142,7 @@
             // XLabel
             // 
             this.XLabel.AutoSize = true;
-            this.XLabel.Location = new System.Drawing.Point(630, 14);
+            this.XLabel.Location = new System.Drawing.Point(615, 11);
             this.XLabel.Name = "XLabel";
             this.XLabel.Size = new System.Drawing.Size(95, 13);
             this.XLabel.TabIndex = 23;
@@ -151,7 +151,7 @@
             // YLabel
             // 
             this.YLabel.AutoSize = true;
-            this.YLabel.Location = new System.Drawing.Point(370, 144);
+            this.YLabel.Location = new System.Drawing.Point(355, 141);
             this.YLabel.Name = "YLabel";
             this.YLabel.Size = new System.Drawing.Size(63, 26);
             this.YLabel.TabIndex = 22;
@@ -162,7 +162,7 @@
             // 
             this.YArrayBox.AcceptsReturn = true;
             this.YArrayBox.AllowDrop = true;
-            this.YArrayBox.Location = new System.Drawing.Point(439, 77);
+            this.YArrayBox.Location = new System.Drawing.Point(424, 74);
             this.YArrayBox.Multiline = true;
             this.YArrayBox.Name = "YArrayBox";
             this.YArrayBox.Size = new System.Drawing.Size(51, 176);
@@ -171,7 +171,7 @@
             // XArrayBox
             // 
             this.XArrayBox.AcceptsTab = true;
-            this.XArrayBox.Location = new System.Drawing.Point(496, 33);
+            this.XArrayBox.Location = new System.Drawing.Point(481, 30);
             this.XArrayBox.Name = "XArrayBox";
             this.XArrayBox.Size = new System.Drawing.Size(370, 20);
             this.XArrayBox.TabIndex = 20;
@@ -181,17 +181,17 @@
             this.TableBox.AcceptsReturn = true;
             this.TableBox.AcceptsTab = true;
             this.TableBox.AllowDrop = true;
-            this.TableBox.Location = new System.Drawing.Point(495, 77);
+            this.TableBox.Location = new System.Drawing.Point(480, 74);
             this.TableBox.Multiline = true;
             this.TableBox.Name = "TableBox";
             this.TableBox.Size = new System.Drawing.Size(370, 176);
             this.TableBox.TabIndex = 19;
             // 
-            // Step4Form
+            // ResultsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(892, 279);
+            this.ClientSize = new System.Drawing.Size(873, 262);
             this.Controls.Add(this.TableLabel);
             this.Controls.Add(this.XLabel);
             this.Controls.Add(this.YLabel);
@@ -206,7 +206,7 @@
             this.Controls.Add(this.CurrStdDevLabel);
             this.Controls.Add(this.CurrMeanLabel);
             this.Controls.Add(this.FormGenLabel);
-            this.Name = "Step4Form";
+            this.Name = "ResultsForm";
             this.Text = "4. Calibration Optimized results and comparison";
             this.Load += new System.EventHandler(this.ResultsForm_Load);
             this.ResumeLayout(false);

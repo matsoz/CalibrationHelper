@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using MathNet.Numerics.Statistics;
 using MathNet.Numerics.Interpolation;
+using System.Drawing;
+using System.Collections;
+using System.ComponentModel;
+
+
 
 namespace CalibrationHelper
 {
@@ -22,6 +28,7 @@ namespace CalibrationHelper
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+
     }
 
    
@@ -201,7 +208,6 @@ namespace CalibrationHelper
 
     static public class TransformationMethods
     {
-
        static public double[] TextLin2VectorLin(string TextVal)
         {
             //Pre treatment of "TextVal" string, removing doubled space characters
@@ -325,6 +331,27 @@ namespace CalibrationHelper
             }
             return TextTable;
         }
+        static public string VectorCol2TextCol(double[] Vector)
+        {
+            string TextVector = ""; 
+
+            for (int i = 0; i < 1 + Vector.GetUpperBound(0); i++) 
+            {
+                TextVector = String.Concat(TextVector, Vector[i], "\r\n");
+            }
+            return TextVector;
+        }
+
+        static public string VectorLin2TextLin(double[] Vector)
+        {
+            string TextVector = "";
+
+            for (int i = 0; i < 1 + Vector.GetUpperBound(0); i++) 
+            {
+                TextVector = String.Concat(TextVector, Vector[i], "\t");
+            }
+            return TextVector;
+        }
     }
 
     static public class CalibrationMethods
@@ -356,15 +383,15 @@ namespace CalibrationHelper
             }
         } //Calculates ratio between Calibration and Data
 
-        static public double[,] CalibrationTabOptimization(double MeanTar, int PrecisionTar,
+        static public double[,] CalibrationTabOptimization( double MeanTar, int PrecisionTar,
                                                             int WeightBox, int FineTuneIterBox, int FineTuneSubIterBox,
                                                             double[] DataX, double[] DataY, double[] DataZ,
-                                                            double[] XBkpt, double[] YBkpt, double[,] ZTab)
+                                                            double[] XBkpt, double[] YBkpt, double[,] ZTab,
+                                                            CalibrationDataForm aParent = null)
         {
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
             double[,] ZWorkTab = new double[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
             byte [,] ZTabStatus = new byte[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
-            WaitBoxForm ProgressBox = new WaitBoxForm(FineTuneIterBox * FineTuneSubIterBox);
 
             //1. Sweep each table point and get average value from delivered data
             for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
@@ -530,8 +557,7 @@ namespace CalibrationHelper
             double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
             double ZStdDev = StatBasic.StdDev(ZRatioArray);
 
-            //ProgressBox.Show();
-
+            if (aParent != null) aParent.ProgressBoxUpdate(0);
             for (int P2A = 0; P2A < FineTuneIterBox; P2A++)
             {
                 for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
@@ -556,26 +582,24 @@ namespace CalibrationHelper
                             // When a second direction change is required (optm reached), break loop and goto next Table position
                             LoopSkip = (P2B == 1 && LoopSkip == 0) ? 1 : LoopSkip;
                             LoopSkip += (ZStdDev >= ZStdDevOld) ? 1 : 0 ;
-
-                            //ProgressBox.CalculateStep(P2A * P2B);
-                                                        
+                                         
                             if (LoopSkip == 2) break;
-
                         }
+                        if (aParent != null) aParent.ProgressBoxUpdate(100 * P2A / FineTuneIterBox);
                     }
                 }
-
-                //ProgressBox.Close();
 
                 if (MFactor < 1) MFactor = 1/MFactor;
 
                 MFactor = ((MFactor - 1) / 2) + 1;
             }
 
+            if (aParent != null) aParent.ProgressBoxFinish();
+
+            //3. Adjust Calibration Table values - MeanTar, Decimal Places, Round Values
             ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
             double ZMean = StatBasic.Mean(ZRatioArray);
 
-            //3. Adjust Calibration Table values - MeanTar, Decimal Places, Round Values
             for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
             {
                 for (int j = 0; j < 1 + ZWorkTab.GetUpperBound(1); j++)//j sweeps X
@@ -584,9 +608,8 @@ namespace CalibrationHelper
                     ZWorkTab[i, j] = Math.Round(ZWorkTab[i, j], PrecisionTar);
                 }
             }
-
+           
             return ZWorkTab;
-        
         }
     }
 }

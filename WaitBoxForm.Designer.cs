@@ -35,7 +35,7 @@
             // FormGenLabel
             // 
             this.FormGenLabel.AutoSize = true;
-            this.FormGenLabel.Location = new System.Drawing.Point(25, 9);
+            this.FormGenLabel.Location = new System.Drawing.Point(69, 9);
             this.FormGenLabel.Name = "FormGenLabel";
             this.FormGenLabel.Size = new System.Drawing.Size(197, 13);
             this.FormGenLabel.TabIndex = 0;
@@ -44,9 +44,11 @@
             // 
             // ProgressBar
             // 
-            this.ProgressBar.Location = new System.Drawing.Point(28, 40);
+            this.ProgressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ProgressBar.ForeColor = System.Drawing.Color.Red;
+            this.ProgressBar.Location = new System.Drawing.Point(0, 37);
             this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(205, 23);
+            this.ProgressBar.Size = new System.Drawing.Size(331, 23);
             this.ProgressBar.Step = 1;
             this.ProgressBar.TabIndex = 1;
             this.ProgressBar.UseWaitCursor = true;
@@ -55,13 +57,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(255, 81);
+            this.ClientSize = new System.Drawing.Size(331, 60);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.FormGenLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "WaitBoxForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "WaitBoxForm";
+            this.TopMost = true;
             this.UseWaitCursor = true;
-            this.Load += new System.EventHandler(this.WaitBoxForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

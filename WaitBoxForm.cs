@@ -12,33 +12,30 @@ namespace CalibrationHelper
 {
     public partial class WaitBoxForm : Form
     {
-        public int MaxSteps, ProgressOld=0, ProgressNew=0;
+        private delegate void ProgressDelegate(int CurrentStep);
+        private ProgressDelegate del;
 
-        private void WaitBoxForm_Load(object sender, EventArgs e)
-        {
-            Application.DoEvents();
-        }
-
-        public WaitBoxForm(int MaxSteps)
-        {
-            InitializeComponent();
-            this.MaxSteps = MaxSteps; 
-        }
         public WaitBoxForm()
         {
             InitializeComponent();
+            this.ProgressBar.Maximum = 100;
+            del = this.UpdateProgressInternal;
         }
 
-        public void CalculateStep(int CurrentStep)
+       
+        private void UpdateProgressInternal(int CurrentStep)
         {
-            ProgressOld = ProgressNew;
-            ProgressNew =   (int)(100*((double)CurrentStep / (double)MaxSteps));
-
-            if (ProgressNew - ProgressOld >= 1) this.ProgressBar.PerformStep();
-            
-            if (ProgressNew >= 97) this.Close();
+            if (this.Handle == null)
+            {
+                return;
+            }
+            this.ProgressBar.Value = CurrentStep;
         }
-    
-    
+
+        public void UpdateProgress(int CurrentStep)
+        {
+            this.Invoke(del, CurrentStep);
+        }
+
     }
 }

@@ -15,6 +15,7 @@ namespace CalibrationHelper
         //1. Basic Form instances
         Form Step1Form, Step2Form, Step3Form, Step4Form;
         public byte FormStatus = 0;
+        public int DataPrecision = 3;
         
         //2. Calibration related types - Pre and Post optimization
         public double[] XCalArray, YCalArray;

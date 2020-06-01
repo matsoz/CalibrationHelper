@@ -73,7 +73,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(195, 259);
+            this.CancelButton.Location = new System.Drawing.Point(184, 240);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 8;
@@ -83,7 +83,7 @@
             // 
             // SubmitButton
             // 
-            this.SubmitButton.Location = new System.Drawing.Point(77, 259);
+            this.SubmitButton.Location = new System.Drawing.Point(66, 240);
             this.SubmitButton.Name = "SubmitButton";
             this.SubmitButton.Size = new System.Drawing.Size(75, 23);
             this.SubmitButton.TabIndex = 7;
@@ -152,7 +152,7 @@
             this.FineTuneIterBox.Name = "FineTuneIterBox";
             this.FineTuneIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneIterBox.TabIndex = 15;
-            this.FineTuneIterBox.Text = "100";
+            this.FineTuneIterBox.Text = "25";
             // 
             // FineTuneSubIterBox
             // 
@@ -160,13 +160,13 @@
             this.FineTuneSubIterBox.Name = "FineTuneSubIterBox";
             this.FineTuneSubIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneSubIterBox.TabIndex = 16;
-            this.FineTuneSubIterBox.Text = "100";
+            this.FineTuneSubIterBox.Text = "25";
             // 
             // CalibrationDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 294);
+            this.ClientSize = new System.Drawing.Size(324, 275);
             this.Controls.Add(this.FineTuneSubIterBox);
             this.Controls.Add(this.FineTuneIterBox);
             this.Controls.Add(this.WeightBox);
