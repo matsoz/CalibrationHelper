@@ -1,6 +1,6 @@
 ﻿namespace CalibrationHelper
 {
-    partial class WaitBoxForm
+    partial class ProgressBoxForm
     {
         /// <summary>
         /// Required designer variable.

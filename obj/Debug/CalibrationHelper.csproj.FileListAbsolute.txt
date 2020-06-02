@@ -12,7 +12,7 @@ C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\Math
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.DataForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csproj.CopyComplete
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.CalibrationDataForm.resources
-C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csprojAssemblyReference.cache
-C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csproj.CoreCompileInputs.cache
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ResultsForm.resources
-C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.WaitBoxForm.resources
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ProgressBoxForm.resources
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\CalibrationHelper.exe.CodeAnalysisLog.xml
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\CalibrationHelper.exe.lastcodeanalysissucceeded

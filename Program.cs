@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using MathNet.Numerics.Statistics;
+using System;
 using System.Windows.Forms;
-using MathNet.Numerics.Statistics;
-using MathNet.Numerics.Interpolation;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-
-
 
 namespace CalibrationHelper
 {
@@ -31,13 +21,12 @@ namespace CalibrationHelper
 
     }
 
-   
     static public class TabManagement
     {
-        
+
         static public double PointsDist2D(double Xa, double Ya, double Xb, double Yb)
         {
-            return Math.Sqrt( Math.Pow(Xa - Xb, 2) + Math.Pow(Ya - Yb, 2) );
+            return Math.Sqrt(Math.Pow(Xa - Xb, 2) + Math.Pow(Ya - Yb, 2));
         }
 
         static public double LinearInterpolation(double XSel, double[] XBkpt, double[] ZTab)
@@ -79,7 +68,7 @@ namespace CalibrationHelper
             ZValueA = ZTab[XIndexInt];
             ZValueB = ZTab[XIndexInt + X_BDOffset];
 
-            ZValue = ((ZValueA * (1 - XIndexFrac)) + (ZValueB * XIndexFrac)); 
+            ZValue = ((ZValueA * (1 - XIndexFrac)) + (ZValueB * XIndexFrac));
 
             return ZValue;
         }
@@ -101,9 +90,9 @@ namespace CalibrationHelper
             }
             else
             {
-                for(int i = 0; i< XBkpt.Length - 1;i++)
+                for (int i = 0; i < XBkpt.Length - 1; i++)
                 {
-                    if (XSel >= XBkpt[i] && XSel < XBkpt[i+1])
+                    if (XSel >= XBkpt[i] && XSel < XBkpt[i + 1])
                     {
                         XIndex = i + ((XSel - XBkpt[i]) / (XBkpt[i + 1] - XBkpt[i]));
                         break;
@@ -116,7 +105,7 @@ namespace CalibrationHelper
             {
                 YIndex = 0;
             }
-            else if (YSel >= YBkpt[(YBkpt.Length) - 1 ])
+            else if (YSel >= YBkpt[(YBkpt.Length) - 1])
             {
                 YIndex = (YBkpt.Length) - 1;
                 Y_CDOffset = 0;
@@ -150,15 +139,15 @@ namespace CalibrationHelper
             ZValueD = ZTab[YIndexInt + Y_CDOffset, XIndexInt + X_BDOffset];
 
             ZValue = (1 - YIndexFrac) * ((ZValueA * (1 - XIndexFrac)) + (ZValueB * XIndexFrac)) +
-                     (YIndexFrac) *     ((ZValueC * (1 - XIndexFrac)) + (ZValueD * XIndexFrac));
+                     (YIndexFrac) * ((ZValueC * (1 - XIndexFrac)) + (ZValueD * XIndexFrac));
 
-            return ZValue ;
+            return ZValue;
         }
     }
-    
+
     static public class StatBasic
     {
-        static public double Mean (double[] Array)
+        static public double Mean(double[] Array)
         {
             if (Array.Length > 0)
             {
@@ -168,19 +157,19 @@ namespace CalibrationHelper
             {
                 return 0;
             }
-            
+
         }
 
         static public double MeanWeighted(double[] Array, double[] Weight, int WeightPow)
         {
             if (Array.Length > 0)
             {
-                double AccumDen=0, AccumNum=0;
-                
-                for (int i=0; i<Array.Length; i++)
+                double AccumDen = 0, AccumNum = 0;
+
+                for (int i = 0; i < Array.Length; i++)
                 {
-                    AccumNum += Array[i] * Math.Pow(Weight[i],WeightPow);
-                    AccumDen += Math.Pow(Weight[i],WeightPow);
+                    AccumNum += Array[i] * Math.Pow(Weight[i], WeightPow);
+                    AccumDen += Math.Pow(Weight[i], WeightPow);
                 }
 
                 return AccumNum / AccumDen;
@@ -202,13 +191,13 @@ namespace CalibrationHelper
             {
                 return 0;
             }
-            
+
         }
     }
 
     static public class TransformationMethods
     {
-       static public double[] TextLin2VectorLin(string TextVal)
+        static public double[] TextLin2VectorLin(string TextVal)
         {
             //Pre treatment of "TextVal" string, removing doubled space characters
             while (TextVal.Contains("\t"))
@@ -234,7 +223,7 @@ namespace CalibrationHelper
 
         }
 
-       static public double[] TextCol2VectorCol(string TextVal)
+        static public double[] TextCol2VectorCol(string TextVal)
         {
             //Pre treatment of "TextVal" string, removing space characters and doubled linebreaks
             while (TextVal.Contains("\t"))
@@ -271,7 +260,7 @@ namespace CalibrationHelper
             return VectVal;
         }
 
-       static public double[,] TextTable2VectorTable(string TextVal)
+        static public double[,] TextTable2VectorTable(string TextVal)
         {
 
             //Pre treatment of "TextVal" string, removing doubled space characters and doubled linebreaks
@@ -317,9 +306,9 @@ namespace CalibrationHelper
             return TableVal;
         }
 
-       static public string VectorTable2TextTable(double[,] VectorTable)
+        static public string VectorTable2TextTable(double[,] VectorTable)
         {
-            string TextTable = "" ; //= new string[2 * (VectorTable.GetUpperBound(0)+1) * (VectorTable.GetUpperBound(1)+1)];
+            string TextTable = ""; //= new string[2 * (VectorTable.GetUpperBound(0)+1) * (VectorTable.GetUpperBound(1)+1)];
 
             for (int i = 0; i < 1 + VectorTable.GetUpperBound(0); i++) //i sweeps Y
             {
@@ -331,11 +320,12 @@ namespace CalibrationHelper
             }
             return TextTable;
         }
+
         static public string VectorCol2TextCol(double[] Vector)
         {
-            string TextVector = ""; 
+            string TextVector = "";
 
-            for (int i = 0; i < 1 + Vector.GetUpperBound(0); i++) 
+            for (int i = 0; i < 1 + Vector.GetUpperBound(0); i++)
             {
                 TextVector = String.Concat(TextVector, Vector[i], "\r\n");
             }
@@ -346,7 +336,7 @@ namespace CalibrationHelper
         {
             string TextVector = "";
 
-            for (int i = 0; i < 1 + Vector.GetUpperBound(0); i++) 
+            for (int i = 0; i < 1 + Vector.GetUpperBound(0); i++)
             {
                 TextVector = String.Concat(TextVector, Vector[i], "\t");
             }
@@ -365,7 +355,7 @@ namespace CalibrationHelper
 
                 for (int i = 0; i < DataX.Length; i++)
                 {
-                    if(TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab) != 0)
+                    if (TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab) != 0)
                     {
                         ZRatioArray[i] = DataZ[i] / TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab);
                     }
@@ -383,15 +373,15 @@ namespace CalibrationHelper
             }
         } //Calculates ratio between Calibration and Data
 
-        static public double[,] CalibrationTabOptimization( double MeanTar, int PrecisionTar,
+        static public double[,] CalibrationTabOptimizationWiPB(double MeanTar, int PrecisionTar,
                                                             int WeightBox, int FineTuneIterBox, int FineTuneSubIterBox,
                                                             double[] DataX, double[] DataY, double[] DataZ,
                                                             double[] XBkpt, double[] YBkpt, double[,] ZTab,
-                                                            CalibrationDataForm aParent = null)
+                                                            ref ProgressBoxInvokation ProgressBox) // WiPB = With Progress Box
         {
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
             double[,] ZWorkTab = new double[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
-            byte [,] ZTabStatus = new byte[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
+            byte[,] ZTabStatus = new byte[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
 
             //1. Sweep each table point and get average value from delivered data
             for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
@@ -499,7 +489,7 @@ namespace CalibrationHelper
 
                     //1.4 Calculate ZMean, within selected interval
                     byte b_A = 1, b_B = 1, b_C = 1, b_D = 1;
-                    
+
                     b_A = DataZSel_A.Length == 0 ? (byte)0 : (byte)1;
                     b_B = DataZSel_B.Length == 0 ? (byte)0 : (byte)1;
                     b_C = DataZSel_C.Length == 0 ? (byte)0 : (byte)1;
@@ -515,7 +505,7 @@ namespace CalibrationHelper
 
                     //1.6 Track/Flag the table values which didn't have associated data to be calculated
                     ZTabStatus[i, j] = (b_A + b_B + b_C + b_D == 0) ? (byte)0 : (byte)1;
-                    ZWorkTab[i, j] = (b_A + b_B + b_C + b_D == 0) ? Math.Pow(10, -1 * (PrecisionTar + 1)) : ZWorkTab[i,j];
+                    ZWorkTab[i, j] = (b_A + b_B + b_C + b_D == 0) ? Math.Pow(10, -1 * (PrecisionTar + 1)) : ZWorkTab[i, j];
 
                 }
             }
@@ -526,13 +516,13 @@ namespace CalibrationHelper
             {
                 for (int j = 0; j < 1 + ZWorkTab.GetUpperBound(1); j++)//j sweeps X
                 {
-                    ZWorkTab[i, j] += (ZWorkTab[i, j] == 0) ? Math.Pow(10, -1 * (PrecisionTar + 1)) : 0 ;
-                    
-                    if(ZTabStatus[i,j] == 0)// Empty position gotten
+                    ZWorkTab[i, j] += (ZWorkTab[i, j] == 0) ? Math.Pow(10, -1 * (PrecisionTar + 1)) : 0;
+
+                    if (ZTabStatus[i, j] == 0)// Empty position gotten
                     {
                         double Z_Ya = 0, Z_Yb = 0, Z_Xa = 0, Z_Xb = 0;
                         byte b_Ya = 0, b_Yb = 0, b_Xa = 0, b_Xb = 0;
-                        
+
                         Z_Ya = (i == 0) ? 0 : ZWorkTab[i - 1, j];
                         Z_Yb = (i == ZWorkTab.GetUpperBound(0)) ? 0 : ZWorkTab[i + 1, j];
                         Z_Xa = (j == 0) ? 0 : ZWorkTab[i, j - 1];
@@ -546,8 +536,8 @@ namespace CalibrationHelper
 
                         ZWorkTab[i, j] = (b_Ya * Z_Ya + b_Yb * Z_Yb + b_Xa * Z_Xa + b_Xb * Z_Xb) /
                                          (b_Ya + b_Yb + b_Xa + b_Xb);
-                        
-                        ZWorkTab[i, j] += Math.Pow(10, -1 * (PrecisionTar+1));
+
+                        ZWorkTab[i, j] += Math.Pow(10, -1 * (PrecisionTar + 1));
                     }
                 }
             }
@@ -557,7 +547,10 @@ namespace CalibrationHelper
             double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
             double ZStdDev = StatBasic.StdDev(ZRatioArray);
 
-            if (aParent != null) aParent.ProgressBoxUpdate(0);
+            if (ProgressBox != null) ProgressBox.ProgressBoxStart(); //If delivered, ProgressBox is desired, thus start ProgressBox
+
+            if (ProgressBox != null) ProgressBox.ProgressBoxUpdate(0); //If delivered, ProgressBox is desired, thus set ProgressBox=0
+
             for (int P2A = 0; P2A < FineTuneIterBox; P2A++)
             {
                 for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
@@ -568,7 +561,7 @@ namespace CalibrationHelper
                         for (int P2B = 0; P2B < FineTuneSubIterBox; P2B++)
                         {
                             // Increment or Decrement a Table value by a specific percent
-                            ZWorkTab[i, j] *=  MFactor;
+                            ZWorkTab[i, j] *= MFactor;
 
                             // Evaluate the results of the value increment/decrement
                             ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
@@ -576,25 +569,25 @@ namespace CalibrationHelper
                             ZStdDev = StatBasic.StdDev(ZRatioArray);
 
                             // If the result didn't optimize the StdDev, undo operation and change direction
-                            MFactor = (ZStdDev >= ZStdDevOld) ? 1/MFactor : MFactor;
+                            MFactor = (ZStdDev >= ZStdDevOld) ? 1 / MFactor : MFactor;
                             ZWorkTab[i, j] *= (ZStdDev > ZStdDevOld) ? MFactor : 1;
 
                             // When a second direction change is required (optm reached), break loop and goto next Table position
                             LoopSkip = (P2B == 1 && LoopSkip == 0) ? 1 : LoopSkip;
-                            LoopSkip += (ZStdDev >= ZStdDevOld) ? 1 : 0 ;
-                                         
+                            LoopSkip += (ZStdDev >= ZStdDevOld) ? 1 : 0;
+
                             if (LoopSkip == 2) break;
                         }
-                        if (aParent != null) aParent.ProgressBoxUpdate(100 * P2A / FineTuneIterBox);
+                        if (ProgressBox != null) ProgressBox.ProgressBoxUpdate(100 * P2A / FineTuneIterBox); //If delivered, ProgressBox is desired, thus set ProgressBox update
                     }
                 }
 
-                if (MFactor < 1) MFactor = 1/MFactor;
+                if (MFactor < 1) MFactor = 1 / MFactor;
 
                 MFactor = ((MFactor - 1) / 2) + 1;
             }
 
-            if (aParent != null) aParent.ProgressBoxFinish();
+            if (ProgressBox != null) ProgressBox.ProgressBoxFinish(); //If delivered, ProgressBox is desired, thus finish ProgressBox
 
             //3. Adjust Calibration Table values - MeanTar, Decimal Places, Round Values
             ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
@@ -608,8 +601,9 @@ namespace CalibrationHelper
                     ZWorkTab[i, j] = Math.Round(ZWorkTab[i, j], PrecisionTar);
                 }
             }
-           
+
             return ZWorkTab;
         }
     }
+
 }

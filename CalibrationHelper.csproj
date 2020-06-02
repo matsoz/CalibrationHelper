@@ -99,11 +99,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WaitBoxForm.cs">
+    <Compile Include="ProgressBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WaitBoxForm.Designer.cs">
-      <DependentUpon>WaitBoxForm.cs</DependentUpon>
+    <Compile Include="ProgressBoxForm.Designer.cs">
+      <DependentUpon>ProgressBoxForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="DataForm.resx">
       <DependentUpon>DataForm.cs</DependentUpon>
@@ -130,8 +130,8 @@
     <EmbeddedResource Include="TableForm.resx">
       <DependentUpon>TableForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WaitBoxForm.resx">
-      <DependentUpon>WaitBoxForm.cs</DependentUpon>
+    <EmbeddedResource Include="ProgressBoxForm.resx">
+      <DependentUpon>ProgressBoxForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
