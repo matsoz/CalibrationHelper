@@ -41,7 +41,7 @@ namespace CalibrationHelper
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            ProgressBoxInvokation CalProgressBox = new ProgressBoxInvokation("Calibration ProgressBox");
+            ProgressBoxInvokation CalProgressBox = new ProgressBoxInvokation("Calibration ProgressBox Thread");
 
             //Call optimization function and optimize the map. The ProgressBox created above is manipulated inside this method.
             ZTabOptm = CalibrationMethods.CalibrationTabOptimizationWiPB(double.Parse(this.MeanTarBox.Text), int.Parse(this.PrecisionTarBox.Text),

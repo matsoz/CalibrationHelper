@@ -14,5 +14,5 @@ C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\Cali
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.CalibrationDataForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ResultsForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ProgressBoxForm.resources
-C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\CalibrationHelper.exe.CodeAnalysisLog.xml
-C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\CalibrationHelper.exe.lastcodeanalysissucceeded
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csprojAssemblyReference.cache
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csproj.CoreCompileInputs.cache
