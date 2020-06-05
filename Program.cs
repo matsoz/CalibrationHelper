@@ -1,21 +1,27 @@
 ﻿using MathNet.Numerics.Statistics;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace CalibrationHelper
 {
     public class Program
     {
-        private string LicKey = "MATH";
         [STAThread]
 
         static public void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            if(LicenseCheck.LicenseFileCheck() == 1)
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
+            }
+            else
+            {
+                Application.Exit();
+            }
         }
-
     }
 
     static public class LicenseCheck
@@ -44,7 +50,6 @@ namespace CalibrationHelper
                 }
                 CodedDataByte[i] = CodedDataPartialByte;
             }
-            // **** STOPPED FROM HERE ****
 
             //Uncode the data with Key algorithm
             for (int i = 0; i < CodedDataByte.Length; i++)
@@ -62,7 +67,6 @@ namespace CalibrationHelper
 
             return UncodedString;
         }
-
 
         static public string CodeLicenseData(string LicData, string LicKey) //Receives String License, convert to Coded Binary
         {
@@ -98,6 +102,49 @@ namespace CalibrationHelper
             return CodeResultString;
         }
 
+        static public int LicenseFileCheck()
+        {
+            string ComputerName = Environment.MachineName, LicenseGet, LicenseUncode;
+            string[] LicenseUncodeSplit;
+            int DateCurrDay = DateTime.Now.Day, DateCurrMonth = DateTime.Now.Month, DateCurrYear = DateTime.Now.Year;
+
+            string myPath = System.AppDomain.CurrentDomain.BaseDirectory;
+
+            try
+            {
+                LicenseGet = File.ReadAllText(myPath + "\\CH_License.lic");
+            }
+            catch //Treatment for exceptions regarding the license reading process 
+            {
+                MessageBox.Show("License File not found!");
+                return -1;
+            }
+
+            LicenseUncode = UnCodeLicenseData(LicenseGet, "MATH"); // License Key carved inside the SW Fucntion
+
+            LicenseUncodeSplit = LicenseUncode.Split('$','/');
+
+            if(LicenseUncodeSplit[0] == ComputerName)
+                if(int.Parse(LicenseUncodeSplit[3]) >= DateCurrYear)
+                    if(int.Parse(LicenseUncodeSplit[2]) >= DateCurrMonth)
+                        if (int.Parse(LicenseUncodeSplit[1]) >= DateCurrDay) return 1; //License approved
+
+            if (LicenseUncodeSplit[0] == ComputerName &&
+                int.Parse(LicenseUncodeSplit[1]) >= 1 && int.Parse(LicenseUncodeSplit[1]) <= 30 &&
+                int.Parse(LicenseUncodeSplit[2]) >= 1 && int.Parse(LicenseUncodeSplit[2]) <= 12 &&
+                int.Parse(LicenseUncodeSplit[3]) >= 2020 && int.Parse(LicenseUncodeSplit[3]) <= 2100)
+            {
+                MessageBox.Show("License File Expired since " + LicenseUncodeSplit[1] +
+                    '/' + LicenseUncodeSplit[2] +
+                    '/' + LicenseUncodeSplit[3]);
+            }
+            else
+            {
+                MessageBox.Show("License File Invalid!");
+            }
+
+            return 0; //License denied
+        }
     }
 
     static public class TabManagement
