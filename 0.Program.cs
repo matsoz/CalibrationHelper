@@ -147,9 +147,8 @@ namespace CalibrationHelper
         }
     }
 
-    static public class TabManagement
+    static public class TabManagementMethods
     {
-
         static public double PointsDist2D(double Xa, double Ya, double Xb, double Yb)
         {
             return Math.Sqrt(Math.Pow(Xa - Xb, 2) + Math.Pow(Ya - Yb, 2));
@@ -271,7 +270,7 @@ namespace CalibrationHelper
         }
     }
 
-    static public class StatBasic
+    static public class VectorStatBasicMethods
     {
         static public double Mean(double[] Array)
         {
@@ -481,9 +480,9 @@ namespace CalibrationHelper
 
                 for (int i = 0; i < DataX.Length; i++)
                 {
-                    if (TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab) != 0)
+                    if (TabManagementMethods.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab) != 0)
                     {
-                        ZRatioArray[i] = DataZ[i] / TabManagement.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab);
+                        ZRatioArray[i] = DataZ[i] / TabManagementMethods.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab);
                     }
                     else
                     {
@@ -582,7 +581,7 @@ namespace CalibrationHelper
                         if (DataX[k] >= X_A && DataX[k] < XBkpt[j] && DataY[k] >= Y_A && DataY[k] < YBkpt[i])
                         {
                             DataZSel_A[m_A] = DataZ[k];
-                            DataZWei_A[m_A] = TabManagement.PointsDist2D((DataX[k] - X_A) / (XBkpt[j] - X_A),
+                            DataZWei_A[m_A] = TabManagementMethods.PointsDist2D((DataX[k] - X_A) / (XBkpt[j] - X_A),
                                                                                 (DataY[k] - Y_A) / (YBkpt[i] - Y_A),
                                                                                 0, 0);
                             m_A++;
@@ -590,7 +589,7 @@ namespace CalibrationHelper
                         else if (DataX[k] >= XBkpt[j] && DataX[k] < X_B && DataY[k] >= Y_A && DataY[k] < YBkpt[i])
                         {
                             DataZSel_B[m_B] = DataZ[k];
-                            DataZWei_B[m_B] = TabManagement.PointsDist2D((DataX[k] - X_B) / (XBkpt[j] - X_B),
+                            DataZWei_B[m_B] = TabManagementMethods.PointsDist2D((DataX[k] - X_B) / (XBkpt[j] - X_B),
                                                                                 (DataY[k] - Y_A) / (YBkpt[i] - Y_A),
                                                                                 0, 0);
                             m_B++;
@@ -598,7 +597,7 @@ namespace CalibrationHelper
                         else if (DataX[k] >= X_A && DataX[k] < XBkpt[j] && DataY[k] >= YBkpt[i] && DataY[k] < Y_B)
                         {
                             DataZSel_C[m_C] = DataZ[k];
-                            DataZWei_C[m_C] = TabManagement.PointsDist2D((DataX[k] - X_A) / (XBkpt[j] - X_A),
+                            DataZWei_C[m_C] = TabManagementMethods.PointsDist2D((DataX[k] - X_A) / (XBkpt[j] - X_A),
                                                                                 (DataY[k] - Y_B) / (YBkpt[i] - Y_B),
                                                                                 0, 0);
                             m_C++;
@@ -606,7 +605,7 @@ namespace CalibrationHelper
                         else if (DataX[k] >= XBkpt[j] && DataX[k] < X_B && DataY[k] >= YBkpt[i] && DataY[k] < Y_B)
                         {
                             DataZSel_D[m_D] = DataZ[k];
-                            DataZWei_D[m_D] = TabManagement.PointsDist2D((DataX[k] - X_B) / (XBkpt[j] - X_B),
+                            DataZWei_D[m_D] = TabManagementMethods.PointsDist2D((DataX[k] - X_B) / (XBkpt[j] - X_B),
                                                                                 (DataY[k] - Y_B) / (YBkpt[i] - Y_B),
                                                                                 0, 0);
                             m_D++;
@@ -621,10 +620,10 @@ namespace CalibrationHelper
                     b_C = DataZSel_C.Length == 0 ? (byte)0 : (byte)1;
                     b_D = DataZSel_D.Length == 0 ? (byte)0 : (byte)1;
 
-                    ZMeanInterval = (b_A * StatBasic.MeanWeighted(DataZSel_A, DataZWei_A, WeightBox) +
-                        b_B * StatBasic.MeanWeighted(DataZSel_B, DataZWei_B, WeightBox) +
-                        b_C * StatBasic.MeanWeighted(DataZSel_C, DataZWei_C, WeightBox) +
-                        b_D * StatBasic.MeanWeighted(DataZSel_D, DataZWei_D, WeightBox)) / (b_A + b_B + b_C + b_D);
+                    ZMeanInterval = (b_A * VectorStatBasicMethods.MeanWeighted(DataZSel_A, DataZWei_A, WeightBox) +
+                        b_B * VectorStatBasicMethods.MeanWeighted(DataZSel_B, DataZWei_B, WeightBox) +
+                        b_C * VectorStatBasicMethods.MeanWeighted(DataZSel_C, DataZWei_C, WeightBox) +
+                        b_D * VectorStatBasicMethods.MeanWeighted(DataZSel_D, DataZWei_D, WeightBox)) / (b_A + b_B + b_C + b_D);
 
                     //1.5 Input mean optimized value (based on data) in ZWorkTab
                     ZWorkTab[i, j] = ZMeanInterval;
@@ -671,7 +670,7 @@ namespace CalibrationHelper
             //3. Sweep each table point and adjust to dimish Z Ratio average deviation
             double MFactor = 1.01, ZStdDevOld;
             double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
-            double ZStdDev = StatBasic.StdDev(ZRatioArray);
+            double ZStdDev = VectorStatBasicMethods.StdDev(ZRatioArray);
 
             if (ProgressBox != null) ProgressBox.ProgressBoxStart(); //If delivered, ProgressBox is desired, thus start ProgressBox
 
@@ -692,7 +691,7 @@ namespace CalibrationHelper
                             // Evaluate the results of the value increment/decrement
                             ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
                             ZStdDevOld = ZStdDev;
-                            ZStdDev = StatBasic.StdDev(ZRatioArray);
+                            ZStdDev = VectorStatBasicMethods.StdDev(ZRatioArray);
 
                             // If the result didn't optimize the StdDev, undo operation and change direction
                             MFactor = (ZStdDev >= ZStdDevOld) ? 1 / MFactor : MFactor;
@@ -717,7 +716,7 @@ namespace CalibrationHelper
 
             //3. Adjust Calibration Table values - MeanTar, Decimal Places, Round Values
             ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
-            double ZMean = StatBasic.Mean(ZRatioArray);
+            double ZMean = VectorStatBasicMethods.Mean(ZRatioArray);
 
             for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
             {

@@ -27,8 +27,8 @@ namespace CalibrationHelper
                  ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                  ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
 
-            ZRatioMean = StatBasic.Mean(ZRatioArray);
-            ZRatioStdDev = StatBasic.StdDev(ZRatioArray);
+            ZRatioMean = VectorStatBasicMethods.Mean(ZRatioArray);
+            ZRatioStdDev = VectorStatBasicMethods.StdDev(ZRatioArray);
 
             this.CurrMeanLabel.Text = ZRatioMean.ToString();
             this.CurrStdDevLabel.Text = ZRatioStdDev.ToString();

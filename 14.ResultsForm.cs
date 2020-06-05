@@ -24,10 +24,10 @@ namespace CalibrationHelper
                 CalibrationMethods.CalibrationRatioArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                                                                     ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTabOptm);
 
-            double ZMeanOld = Math.Round(StatBasic.Mean(ZRatioArrayOld), Math.Max(3, ParentApp.DataPrecision + 1));
-            double ZStdDevOld = Math.Round(StatBasic.StdDev(ZRatioArrayOld), Math.Max(3, ParentApp.DataPrecision + 1));
-            double ZMeanOptm = Math.Round(StatBasic.Mean(ZRatioArrayOptm), Math.Max(3, ParentApp.DataPrecision + 1));
-            double ZStdDevOptm = Math.Round(StatBasic.StdDev(ZRatioArrayOptm), Math.Max(3, ParentApp.DataPrecision + 1));
+            double ZMeanOld = Math.Round(VectorStatBasicMethods.Mean(ZRatioArrayOld), Math.Max(3, ParentApp.DataPrecision + 1));
+            double ZStdDevOld = Math.Round(VectorStatBasicMethods.StdDev(ZRatioArrayOld), Math.Max(3, ParentApp.DataPrecision + 1));
+            double ZMeanOptm = Math.Round(VectorStatBasicMethods.Mean(ZRatioArrayOptm), Math.Max(3, ParentApp.DataPrecision + 1));
+            double ZStdDevOptm = Math.Round(VectorStatBasicMethods.StdDev(ZRatioArrayOptm), Math.Max(3, ParentApp.DataPrecision + 1));
 
             this.CurrMeanLabel.Text = ZMeanOld.ToString();
             this.CurrStdDevLabel.Text = ZStdDevOld.ToString();

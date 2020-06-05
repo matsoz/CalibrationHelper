@@ -67,52 +67,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataForm.cs">
+    <Compile Include="12.DataForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DataForm.Designer.cs">
-      <DependentUpon>DataForm.cs</DependentUpon>
+    <Compile Include="12.DataForm.Designer.cs">
+      <DependentUpon>12.DataForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CalibrationDataForm.cs">
+    <Compile Include="13.CalibrationDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CalibrationDataForm.Designer.cs">
-      <DependentUpon>CalibrationDataForm.cs</DependentUpon>
+    <Compile Include="13.CalibrationDataForm.Designer.cs">
+      <DependentUpon>13.CalibrationDataForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ResultsForm.cs">
+    <Compile Include="14.ResultsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ResultsForm.Designer.cs">
-      <DependentUpon>ResultsForm.cs</DependentUpon>
+    <Compile Include="14.ResultsForm.Designer.cs">
+      <DependentUpon>14.ResultsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="1.MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="1.MainForm.Designer.cs">
+      <DependentUpon>1.MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TableForm.cs">
+    <Compile Include="11.TableForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TableForm.Designer.cs">
-      <DependentUpon>TableForm.cs</DependentUpon>
+    <Compile Include="11.TableForm.Designer.cs">
+      <DependentUpon>11.TableForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProgressBoxForm.cs">
+    <Compile Include="A.ProgressBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProgressBoxForm.Designer.cs">
-      <DependentUpon>ProgressBoxForm.cs</DependentUpon>
+    <Compile Include="A.ProgressBoxForm.Designer.cs">
+      <DependentUpon>A.ProgressBoxForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="DataForm.resx">
-      <DependentUpon>DataForm.cs</DependentUpon>
+    <EmbeddedResource Include="12.DataForm.resx">
+      <DependentUpon>12.DataForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CalibrationDataForm.resx">
-      <DependentUpon>CalibrationDataForm.cs</DependentUpon>
+    <EmbeddedResource Include="13.CalibrationDataForm.resx">
+      <DependentUpon>13.CalibrationDataForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="1.MainForm.resx">
+      <DependentUpon>1.MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -124,14 +124,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ResultsForm.resx">
-      <DependentUpon>ResultsForm.cs</DependentUpon>
+    <EmbeddedResource Include="14.ResultsForm.resx">
+      <DependentUpon>14.ResultsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TableForm.resx">
-      <DependentUpon>TableForm.cs</DependentUpon>
+    <EmbeddedResource Include="11.TableForm.resx">
+      <DependentUpon>11.TableForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressBoxForm.resx">
-      <DependentUpon>ProgressBoxForm.cs</DependentUpon>
+    <EmbeddedResource Include="A.ProgressBoxForm.resx">
+      <DependentUpon>A.ProgressBoxForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
