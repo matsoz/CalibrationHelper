@@ -97,7 +97,7 @@
     <Compile Include="11.TableForm.Designer.cs">
       <DependentUpon>11.TableForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="0.Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="A.ProgressBoxForm.cs">
       <SubType>Form</SubType>

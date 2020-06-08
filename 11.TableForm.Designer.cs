@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableForm));
             this.TableBox = new System.Windows.Forms.TextBox();
             this.XArrayBox = new System.Windows.Forms.TextBox();
             this.YArrayBox = new System.Windows.Forms.TextBox();
@@ -43,33 +44,42 @@
             this.TableBox.AcceptsReturn = true;
             this.TableBox.AcceptsTab = true;
             this.TableBox.AllowDrop = true;
+            this.TableBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TableBox.Location = new System.Drawing.Point(130, 70);
+            this.TableBox.MaxLength = 60000;
             this.TableBox.Multiline = true;
             this.TableBox.Name = "TableBox";
+            this.TableBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TableBox.Size = new System.Drawing.Size(370, 176);
             this.TableBox.TabIndex = 0;
-            this.TableBox.Text = "1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t" +
-    "1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\r\n";
+            this.TableBox.Text = resources.GetString("TableBox.Text");
+            this.TableBox.WordWrap = false;
             // 
             // XArrayBox
             // 
             this.XArrayBox.AcceptsTab = true;
+            this.XArrayBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.XArrayBox.Location = new System.Drawing.Point(131, 26);
             this.XArrayBox.Name = "XArrayBox";
+            this.XArrayBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.XArrayBox.Size = new System.Drawing.Size(370, 20);
             this.XArrayBox.TabIndex = 1;
-            this.XArrayBox.Text = "1 2 3 4 5 6 7";
+            this.XArrayBox.Text = "200\t400\t600\t800\t1000\t1200\t1500\t2000\t2500\r\n";
+            this.XArrayBox.WordWrap = false;
             // 
             // YArrayBox
             // 
             this.YArrayBox.AcceptsReturn = true;
             this.YArrayBox.AllowDrop = true;
+            this.YArrayBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YArrayBox.Location = new System.Drawing.Point(74, 70);
+            this.YArrayBox.MaxLength = 60000;
             this.YArrayBox.Multiline = true;
             this.YArrayBox.Name = "YArrayBox";
+            this.YArrayBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.YArrayBox.Size = new System.Drawing.Size(51, 176);
             this.YArrayBox.TabIndex = 2;
-            this.YArrayBox.Text = "1\r\n2\r\n3\r\n4\r\n5\r\n6\r\n7\r\n";
+            this.YArrayBox.Text = "600\r\n800\r\n900\r\n1000\r\n1200\r\n1500\r\n2000\r\n4000\r\n6000\r\n";
             // 
             // SubmitButton
             // 

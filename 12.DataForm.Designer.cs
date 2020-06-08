@@ -64,6 +64,7 @@
             this.YArrayBox.AcceptsReturn = true;
             this.YArrayBox.AllowDrop = true;
             this.YArrayBox.Location = new System.Drawing.Point(118, 35);
+            this.YArrayBox.MaxLength = 200000;
             this.YArrayBox.Multiline = true;
             this.YArrayBox.Name = "YArrayBox";
             this.YArrayBox.Size = new System.Drawing.Size(60, 300);
@@ -75,6 +76,7 @@
             this.XArrayBox.AcceptsReturn = true;
             this.XArrayBox.AllowDrop = true;
             this.XArrayBox.Location = new System.Drawing.Point(19, 35);
+            this.XArrayBox.MaxLength = 200000;
             this.XArrayBox.Multiline = true;
             this.XArrayBox.Name = "XArrayBox";
             this.XArrayBox.Size = new System.Drawing.Size(60, 300);
@@ -86,6 +88,7 @@
             this.ZArrayBox.AcceptsReturn = true;
             this.ZArrayBox.AllowDrop = true;
             this.ZArrayBox.Location = new System.Drawing.Point(219, 35);
+            this.ZArrayBox.MaxLength = 200000;
             this.ZArrayBox.Multiline = true;
             this.ZArrayBox.Name = "ZArrayBox";
             this.ZArrayBox.Size = new System.Drawing.Size(60, 300);

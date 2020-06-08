@@ -117,4 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="TableBox.Text" xml:space="preserve">
+    <value>10	140	275	395	505	570	625	665	690
+0	150	300	425	545	620	675	725	745
+0	160	300	430	560	630	685	735	780
+0	165	300	460	575	660	710	755	800
+0	165	300	510	585	705	760	810	820
+0	165	300	531	625	765	790	830	830
+0	145	315	490	625	765	783	830	830
+0	10	30	300	440	600	775	810	810
+0	10	30	300	440	600	775	810	810
+</value>
+  </data>
 </root>

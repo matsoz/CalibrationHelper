@@ -125,9 +125,25 @@ namespace CalibrationHelper
             LicenseUncodeSplit = LicenseUncode.Split('$','/');
 
             if(LicenseUncodeSplit[0] == ComputerName)
-                if(int.Parse(LicenseUncodeSplit[3]) >= DateCurrYear)
-                    if(int.Parse(LicenseUncodeSplit[2]) >= DateCurrMonth)
+            {
+                if (int.Parse(LicenseUncodeSplit[3]) > DateCurrYear)
+                {
+                    return 1; //License approved
+                }
+                else if (int.Parse(LicenseUncodeSplit[3]) == DateCurrYear)
+                {
+                    if (int.Parse(LicenseUncodeSplit[2]) > DateCurrMonth)
+                    {
+                        return 1; //License approved
+                    }
+                    else if (int.Parse(LicenseUncodeSplit[2]) == DateCurrMonth)
+                    {
                         if (int.Parse(LicenseUncodeSplit[1]) >= DateCurrDay) return 1; //License approved
+                    }
+                }
+            }
+
+
 
             if (LicenseUncodeSplit[0] == ComputerName &&
                 int.Parse(LicenseUncodeSplit[1]) >= 1 && int.Parse(LicenseUncodeSplit[1]) <= 30 &&
@@ -317,6 +333,19 @@ namespace CalibrationHelper
                 return 0;
             }
 
+        }
+   
+        static public double SquaredErrors(double[] ArrayA, double[] ArrayB)
+        {
+            if (ArrayA.Length != ArrayB.Length) return 0;
+
+            double ErrSqrd = 0;
+            for (int i=0; i< ArrayA.Length; i++)
+            {
+                ErrSqrd += Math.Pow((ArrayA[i] - ArrayB[i]),2);
+            }
+
+            return Math.Sqrt(ErrSqrd);
         }
     }
 
@@ -659,8 +688,9 @@ namespace CalibrationHelper
                         b_Xb = (byte)((j == ZWorkTab.GetUpperBound(1)) ? 0 : ZTabStatus[i, j + 1]);
 
 
-                        ZWorkTab[i, j] = (b_Ya * Z_Ya + b_Yb * Z_Yb + b_Xa * Z_Xa + b_Xb * Z_Xb) /
-                                         (b_Ya + b_Yb + b_Xa + b_Xb);
+                        ZWorkTab[i, j] = (b_Ya + b_Yb + b_Xa + b_Xb) != 0 ?
+                            (b_Ya * Z_Ya + b_Yb * Z_Yb + b_Xa * Z_Xa + b_Xb * Z_Xb) / (b_Ya + b_Yb + b_Xa + b_Xb) :
+                            Math.Pow(10, -1 * (PrecisionTar + 1));
 
                         ZWorkTab[i, j] += Math.Pow(10, -1 * (PrecisionTar + 1));
                     }
@@ -668,12 +698,11 @@ namespace CalibrationHelper
             }
 
             //3. Sweep each table point and adjust to dimish Z Ratio average deviation
-            double MFactor = 1.01, ZStdDevOld;
+            double MFactor = 1.1, ZStdDevOld;
             double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
             double ZStdDev = VectorStatBasicMethods.StdDev(ZRatioArray);
 
             if (ProgressBox != null) ProgressBox.ProgressBoxStart(); //If delivered, ProgressBox is desired, thus start ProgressBox
-
             if (ProgressBox != null) ProgressBox.ProgressBoxUpdate(0); //If delivered, ProgressBox is desired, thus set ProgressBox=0
 
             for (int P2A = 0; P2A < FineTuneIterBox; P2A++)
