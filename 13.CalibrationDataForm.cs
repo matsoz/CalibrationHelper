@@ -12,7 +12,8 @@ namespace CalibrationHelper
         //General class variables
         public double[,] ZTabOptm;
         public double[] ZRatioArray;
-        public double ZRatioMean, ZRatioStdDev;
+        public double[] ZSqrdErrArray, ZCalTabArray;
+        public double ZRatioMean, ZRatioStdDev, ZAbsMeanErr, ZAbsStdDErr;
 
         public CalibrationDataForm(MainForm aParent)
         {
@@ -27,11 +28,19 @@ namespace CalibrationHelper
                  ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                  ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
 
+            ZCalTabArray = CalibrationMethods.CalibrationResultingArrayCalculation(
+                 ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
+                 ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
+
             ZRatioMean = VectorStatBasicMethods.Mean(ZRatioArray);
             ZRatioStdDev = VectorStatBasicMethods.StdDev(ZRatioArray);
+            ZAbsMeanErr = VectorStatBasicMethods.ErrorsAvg(ZCalTabArray, ParentApp.ZDataArray);
+            ZAbsStdDErr = VectorStatBasicMethods.ErrorsStdDev(ZCalTabArray, ParentApp.ZDataArray);
 
             this.CurrMeanLabel.Text = ZRatioMean.ToString();
             this.CurrStdDevLabel.Text = ZRatioStdDev.ToString();
+            this.CurrAbsErrLabel.Text = ZAbsMeanErr.ToString();
+            this.CurrAbsStdDErrLabel.Text = ZAbsStdDErr.ToString();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

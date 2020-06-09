@@ -23,16 +23,37 @@ namespace CalibrationHelper
             double[] ZRatioArrayOptm =
                 CalibrationMethods.CalibrationRatioArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                                                                     ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTabOptm);
+            double[] ZCalTabArrayOld =
+                CalibrationMethods.CalibrationResultingArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
+                                                        ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
+            double[] ZCalTabArrayOptm =
+                CalibrationMethods.CalibrationResultingArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
+                                                                    ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTabOptm);
 
             double ZMeanOld = Math.Round(VectorStatBasicMethods.Mean(ZRatioArrayOld), Math.Max(3, ParentApp.DataPrecision + 1));
             double ZStdDevOld = Math.Round(VectorStatBasicMethods.StdDev(ZRatioArrayOld), Math.Max(3, ParentApp.DataPrecision + 1));
+            double ZAbsMeanErrOld = Math.Round(VectorStatBasicMethods.ErrorsAvg(ParentApp.ZDataArray, ZCalTabArrayOld),
+                                             Math.Max(3, ParentApp.DataPrecision + 1));
+            double ZAbsStdDErrOld = Math.Round(VectorStatBasicMethods.ErrorsStdDev(ParentApp.ZDataArray, ZCalTabArrayOld),
+                                 Math.Max(3, ParentApp.DataPrecision + 1));
+
             double ZMeanOptm = Math.Round(VectorStatBasicMethods.Mean(ZRatioArrayOptm), Math.Max(3, ParentApp.DataPrecision + 1));
             double ZStdDevOptm = Math.Round(VectorStatBasicMethods.StdDev(ZRatioArrayOptm), Math.Max(3, ParentApp.DataPrecision + 1));
+            double ZAbsMeanErrOptm = Math.Round(VectorStatBasicMethods.ErrorsAvg(ParentApp.ZDataArray, ZCalTabArrayOptm),
+                                            Math.Max(3, ParentApp.DataPrecision + 1));
+            double ZAbsStdDErrOptm = Math.Round(VectorStatBasicMethods.ErrorsStdDev(ParentApp.ZDataArray, ZCalTabArrayOptm),
+                                Math.Max(3, ParentApp.DataPrecision + 1));
 
             this.CurrMeanLabel.Text = ZMeanOld.ToString();
             this.CurrStdDevLabel.Text = ZStdDevOld.ToString();
+            this.CurrAbsErrLabel.Text = ZAbsMeanErrOld.ToString();
+            this.CurrAbsStdDErrLabel.Text = ZAbsStdDErrOld.ToString();
+
+
             this.OptmMeanLabel.Text = ZMeanOptm.ToString();
             this.OptmStdDevLabel.Text = ZStdDevOptm.ToString();
+            this.OptmAbsErrLabel.Text = ZAbsMeanErrOptm.ToString();
+            this.OptmAbsStdDErrLabel.Text = ZAbsStdDErrOptm.ToString();
 
             this.TableBox.Text = TransformationMethods.VectorTable2TextTable(ParentApp.ZCalTabOptm);
             this.XArrayBox.Text = TransformationMethods.VectorLin2TextLin(ParentApp.XCalArray);

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableForm));
             this.TableBox = new System.Windows.Forms.TextBox();
             this.XArrayBox = new System.Windows.Forms.TextBox();
             this.YArrayBox = new System.Windows.Forms.TextBox();
@@ -52,7 +51,9 @@
             this.TableBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TableBox.Size = new System.Drawing.Size(370, 176);
             this.TableBox.TabIndex = 0;
-            this.TableBox.Text = resources.GetString("TableBox.Text");
+            this.TableBox.Text = "1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1" +
+    "\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1" +
+    "\t1\t1\t1\t1\r\n";
             this.TableBox.WordWrap = false;
             // 
             // XArrayBox

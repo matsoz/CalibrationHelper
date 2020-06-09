@@ -42,6 +42,10 @@
             this.YArrayBox = new System.Windows.Forms.TextBox();
             this.XArrayBox = new System.Windows.Forms.TextBox();
             this.TableBox = new System.Windows.Forms.TextBox();
+            this.CurrAbsErrLabel = new System.Windows.Forms.Label();
+            this.OptmAbsErrLabel = new System.Windows.Forms.Label();
+            this.CurrAbsStdDErrLabel = new System.Windows.Forms.Label();
+            this.OptmAbsStdDErrLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // FormTitleLabel1
@@ -50,7 +54,7 @@
             this.FormTitleLabel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.FormTitleLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormTitleLabel1.ForeColor = System.Drawing.Color.Red;
-            this.FormTitleLabel1.Location = new System.Drawing.Point(12, 38);
+            this.FormTitleLabel1.Location = new System.Drawing.Point(12, 10);
             this.FormTitleLabel1.Name = "FormTitleLabel1";
             this.FormTitleLabel1.Size = new System.Drawing.Size(317, 15);
             this.FormTitleLabel1.TabIndex = 14;
@@ -61,7 +65,7 @@
             this.CurrStdDevLabel.AutoSize = true;
             this.CurrStdDevLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrStdDevLabel.ForeColor = System.Drawing.Color.Red;
-            this.CurrStdDevLabel.Location = new System.Drawing.Point(198, 89);
+            this.CurrStdDevLabel.Location = new System.Drawing.Point(251, 61);
             this.CurrStdDevLabel.Name = "CurrStdDevLabel";
             this.CurrStdDevLabel.Size = new System.Drawing.Size(39, 13);
             this.CurrStdDevLabel.TabIndex = 13;
@@ -72,7 +76,7 @@
             this.CurrMeanLabel.AutoSize = true;
             this.CurrMeanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrMeanLabel.ForeColor = System.Drawing.Color.Red;
-            this.CurrMeanLabel.Location = new System.Drawing.Point(198, 63);
+            this.CurrMeanLabel.Location = new System.Drawing.Point(251, 35);
             this.CurrMeanLabel.Name = "CurrMeanLabel";
             this.CurrMeanLabel.Size = new System.Drawing.Size(39, 13);
             this.CurrMeanLabel.TabIndex = 12;
@@ -81,11 +85,13 @@
             // FormGenLabel
             // 
             this.FormGenLabel.AutoSize = true;
-            this.FormGenLabel.Location = new System.Drawing.Point(12, 62);
+            this.FormGenLabel.Location = new System.Drawing.Point(12, 34);
             this.FormGenLabel.Name = "FormGenLabel";
-            this.FormGenLabel.Size = new System.Drawing.Size(160, 39);
+            this.FormGenLabel.Size = new System.Drawing.Size(220, 91);
             this.FormGenLabel.TabIndex = 11;
-            this.FormGenLabel.Text = "Current Data Fit - Mean Value:\r\n\r\nCurrent Data Fit - Std. Deviation:\r\n";
+            this.FormGenLabel.Text = "Current Data Fit - Relative Mean Value:\r\n\r\nCurrent Data Fit -  Relative Std. Dev." +
+    ":\r\n\r\nCurrent Data Fit - Avg. Abs. Sqrd. Errors:\r\n\r\nCurrent Data Fit - Std. Dev. " +
+    "Abs. Sqrd. Errors:\r\n";
             // 
             // FormTitleLabel2
             // 
@@ -93,7 +99,7 @@
             this.FormTitleLabel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.FormTitleLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormTitleLabel2.ForeColor = System.Drawing.Color.DarkGreen;
-            this.FormTitleLabel2.Location = new System.Drawing.Point(12, 155);
+            this.FormTitleLabel2.Location = new System.Drawing.Point(12, 138);
             this.FormTitleLabel2.Name = "FormTitleLabel2";
             this.FormTitleLabel2.Size = new System.Drawing.Size(317, 15);
             this.FormTitleLabel2.TabIndex = 18;
@@ -104,7 +110,7 @@
             this.OptmStdDevLabel.AutoSize = true;
             this.OptmStdDevLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OptmStdDevLabel.ForeColor = System.Drawing.Color.DarkGreen;
-            this.OptmStdDevLabel.Location = new System.Drawing.Point(198, 206);
+            this.OptmStdDevLabel.Location = new System.Drawing.Point(251, 188);
             this.OptmStdDevLabel.Name = "OptmStdDevLabel";
             this.OptmStdDevLabel.Size = new System.Drawing.Size(39, 13);
             this.OptmStdDevLabel.TabIndex = 17;
@@ -115,7 +121,7 @@
             this.OptmMeanLabel.AutoSize = true;
             this.OptmMeanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OptmMeanLabel.ForeColor = System.Drawing.Color.DarkGreen;
-            this.OptmMeanLabel.Location = new System.Drawing.Point(198, 180);
+            this.OptmMeanLabel.Location = new System.Drawing.Point(251, 162);
             this.OptmMeanLabel.Name = "OptmMeanLabel";
             this.OptmMeanLabel.Size = new System.Drawing.Size(39, 13);
             this.OptmMeanLabel.TabIndex = 16;
@@ -124,11 +130,13 @@
             // FormGenLabel2
             // 
             this.FormGenLabel2.AutoSize = true;
-            this.FormGenLabel2.Location = new System.Drawing.Point(12, 179);
+            this.FormGenLabel2.Location = new System.Drawing.Point(12, 162);
             this.FormGenLabel2.Name = "FormGenLabel2";
-            this.FormGenLabel2.Size = new System.Drawing.Size(172, 39);
+            this.FormGenLabel2.Size = new System.Drawing.Size(232, 91);
             this.FormGenLabel2.TabIndex = 15;
-            this.FormGenLabel2.Text = "Optimized Data Fit - Mean Value:\r\n\r\nOptimized Data Fit - Std. Deviation:\r\n";
+            this.FormGenLabel2.Text = "Optimized Data Fit - Relative Mean Value:\r\n\r\nOptimized Data Fit -  Relative Std. " +
+    "Dev.:\r\n\r\nOptimized Data Fit - Avg. Abs. Sqrd. Errors:\r\n\r\nOptimized Data Fit - St" +
+    "d. Dev. Abs. Sqrd. Errors:\r\n";
             // 
             // TableLabel
             // 
@@ -165,6 +173,7 @@
             this.YArrayBox.Location = new System.Drawing.Point(424, 74);
             this.YArrayBox.Multiline = true;
             this.YArrayBox.Name = "YArrayBox";
+            this.YArrayBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.YArrayBox.Size = new System.Drawing.Size(51, 176);
             this.YArrayBox.TabIndex = 21;
             // 
@@ -173,8 +182,10 @@
             this.XArrayBox.AcceptsTab = true;
             this.XArrayBox.Location = new System.Drawing.Point(481, 30);
             this.XArrayBox.Name = "XArrayBox";
+            this.XArrayBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.XArrayBox.Size = new System.Drawing.Size(370, 20);
             this.XArrayBox.TabIndex = 20;
+            this.XArrayBox.WordWrap = false;
             // 
             // TableBox
             // 
@@ -184,14 +195,64 @@
             this.TableBox.Location = new System.Drawing.Point(480, 74);
             this.TableBox.Multiline = true;
             this.TableBox.Name = "TableBox";
+            this.TableBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TableBox.Size = new System.Drawing.Size(370, 176);
             this.TableBox.TabIndex = 19;
+            this.TableBox.WordWrap = false;
+            // 
+            // CurrSqrErrLabel
+            // 
+            this.CurrAbsErrLabel.AutoSize = true;
+            this.CurrAbsErrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrAbsErrLabel.ForeColor = System.Drawing.Color.Red;
+            this.CurrAbsErrLabel.Location = new System.Drawing.Point(251, 86);
+            this.CurrAbsErrLabel.Name = "CurrSqrErrLabel";
+            this.CurrAbsErrLabel.Size = new System.Drawing.Size(39, 13);
+            this.CurrAbsErrLabel.TabIndex = 25;
+            this.CurrAbsErrLabel.Text = "00.00";
+            // 
+            // OptmSqrErrLabel
+            // 
+            this.OptmAbsErrLabel.AutoSize = true;
+            this.OptmAbsErrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OptmAbsErrLabel.ForeColor = System.Drawing.Color.DarkGreen;
+            this.OptmAbsErrLabel.Location = new System.Drawing.Point(251, 214);
+            this.OptmAbsErrLabel.Name = "OptmSqrErrLabel";
+            this.OptmAbsErrLabel.Size = new System.Drawing.Size(39, 13);
+            this.OptmAbsErrLabel.TabIndex = 26;
+            this.OptmAbsErrLabel.Text = "00.00";
+            // 
+            // CurrSqrStdDErrLabel
+            // 
+            this.CurrAbsStdDErrLabel.AutoSize = true;
+            this.CurrAbsStdDErrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrAbsStdDErrLabel.ForeColor = System.Drawing.Color.Red;
+            this.CurrAbsStdDErrLabel.Location = new System.Drawing.Point(251, 112);
+            this.CurrAbsStdDErrLabel.Name = "CurrSqrStdDErrLabel";
+            this.CurrAbsStdDErrLabel.Size = new System.Drawing.Size(39, 13);
+            this.CurrAbsStdDErrLabel.TabIndex = 27;
+            this.CurrAbsStdDErrLabel.Text = "00.00";
+            // 
+            // OptmSqrStdDErrLabel
+            // 
+            this.OptmAbsStdDErrLabel.AutoSize = true;
+            this.OptmAbsStdDErrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OptmAbsStdDErrLabel.ForeColor = System.Drawing.Color.DarkGreen;
+            this.OptmAbsStdDErrLabel.Location = new System.Drawing.Point(251, 240);
+            this.OptmAbsStdDErrLabel.Name = "OptmSqrStdDErrLabel";
+            this.OptmAbsStdDErrLabel.Size = new System.Drawing.Size(39, 13);
+            this.OptmAbsStdDErrLabel.TabIndex = 28;
+            this.OptmAbsStdDErrLabel.Text = "00.00";
             // 
             // ResultsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(873, 262);
+            this.Controls.Add(this.OptmAbsStdDErrLabel);
+            this.Controls.Add(this.CurrAbsStdDErrLabel);
+            this.Controls.Add(this.OptmAbsErrLabel);
+            this.Controls.Add(this.CurrAbsErrLabel);
             this.Controls.Add(this.TableLabel);
             this.Controls.Add(this.XLabel);
             this.Controls.Add(this.YLabel);
@@ -230,5 +291,9 @@
         private System.Windows.Forms.TextBox YArrayBox;
         private System.Windows.Forms.TextBox XArrayBox;
         private System.Windows.Forms.TextBox TableBox;
+        private System.Windows.Forms.Label CurrAbsErrLabel;
+        private System.Windows.Forms.Label OptmAbsErrLabel;
+        private System.Windows.Forms.Label CurrAbsStdDErrLabel;
+        private System.Windows.Forms.Label OptmAbsStdDErrLabel;
     }
 }

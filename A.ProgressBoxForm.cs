@@ -27,8 +27,15 @@ namespace CalibrationHelper
 
         public void UpdateProgress(int CurrentStep)
         {
-            this.Invoke(del, CurrentStep);
-        }
+            try
+            {
+                this.Invoke(del, CurrentStep);
+            }
+            catch
+            {
+
+            }
+       }
 
     }
     public class ProgressBoxInvokation
