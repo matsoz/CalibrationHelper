@@ -13,7 +13,7 @@ namespace CalibrationHelper
         public double[,] ZTabOptm;
         public double[] ZRatioArray;
         public double[] ZSqrdErrArray, ZCalTabArray;
-        public double ZRatioMean, ZRatioStdDev, ZAbsMeanErr, ZAbsStdDErr;
+        public double ZRatioMean, ZRatioStdDev, ZAbsErrMean, ZAbsErrStdD;
 
         public CalibrationDataForm(MainForm aParent)
         {
@@ -34,13 +34,13 @@ namespace CalibrationHelper
 
             ZRatioMean = VectorStatBasicMethods.Mean(ZRatioArray);
             ZRatioStdDev = VectorStatBasicMethods.StdDev(ZRatioArray);
-            ZAbsMeanErr = VectorStatBasicMethods.ErrorsAvg(ZCalTabArray, ParentApp.ZDataArray);
-            ZAbsStdDErr = VectorStatBasicMethods.ErrorsStdDev(ZCalTabArray, ParentApp.ZDataArray);
+            ZAbsErrMean = VectorStatBasicMethods.ErrorsAvg(ZCalTabArray, ParentApp.ZDataArray);
+            ZAbsErrStdD = VectorStatBasicMethods.ErrorsStdDev(ZCalTabArray, ParentApp.ZDataArray);
 
             this.CurrMeanLabel.Text = ZRatioMean.ToString();
             this.CurrStdDevLabel.Text = ZRatioStdDev.ToString();
-            this.CurrAbsErrLabel.Text = ZAbsMeanErr.ToString();
-            this.CurrAbsStdDErrLabel.Text = ZAbsStdDErr.ToString();
+            this.CurrAbsErrLabel.Text = ZAbsErrMean.ToString();
+            this.CurrAbsErrStdDLabel.Text = ZAbsErrStdD.ToString();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

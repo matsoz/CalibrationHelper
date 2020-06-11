@@ -43,7 +43,7 @@
             this.FineTuneIterBox = new System.Windows.Forms.TextBox();
             this.FineTuneSubIterBox = new System.Windows.Forms.TextBox();
             this.CurrAbsErrLabel = new System.Windows.Forms.Label();
-            this.CurrAbsStdDErrLabel = new System.Windows.Forms.Label();
+            this.CurrAbsErrStdDLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // FormGenLabel
@@ -177,19 +177,19 @@
             // 
             // CurrSqrStdDErrLabel
             // 
-            this.CurrAbsStdDErrLabel.AutoSize = true;
-            this.CurrAbsStdDErrLabel.Location = new System.Drawing.Point(250, 111);
-            this.CurrAbsStdDErrLabel.Name = "CurrSqrStdDErrLabel";
-            this.CurrAbsStdDErrLabel.Size = new System.Drawing.Size(34, 13);
-            this.CurrAbsStdDErrLabel.TabIndex = 18;
-            this.CurrAbsStdDErrLabel.Text = "00.00";
+            this.CurrAbsErrStdDLabel.AutoSize = true;
+            this.CurrAbsErrStdDLabel.Location = new System.Drawing.Point(250, 111);
+            this.CurrAbsErrStdDLabel.Name = "CurrSqrStdDErrLabel";
+            this.CurrAbsErrStdDLabel.Size = new System.Drawing.Size(34, 13);
+            this.CurrAbsErrStdDLabel.TabIndex = 18;
+            this.CurrAbsErrStdDLabel.Text = "00.00";
             // 
             // CalibrationDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(324, 321);
-            this.Controls.Add(this.CurrAbsStdDErrLabel);
+            this.Controls.Add(this.CurrAbsErrStdDLabel);
             this.Controls.Add(this.CurrAbsErrLabel);
             this.Controls.Add(this.FineTuneSubIterBox);
             this.Controls.Add(this.FineTuneIterBox);
@@ -228,6 +228,6 @@
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button SubmitButton;
         private System.Windows.Forms.Label CurrAbsErrLabel;
-        private System.Windows.Forms.Label CurrAbsStdDErrLabel;
+        private System.Windows.Forms.Label CurrAbsErrStdDLabel;
     }
 }

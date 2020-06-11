@@ -143,8 +143,6 @@ namespace CalibrationHelper
                 }
             }
 
-
-
             if (LicenseUncodeSplit[0] == ComputerName &&
                 int.Parse(LicenseUncodeSplit[1]) >= 1 && int.Parse(LicenseUncodeSplit[1]) <= 30 &&
                 int.Parse(LicenseUncodeSplit[2]) >= 1 && int.Parse(LicenseUncodeSplit[2]) <= 12 &&
