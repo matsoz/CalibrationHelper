@@ -14,12 +14,24 @@ namespace CalibrationHelper
         public double[] ZRatioArray;
         public double[] ZSqrdErrArray, ZCalTabArray;
         public double ZRatioMean, ZRatioStdDev, ZAbsErrMean, ZAbsErrStdD;
+        public bool FitType = false; // false for Absolute, true for Relative
 
         public CalibrationDataForm(MainForm aParent)
         {
             //Initialize the component and create reference to the instance handler
             InitializeComponent();
             this.ParentApp = aParent;
+        }
+
+        private void CalibrationDataForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
+
+        private void AbsFitBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            FitType = (this.AbsFitBtn.Checked == true) ? false : true;
         }
 
         private void CalibrationDataForm_Load(object sender, EventArgs e)
@@ -43,6 +55,7 @@ namespace CalibrationHelper
             this.CurrAbsErrStdDLabel.Text = ZAbsErrStdD.ToString();
         }
 
+       
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -54,7 +67,7 @@ namespace CalibrationHelper
 
             //Call optimization function and optimize the map. The ProgressBox created above is manipulated inside this method.
             ZTabOptm = CalibrationMethods.CalibrationTabOptimizationWiPB(double.Parse(this.MeanTarBox.Text), int.Parse(this.PrecisionTarBox.Text),
-                        int.Parse(this.WeightBox.Text), int.Parse(this.FineTuneIterBox.Text), int.Parse(this.FineTuneSubIterBox.Text),
+                        int.Parse(this.WeightBox.Text), int.Parse(this.FineTuneIterBox.Text), int.Parse(this.FineTuneSubIterBox.Text), FitType, 
                         ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                         ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab,
                         ref CalProgressBox);

@@ -269,7 +269,9 @@
             this.Controls.Add(this.FormGenLabel);
             this.Name = "ResultsForm";
             this.Text = "4. Calibration Optimized results and comparison";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResultsForm_FormClosing);
             this.Load += new System.EventHandler(this.ResultsForm_Load);
+            this.Shown += new System.EventHandler(this.ResultsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

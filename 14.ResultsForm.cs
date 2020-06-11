@@ -58,5 +58,11 @@ namespace CalibrationHelper
             this.XArrayBox.Text = TransformationMethods.VectorLin2TextLin(ParentApp.XCalArray);
             this.YArrayBox.Text = TransformationMethods.VectorCol2TextCol(ParentApp.YCalArray);
         }
+
+        private void ResultsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
     }
 }

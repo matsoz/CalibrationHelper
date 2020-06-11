@@ -44,6 +44,10 @@
             this.FineTuneSubIterBox = new System.Windows.Forms.TextBox();
             this.CurrAbsErrLabel = new System.Windows.Forms.Label();
             this.CurrAbsErrStdDLabel = new System.Windows.Forms.Label();
+            this.AbsFitBtn = new System.Windows.Forms.RadioButton();
+            this.RelFitBtn = new System.Windows.Forms.RadioButton();
+            this.FitTypeBox = new System.Windows.Forms.GroupBox();
+            this.FitTypeBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // FormGenLabel
@@ -51,11 +55,11 @@
             this.FormGenLabel.AutoSize = true;
             this.FormGenLabel.Location = new System.Drawing.Point(12, 33);
             this.FormGenLabel.Name = "FormGenLabel";
-            this.FormGenLabel.Size = new System.Drawing.Size(220, 91);
+            this.FormGenLabel.Size = new System.Drawing.Size(210, 104);
             this.FormGenLabel.TabIndex = 0;
-            this.FormGenLabel.Text = "Current Data Fit - Relative Mean Value:\r\n\r\nCurrent Data Fit -  Relative Std. Dev." +
-    ":\r\n\r\nCurrent Data Fit - Avg. Abs. Sqrd. Errors:\r\n\r\nCurrent Data Fit - Std. Dev. " +
-    "Abs. Sqrd. Errors:\r\n";
+            this.FormGenLabel.Text = "Current Data Fit - Relative Error Mean:\r\n\r\nCurrent Data Fit - Relative Error Std." +
+    " Dev.:\r\n\r\nCurrent Data Fit - Absolute Error Mean:\r\n\r\nCurrent Data Fit - Absolute" +
+    "  Error Std. Dev.:\r\n\r\n";
             // 
             // CurrMeanLabel
             // 
@@ -77,7 +81,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(184, 292);
+            this.CancelButton.Location = new System.Drawing.Point(184, 332);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 8;
@@ -87,7 +91,7 @@
             // 
             // SubmitButton
             // 
-            this.SubmitButton.Location = new System.Drawing.Point(66, 292);
+            this.SubmitButton.Location = new System.Drawing.Point(66, 332);
             this.SubmitButton.Name = "SubmitButton";
             this.SubmitButton.Size = new System.Drawing.Size(75, 23);
             this.SubmitButton.TabIndex = 7;
@@ -98,7 +102,7 @@
             // FormGenLabel2
             // 
             this.FormGenLabel2.AutoSize = true;
-            this.FormGenLabel2.Location = new System.Drawing.Point(12, 159);
+            this.FormGenLabel2.Location = new System.Drawing.Point(12, 165);
             this.FormGenLabel2.Name = "FormGenLabel2";
             this.FormGenLabel2.Size = new System.Drawing.Size(212, 130);
             this.FormGenLabel2.TabIndex = 9;
@@ -128,7 +132,7 @@
             // 
             // MeanTarBox
             // 
-            this.MeanTarBox.Location = new System.Drawing.Point(240, 156);
+            this.MeanTarBox.Location = new System.Drawing.Point(240, 162);
             this.MeanTarBox.Name = "MeanTarBox";
             this.MeanTarBox.Size = new System.Drawing.Size(50, 20);
             this.MeanTarBox.TabIndex = 12;
@@ -136,7 +140,7 @@
             // 
             // PrecisionTarBox
             // 
-            this.PrecisionTarBox.Location = new System.Drawing.Point(240, 182);
+            this.PrecisionTarBox.Location = new System.Drawing.Point(240, 188);
             this.PrecisionTarBox.Name = "PrecisionTarBox";
             this.PrecisionTarBox.Size = new System.Drawing.Size(50, 20);
             this.PrecisionTarBox.TabIndex = 13;
@@ -144,7 +148,7 @@
             // 
             // WeightBox
             // 
-            this.WeightBox.Location = new System.Drawing.Point(240, 208);
+            this.WeightBox.Location = new System.Drawing.Point(240, 214);
             this.WeightBox.Name = "WeightBox";
             this.WeightBox.Size = new System.Drawing.Size(50, 20);
             this.WeightBox.TabIndex = 14;
@@ -152,7 +156,7 @@
             // 
             // FineTuneIterBox
             // 
-            this.FineTuneIterBox.Location = new System.Drawing.Point(240, 234);
+            this.FineTuneIterBox.Location = new System.Drawing.Point(240, 240);
             this.FineTuneIterBox.Name = "FineTuneIterBox";
             this.FineTuneIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneIterBox.TabIndex = 15;
@@ -160,35 +164,73 @@
             // 
             // FineTuneSubIterBox
             // 
-            this.FineTuneSubIterBox.Location = new System.Drawing.Point(240, 260);
+            this.FineTuneSubIterBox.Location = new System.Drawing.Point(240, 266);
             this.FineTuneSubIterBox.Name = "FineTuneSubIterBox";
             this.FineTuneSubIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneSubIterBox.TabIndex = 16;
             this.FineTuneSubIterBox.Text = "25";
             // 
-            // CurrSqrErrLabel
+            // CurrAbsErrLabel
             // 
             this.CurrAbsErrLabel.AutoSize = true;
             this.CurrAbsErrLabel.Location = new System.Drawing.Point(250, 85);
-            this.CurrAbsErrLabel.Name = "CurrSqrErrLabel";
+            this.CurrAbsErrLabel.Name = "CurrAbsErrLabel";
             this.CurrAbsErrLabel.Size = new System.Drawing.Size(34, 13);
             this.CurrAbsErrLabel.TabIndex = 17;
             this.CurrAbsErrLabel.Text = "00.00";
             // 
-            // CurrSqrStdDErrLabel
+            // CurrAbsErrStdDLabel
             // 
             this.CurrAbsErrStdDLabel.AutoSize = true;
             this.CurrAbsErrStdDLabel.Location = new System.Drawing.Point(250, 111);
-            this.CurrAbsErrStdDLabel.Name = "CurrSqrStdDErrLabel";
+            this.CurrAbsErrStdDLabel.Name = "CurrAbsErrStdDLabel";
             this.CurrAbsErrStdDLabel.Size = new System.Drawing.Size(34, 13);
             this.CurrAbsErrStdDLabel.TabIndex = 18;
             this.CurrAbsErrStdDLabel.Text = "00.00";
+            // 
+            // AbsFitBtn
+            // 
+            this.AbsFitBtn.AutoSize = true;
+            this.AbsFitBtn.Checked = true;
+            this.AbsFitBtn.Location = new System.Drawing.Point(14, 11);
+            this.AbsFitBtn.Name = "AbsFitBtn";
+            this.AbsFitBtn.Size = new System.Drawing.Size(142, 17);
+            this.AbsFitBtn.TabIndex = 19;
+            this.AbsFitBtn.TabStop = true;
+            this.AbsFitBtn.Text = "Absolute Fit (Data - Map)";
+            this.AbsFitBtn.UseVisualStyleBackColor = true;
+            this.AbsFitBtn.CheckedChanged += new System.EventHandler(this.AbsFitBtn_CheckedChanged);
+            // 
+            // RelFitBtn
+            // 
+            this.RelFitBtn.AutoSize = true;
+            this.RelFitBtn.Location = new System.Drawing.Point(169, 11);
+            this.RelFitBtn.Name = "RelFitBtn";
+            this.RelFitBtn.Size = new System.Drawing.Size(142, 17);
+            this.RelFitBtn.TabIndex = 20;
+            this.RelFitBtn.Text = "Relative Fit (Data / Map)";
+            this.RelFitBtn.UseVisualStyleBackColor = true;
+            // 
+            // FitTypeBox
+            // 
+            this.FitTypeBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.FitTypeBox.Controls.Add(this.AbsFitBtn);
+            this.FitTypeBox.Controls.Add(this.RelFitBtn);
+            this.FitTypeBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FitTypeBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FitTypeBox.Location = new System.Drawing.Point(0, 289);
+            this.FitTypeBox.Name = "FitTypeBox";
+            this.FitTypeBox.Size = new System.Drawing.Size(325, 34);
+            this.FitTypeBox.TabIndex = 21;
+            this.FitTypeBox.TabStop = false;
             // 
             // CalibrationDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 321);
+            this.CancelButton = this.CancelButton;
+            this.ClientSize = new System.Drawing.Size(324, 365);
+            this.Controls.Add(this.FitTypeBox);
             this.Controls.Add(this.CurrAbsErrStdDLabel);
             this.Controls.Add(this.CurrAbsErrLabel);
             this.Controls.Add(this.FineTuneSubIterBox);
@@ -206,7 +248,11 @@
             this.Controls.Add(this.FormGenLabel);
             this.Name = "CalibrationDataForm";
             this.Text = "3. Calibration Statistics and Adjust Form";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CalibrationDataForm_FormClosing);
             this.Load += new System.EventHandler(this.CalibrationDataForm_Load);
+            this.Shown += new System.EventHandler(this.CalibrationDataForm_Load);
+            this.FitTypeBox.ResumeLayout(false);
+            this.FitTypeBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,5 +275,8 @@
         private System.Windows.Forms.Button SubmitButton;
         private System.Windows.Forms.Label CurrAbsErrLabel;
         private System.Windows.Forms.Label CurrAbsErrStdDLabel;
+        private System.Windows.Forms.RadioButton AbsFitBtn;
+        private System.Windows.Forms.RadioButton RelFitBtn;
+        private System.Windows.Forms.GroupBox FitTypeBox;
     }
 }

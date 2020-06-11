@@ -37,6 +37,12 @@ namespace CalibrationHelper
             this.Hide();
         }
 
+        private void DataForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
+
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Hide();

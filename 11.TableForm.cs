@@ -36,6 +36,12 @@ namespace CalibrationHelper
             this.Hide();
         }
 
+        private void TableForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
+
         private void ConvertText2DoubleArrays()
         {
             // Convert each field (table and arrays) into numeric data

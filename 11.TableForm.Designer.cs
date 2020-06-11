@@ -145,6 +145,7 @@
             this.Controls.Add(this.TableBox);
             this.Name = "TableForm";
             this.Text = "1. Insert Calibration Table and Breakpoints here";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TableForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

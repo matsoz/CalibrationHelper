@@ -588,13 +588,14 @@ namespace CalibrationHelper
         } //Calculates resulting Z calibrated value for each provided X, Y data point
 
         static public double[,] CalibrationTabOptimizationWiPB(double MeanTar, int PrecisionTar,
-                                                            int WeightBox, int FineTuneIterBox, int FineTuneSubIterBox,
+                                                            int WeightBox, int FineTuneIterBox, int FineTuneSubIterBox, bool FitType,
                                                             double[] DataX, double[] DataY, double[] DataZ,
                                                             double[] XBkpt, double[] YBkpt, double[,] ZTab,
                                                             ref ProgressBoxInvokation ProgressBox) // WiPB = With Progress Box
         {
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
             double[,] ZWorkTab = new double[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
+            double[] ZRatio = new double[DataZ.Length];
             byte[,] ZTabStatus = new byte[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
 
             //1. Sweep each table point and get average value from delivered data
@@ -759,8 +760,8 @@ namespace CalibrationHelper
             //3. Sweep each table point and adjust to dimish Z Ratio average deviation
             double MFactor = 1.1;
             double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
-            double ZSqrdErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
-                CalibrationMethods.CalibrationResultingArrayCalculation(DataX,DataY,DataZ,XBkpt,YBkpt,ZWorkTab)), ZSqrdErrOld;
+            double ZErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
+                CalibrationMethods.CalibrationResultingArrayCalculation(DataX,DataY,DataZ,XBkpt,YBkpt,ZWorkTab)), ZErrOld;
     
             if (ProgressBox != null) ProgressBox.ProgressBoxStart(); //If delivered, ProgressBox is desired, thus start ProgressBox
             if (ProgressBox != null) ProgressBox.ProgressBoxUpdate(0); //If delivered, ProgressBox is desired, thus set ProgressBox=0
@@ -773,8 +774,16 @@ namespace CalibrationHelper
                     {
                         int LoopSkip = 0;
 
-                        ZSqrdErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
-                          CalibrationMethods.CalibrationResultingArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                        if(FitType == false) //Absolute Error optimization
+                        {
+                            ZErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
+                                CalibrationMethods.CalibrationResultingArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                        }
+                        else //Relative Error optimization
+                        {
+                            ZErr = VectorStatBasicMethods.StdDev(
+                                CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                        }
 
                         for (int P2B = 0; P2B < FineTuneSubIterBox; P2B++)
                         {
@@ -782,17 +791,27 @@ namespace CalibrationHelper
                             ZWorkTab[i, j] *= MFactor;
 
                             // Evaluate the results of the value increment/decrement in terms of summed squared errors
-                            ZSqrdErrOld = ZSqrdErr;
-                            ZSqrdErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
-                             CalibrationMethods.CalibrationResultingArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                            ZErrOld = ZErr;
+                            
+                            if (FitType == false) //Absolute Error optimization
+                            {
+                                ZErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
+                                    CalibrationMethods.CalibrationResultingArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                            }
+                            else //Relative Error optimization
+                            {
+                                ZErr = VectorStatBasicMethods.StdDev(
+                                    CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                            }
 
-                            // If the result didn't optimize the StdDev, undo operation and change direction
-                            MFactor = (ZSqrdErr >= ZSqrdErrOld) ? 1 / MFactor : MFactor;
-                            ZWorkTab[i, j] *= (ZSqrdErr > ZSqrdErrOld) ? MFactor : 1;
+                            // If the result didn't optimize the StdDev, undo operation and change direction and retrieve old error
+                            MFactor = (ZErr >= ZErrOld) ? 1 / MFactor : MFactor;
+                            ZWorkTab[i, j] *= (ZErr > ZErrOld) ? MFactor : 1;
+                            ZErr = (ZErr >= ZErrOld) ? ZErrOld : ZErr;
 
                             // When a second direction change is required (optm reached), break loop and goto next Table position
                             LoopSkip = (P2B == 1 && LoopSkip == 0) ? 1 : LoopSkip;
-                            LoopSkip += (ZSqrdErr >= ZSqrdErrOld) ? 1 : 0;
+                            LoopSkip += (ZErr >= ZErrOld) ? 1 : 0;
 
                             if (LoopSkip == 2) break;
                         }
@@ -813,7 +832,16 @@ namespace CalibrationHelper
             {
                 for (int j = 0; j < 1 + ZWorkTab.GetUpperBound(1); j++)//j sweeps X
                 {
-                    ZWorkTab[i, j] *= MeanTar;
+                    if(FitType == false)
+                    {
+                        ZWorkTab[i, j] *= MeanTar;
+                    }
+                    else
+                    {
+                        ZWorkTab[i, j] *= MeanTar * VectorStatBasicMethods.Mean(
+                                    CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab)); ;
+                    }
+                    
                     ZWorkTab[i, j] = Math.Round(ZWorkTab[i, j], PrecisionTar);
                 }
             }

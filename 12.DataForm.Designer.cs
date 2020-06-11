@@ -137,6 +137,7 @@
             this.Controls.Add(this.SubmitButton);
             this.Name = "DataForm";
             this.Text = "2. Insert Data for X, Y and f(x,y)";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DataForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
