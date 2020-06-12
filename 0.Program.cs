@@ -11,7 +11,7 @@ namespace CalibrationHelper
 
         static public void Main()
         {
-            if(LicenseCheck.LicenseFileCheck() == 1)
+            if (LicenseCheck.LicenseFileCheck() == 1)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -36,17 +36,17 @@ namespace CalibrationHelper
             string UncodedString = "";
 
             //Transform Coded string to byte vector
-            for(int i=0; i<CodedDataByte.Length; i++)
+            for (int i = 0; i < CodedDataByte.Length; i++)
             {
                 CodedDataPartialByteStr = "";
                 CodedDataPartialByte = 0;
-                for(int j=0; j<8; j++)
+                for (int j = 0; j < 8; j++)
                 {
-                    CodedDataPartialByteStr = String.Concat(CodedDataPartialByteStr, CodedData[(8*i) + j]);
+                    CodedDataPartialByteStr = String.Concat(CodedDataPartialByteStr, CodedData[(8 * i) + j]);
                 }
                 for (int j = 7; j >= 8 - CodedDataPartialByteStr.Length; j--)
                 {
-                    CodedDataPartialByte += char.Equals(CodedDataPartialByteStr[j] , '1') ? (byte)Math.Pow(2, 7 - j) : (byte)0;
+                    CodedDataPartialByte += char.Equals(CodedDataPartialByteStr[j], '1') ? (byte)Math.Pow(2, 7 - j) : (byte)0;
                 }
                 CodedDataByte[i] = CodedDataPartialByte;
             }
@@ -56,13 +56,13 @@ namespace CalibrationHelper
             {
                 LicKeyChar = i % KeySize;
 
-                UnCodedDataByte[i] = (byte)((int)CodedDataByte[i] ^ (int)LicKey[LicKeyChar]);
+                UnCodedDataByte[i] = (byte)(CodedDataByte[i] ^ LicKey[LicKeyChar]);
             }
 
             //Convert to Uncoded License String Data
             for (int i = 0; i < UnCodedDataByte.Length; i++)
             {
-                UncodedString = String.Concat(UncodedString, (char)UnCodedDataByte[i] );
+                UncodedString = String.Concat(UncodedString, (char)UnCodedDataByte[i]);
             }
 
             return UncodedString;
@@ -71,30 +71,30 @@ namespace CalibrationHelper
         static public string CodeLicenseData(string LicData, string LicKey) //Receives String License, convert to Coded Binary
         {
 
-            int KeySize = LicKey.Length, LicKeyChar=0;
+            int KeySize = LicKey.Length, LicKeyChar = 0;
             byte[] CodeResultByte = new byte[LicData.Length];
-            bool[] CodeResultBool = new bool[8*LicData.Length];
-            string CodeResultString="";
+            bool[] CodeResultBool = new bool[8 * LicData.Length];
+            string CodeResultString = "";
 
             //Code the Key with selected algorithm
-            for (int i=0; i<LicData.Length; i++)
+            for (int i = 0; i < LicData.Length; i++)
             {
                 LicKeyChar = i % KeySize;
 
-                CodeResultByte[i] = (byte)((int)LicData[i] ^ (int)LicKey[LicKeyChar]);
+                CodeResultByte[i] = (byte)(LicData[i] ^ LicKey[LicKeyChar]);
             }
 
             //Convert to binary
             for (int i = 0; i < LicData.Length; i++)
             {
-                for(int j=0; j<8; j++)
+                for (int j = 0; j < 8; j++)
                 {
-                    CodeResultBool[(8 * i) + (7-j)] = (byte)(CodeResultByte[i] & (1 << j)) == Math.Pow(2,j)  ? true : false;
+                    CodeResultBool[(8 * i) + (7 - j)] = (byte)(CodeResultByte[i] & (1 << j)) == Math.Pow(2, j) ? true : false;
                 }
             }
 
             //Convert to License String Data
-            for (int i=0; i<CodeResultBool.Length ; i++)
+            for (int i = 0; i < CodeResultBool.Length; i++)
             {
                 CodeResultString = String.Concat(CodeResultString, CodeResultBool[i] == true ? 1 : 0);
             }
@@ -122,9 +122,9 @@ namespace CalibrationHelper
 
             LicenseUncode = UnCodeLicenseData(LicenseGet, "MATH"); // License Key carved inside the SW Fucntion
 
-            LicenseUncodeSplit = LicenseUncode.Split('$','/');
+            LicenseUncodeSplit = LicenseUncode.Split('$', '/');
 
-            if(LicenseUncodeSplit[0] == ComputerName)
+            if (LicenseUncodeSplit[0] == ComputerName)
             {
                 if (int.Parse(LicenseUncodeSplit[3]) > DateCurrYear)
                 {
@@ -138,7 +138,10 @@ namespace CalibrationHelper
                     }
                     else if (int.Parse(LicenseUncodeSplit[2]) == DateCurrMonth)
                     {
-                        if (int.Parse(LicenseUncodeSplit[1]) >= DateCurrDay) return 1; //License approved
+                        if (int.Parse(LicenseUncodeSplit[1]) >= DateCurrDay)
+                        {
+                            return 1; //License approved
+                        }
                     }
                 }
             }
@@ -335,7 +338,10 @@ namespace CalibrationHelper
 
         static public double ErrorsAvg(double[] ArrayA, double[] ArrayB)
         {
-            if (ArrayA.Length != ArrayB.Length) return 0;
+            if (ArrayA.Length != ArrayB.Length)
+            {
+                return 0;
+            }
 
             double Err = 0;
             for (int i = 0; i < ArrayA.Length; i++)
@@ -343,12 +349,31 @@ namespace CalibrationHelper
                 Err += ArrayA[i] - ArrayB[i];
             }
 
-            return Err / (double)ArrayA.Length;
+            return Err / ArrayA.Length;
+        }
+
+        static public double ErrorsAvgRMS(double[] ArrayA, double[] ArrayB)
+        {
+            if (ArrayA.Length != ArrayB.Length)
+            {
+                return 0;
+            }
+
+            double Err = 0;
+            for (int i = 0; i < ArrayA.Length; i++)
+            {
+                Err += Math.Pow(ArrayA[i] - ArrayB[i],2);
+            }
+
+            return Math.Sqrt(Err / ArrayA.Length);
         }
 
         static public double ErrorsStdDev(double[] ArrayA, double[] ArrayB)
         {
-            if (ArrayA.Length != ArrayB.Length) return 0;
+            if (ArrayA.Length != ArrayB.Length)
+            {
+                return 0;
+            }
 
             double[] Err = new double[ArrayA.Length];
 
@@ -357,17 +382,20 @@ namespace CalibrationHelper
                 Err[i] = (ArrayA[i] - ArrayB[i]);
             }
 
-            return VectorStatBasicMethods.StdDev(Err);        
+            return VectorStatBasicMethods.StdDev(Err);
         }
 
         static public double SquaredErrorsSum(double[] ArrayA, double[] ArrayB)
         {
-            if (ArrayA.Length != ArrayB.Length) return 0;
+            if (ArrayA.Length != ArrayB.Length)
+            {
+                return 0;
+            }
 
             double ErrSqrd = 0;
-            for (int i=0; i< ArrayA.Length; i++)
+            for (int i = 0; i < ArrayA.Length; i++)
             {
-                ErrSqrd += Math.Pow((ArrayA[i] - ArrayB[i]),2);
+                ErrSqrd += Math.Pow((ArrayA[i] - ArrayB[i]), 2);
             }
 
             return Math.Sqrt(ErrSqrd);
@@ -537,10 +565,10 @@ namespace CalibrationHelper
                     if (TabManagementMethods.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab) != 0)
                     {
                         DataZ[i] = DataZ[i] == 0 ? 0.00000001 : DataZ[i];
-                        
+
                         ZRatioArray[i] = DataZ[i] / TabManagementMethods.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab);
                     }
-                    else if (TabManagementMethods.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab) == 0 && DataZ[i] == 0 )
+                    else if (TabManagementMethods.BilinearInterpolation(DataX[i], DataY[i], XBkpt, YBkpt, ZTab) == 0 && DataZ[i] == 0)
                     {
                         ZRatioArray[i] = 0;
                     }
@@ -560,7 +588,7 @@ namespace CalibrationHelper
             }
         } //Calculates ratio between Z data from Calibration and Z data from Data points
 
-        static public double[] CalibrationResultingArrayCalculation(double[] DataX, double[] DataY, double[] DataZ,
+        static public double[] CalibrationAbsoluteArrayCalculation(double[] DataX, double[] DataY, double[] DataZ,
                                                            double[] XBkpt, double[] YBkpt, double[,] ZTab)
         {
             if (DataX.Length == DataY.Length && DataY.Length == DataZ.Length) //Check Data size plausibility
@@ -591,12 +619,29 @@ namespace CalibrationHelper
                                                             int WeightBox, int FineTuneIterBox, int FineTuneSubIterBox, bool FitType,
                                                             double[] DataX, double[] DataY, double[] DataZ,
                                                             double[] XBkpt, double[] YBkpt, double[,] ZTab,
-                                                            ref ProgressBoxInvokation ProgressBox) // WiPB = With Progress Box
+                                                            ref ProgressBoxInvokation ProgressBox, ref double[] ErrStep, ref double[] StdDStep) // WiPB = With Progress Box
         {
             double X_A, X_B, Y_A, Y_B, ZMeanInterval;
             double[,] ZWorkTab = new double[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
             double[] ZRatio = new double[DataZ.Length];
             byte[,] ZTabStatus = new byte[1 + ZTab.GetUpperBound(0), 1 + ZTab.GetUpperBound(1)];
+
+
+            //0. Populate the iteration converging error vector (first position) to be plotted afterwards
+            if (FitType == false)
+            {
+                ErrStep[ErrStep.GetLowerBound(0)] = VectorStatBasicMethods.ErrorsAvg(DataZ,
+                     CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZTab));
+                StdDStep[ErrStep.GetLowerBound(0)] = VectorStatBasicMethods.ErrorsStdDev(DataZ,
+                      CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZTab));
+            }
+            else
+            {
+                ErrStep[ErrStep.GetLowerBound(0)] = VectorStatBasicMethods.Mean(
+                     CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZTab));
+                StdDStep[ErrStep.GetLowerBound(0)] = VectorStatBasicMethods.StdDev(
+                       CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZTab));
+            }
 
             //1. Sweep each table point and get average value from delivered data
             for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
@@ -758,14 +803,15 @@ namespace CalibrationHelper
             }
 
             //3. Sweep each table point and adjust to dimish Z Ratio average deviation
-            double MFactor = 1.1;
+            double MFactor = 1.25;
             double[] ZRatioArray = CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab);
-            double ZErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
-                CalibrationMethods.CalibrationResultingArrayCalculation(DataX,DataY,DataZ,XBkpt,YBkpt,ZWorkTab)), ZErrOld;
-    
+            double ZErr = VectorStatBasicMethods.ErrorsStdDev(DataZ,
+                CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab)), ZErrOld;
+
             if (ProgressBox != null) ProgressBox.ProgressBoxStart(); //If delivered, ProgressBox is desired, thus start ProgressBox
             if (ProgressBox != null) ProgressBox.ProgressBoxUpdate(0); //If delivered, ProgressBox is desired, thus set ProgressBox=0
 
+            
             for (int P2A = 0; P2A < FineTuneIterBox; P2A++)
             {
                 for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
@@ -774,10 +820,10 @@ namespace CalibrationHelper
                     {
                         int LoopSkip = 0;
 
-                        if(FitType == false) //Absolute Error optimization
+                        if (FitType == false) //Absolute Error optimization
                         {
-                            ZErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
-                                CalibrationMethods.CalibrationResultingArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                            ZErr = VectorStatBasicMethods.ErrorsStdDev(DataZ,
+                                CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
                         }
                         else //Relative Error optimization
                         {
@@ -792,11 +838,11 @@ namespace CalibrationHelper
 
                             // Evaluate the results of the value increment/decrement in terms of summed squared errors
                             ZErrOld = ZErr;
-                            
+
                             if (FitType == false) //Absolute Error optimization
                             {
-                                ZErr = VectorStatBasicMethods.SquaredErrorsSum(DataZ,
-                                    CalibrationMethods.CalibrationResultingArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                                ZErr = VectorStatBasicMethods.ErrorsStdDev(DataZ,
+                                    CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
                             }
                             else //Relative Error optimization
                             {
@@ -806,34 +852,53 @@ namespace CalibrationHelper
 
                             // If the result didn't optimize the StdDev, undo operation and change direction and retrieve old error
                             MFactor = (ZErr >= ZErrOld) ? 1 / MFactor : MFactor;
-                            ZWorkTab[i, j] *= (ZErr > ZErrOld) ? MFactor : 1;
+                            ZWorkTab[i, j] *= (ZErr >= ZErrOld) ? MFactor : 1;
                             ZErr = (ZErr >= ZErrOld) ? ZErrOld : ZErr;
 
                             // When a second direction change is required (optm reached), break loop and goto next Table position
                             LoopSkip = (P2B == 1 && LoopSkip == 0) ? 1 : LoopSkip;
                             LoopSkip += (ZErr >= ZErrOld) ? 1 : 0;
-
                             if (LoopSkip == 2) break;
+
                         }
+                        
                         if (ProgressBox != null) ProgressBox.ProgressBoxUpdate(100 * P2A / FineTuneIterBox); //If delivered, ProgressBox is desired, thus set ProgressBox update
                     }
                 }
 
-                if (MFactor < 1) MFactor = 1 / MFactor;
-
+                MFactor = MFactor < 1 ? 1 / MFactor : MFactor;
                 MFactor = ((MFactor - 1) / 2) + 1;
+
+                //Populate the iteration converging error vector to be plotted afterwards
+                if(FitType == false)
+                {
+                    ErrStep[P2A+1] = VectorStatBasicMethods.ErrorsAvg(DataZ,
+                         CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                    StdDStep[P2A+1] = VectorStatBasicMethods.ErrorsStdDev(DataZ,
+                         CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                }
+                else
+                {
+                    ErrStep[P2A+1] = VectorStatBasicMethods.Mean(
+                         CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                    StdDStep[P2A+1] = VectorStatBasicMethods.StdDev(
+                        CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                }
+
             }
 
             if (ProgressBox != null) ProgressBox.ProgressBoxFinish(); //If delivered, ProgressBox is desired, thus finish ProgressBox
 
-            //3. Adjust Calibration Table values - MeanTar, Decimal Places, Round Values
+            //4 Adjust Calibration Table values - MeanTar, Decimal Places, Round Values
             double ZMean = VectorStatBasicMethods.Mean(ZRatioArray);
             for (int i = 0; i < 1 + ZWorkTab.GetUpperBound(0); i++) //i sweeps Y
             {
                 for (int j = 0; j < 1 + ZWorkTab.GetUpperBound(1); j++)//j sweeps X
                 {
-                    if(FitType == false)
+                    if (FitType == false)
                     {
+                        ZWorkTab[i, j] += ErrStep[ErrStep.GetUpperBound(0) - 1];
+
                         ZWorkTab[i, j] *= MeanTar;
                     }
                     else
@@ -841,9 +906,25 @@ namespace CalibrationHelper
                         ZWorkTab[i, j] *= MeanTar * VectorStatBasicMethods.Mean(
                                     CalibrationMethods.CalibrationRatioArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab)); ;
                     }
-                    
+
                     ZWorkTab[i, j] = Math.Round(ZWorkTab[i, j], PrecisionTar);
                 }
+            }
+
+            //5. Populate the iteration converging error vector (last position) to be plotted afterwards
+            if (FitType == false)
+            {
+                ErrStep[ErrStep.GetUpperBound(0)] = VectorStatBasicMethods.ErrorsAvg(DataZ,
+                     CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                StdDStep[ErrStep.GetUpperBound(0)] = VectorStatBasicMethods.ErrorsStdDev(DataZ,
+                      CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+            }
+            else
+            {
+                ErrStep[ErrStep.GetUpperBound(0)] = VectorStatBasicMethods.Mean(
+                     CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
+                StdDStep[ErrStep.GetUpperBound(0)] = VectorStatBasicMethods.StdDev(
+                       CalibrationMethods.CalibrationAbsoluteArrayCalculation(DataX, DataY, DataZ, XBkpt, YBkpt, ZWorkTab));
             }
 
             return ZWorkTab;

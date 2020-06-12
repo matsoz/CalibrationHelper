@@ -52,9 +52,17 @@
     <Reference Include="MathNet.Numerics, Version=4.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.4.9.1\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.WindowsForms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=245eacd6b5d2d338, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.WindowsForms.2.0.0\lib\net45\OxyPlot.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -73,11 +81,11 @@
     <Compile Include="12.DataForm.Designer.cs">
       <DependentUpon>12.DataForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="13.CalibrationDataForm.cs">
+    <Compile Include="13.OptimizationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="13.CalibrationDataForm.Designer.cs">
-      <DependentUpon>13.CalibrationDataForm.cs</DependentUpon>
+    <Compile Include="13.OptimizationForm.Designer.cs">
+      <DependentUpon>13.OptimizationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="14.ResultsForm.cs">
       <SubType>Form</SubType>
@@ -98,6 +106,12 @@
       <DependentUpon>11.TableForm.cs</DependentUpon>
     </Compile>
     <Compile Include="0.Program.cs" />
+    <Compile Include="141.ResConvForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="141.ResConvForm.Designer.cs">
+      <DependentUpon>141.ResConvForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="A.ProgressBoxForm.cs">
       <SubType>Form</SubType>
@@ -108,11 +122,14 @@
     <EmbeddedResource Include="12.DataForm.resx">
       <DependentUpon>12.DataForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="13.CalibrationDataForm.resx">
-      <DependentUpon>13.CalibrationDataForm.cs</DependentUpon>
+    <EmbeddedResource Include="13.OptimizationForm.resx">
+      <DependentUpon>13.OptimizationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="1.MainForm.resx">
       <DependentUpon>1.MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="141.ResConvForm.resx">
+      <DependentUpon>141.ResConvForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

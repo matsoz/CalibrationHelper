@@ -136,6 +136,7 @@
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.SubmitButton);
             this.Name = "DataForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "2. Insert Data for X, Y and f(x,y)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DataForm_FormClosing);
             this.ResumeLayout(false);
@@ -151,7 +152,9 @@
         private System.Windows.Forms.TextBox XArrayBox;
         private System.Windows.Forms.TextBox YArrayBox;
         private System.Windows.Forms.TextBox ZArrayBox;
+#pragma warning disable CS0108 // 'DataForm.CancelButton' hides inherited member 'Form.CancelButton'. Use the new keyword if hiding was intended.
         private System.Windows.Forms.Button CancelButton;
+#pragma warning restore CS0108 // 'DataForm.CancelButton' hides inherited member 'Form.CancelButton'. Use the new keyword if hiding was intended.
         private System.Windows.Forms.Button SubmitButton;
     }
 }

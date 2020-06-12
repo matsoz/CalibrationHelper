@@ -11,8 +11,13 @@ C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\Math
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\MathNet.Numerics.xml
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.DataForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csproj.CopyComplete
-C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.CalibrationDataForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ResultsForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ProgressBoxForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csprojAssemblyReference.cache
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.csproj.CoreCompileInputs.cache
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\OxyPlot.dll
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\OxyPlot.WindowsForms.dll
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\OxyPlot.xml
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\OxyPlot.WindowsForms.xml
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.OptimizationForm.resources
+C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ResConvForm.resources

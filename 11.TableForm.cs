@@ -15,39 +15,40 @@ namespace CalibrationHelper
         {
             InitializeComponent();
 
-            this.ParentApp = aParent;
+            ParentApp = aParent;
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             ConvertText2DoubleArrays();
 
-            ParentApp.XCalArray = this.XVect;
-            ParentApp.YCalArray = this.YVect;
-            ParentApp.ZCalTab = this.Table2DVect;
+            ParentApp.XCalArray = XVect;
+            ParentApp.YCalArray = YVect;
+            ParentApp.ZCalTab = Table2DVect;
 
             ParentApp.FormStatus = (byte)(ParentApp.FormStatus | 0x01);
 
-            this.Hide();
+            Hide();
+            ParentApp.Step2Button_AutoOpen();
         }
 
         private void TableForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Hide();
+            Hide();
             e.Cancel = true;
         }
 
         private void ConvertText2DoubleArrays()
         {
             // Convert each field (table and arrays) into numeric data
-            XVect = TransformationMethods.TextLin2VectorLin(this.XArrayBox.Text);
-            YVect = TransformationMethods.TextCol2VectorCol(this.YArrayBox.Text);
-            Table2DVect = TransformationMethods.TextTable2VectorTable(this.TableBox.Text);
+            XVect = TransformationMethods.TextLin2VectorLin(XArrayBox.Text);
+            YVect = TransformationMethods.TextCol2VectorCol(YArrayBox.Text);
+            Table2DVect = TransformationMethods.TextTable2VectorTable(TableBox.Text);
         }
     }
 }

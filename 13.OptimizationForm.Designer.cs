@@ -1,6 +1,6 @@
 ﻿namespace CalibrationHelper
 {
-    partial class CalibrationDataForm
+    partial class OptimizationForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalibrationDataForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptimizationForm));
             this.FormGenLabel = new System.Windows.Forms.Label();
             this.CurrMeanLabel = new System.Windows.Forms.Label();
             this.CurrStdDevLabel = new System.Windows.Forms.Label();
@@ -160,7 +160,7 @@
             this.FineTuneIterBox.Name = "FineTuneIterBox";
             this.FineTuneIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneIterBox.TabIndex = 15;
-            this.FineTuneIterBox.Text = "25";
+            this.FineTuneIterBox.Text = "10";
             // 
             // FineTuneSubIterBox
             // 
@@ -224,11 +224,10 @@
             this.FitTypeBox.TabIndex = 21;
             this.FitTypeBox.TabStop = false;
             // 
-            // CalibrationDataForm
+            // OptimizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.CancelButton;
             this.ClientSize = new System.Drawing.Size(324, 365);
             this.Controls.Add(this.FitTypeBox);
             this.Controls.Add(this.CurrAbsErrStdDLabel);
@@ -246,7 +245,8 @@
             this.Controls.Add(this.CurrStdDevLabel);
             this.Controls.Add(this.CurrMeanLabel);
             this.Controls.Add(this.FormGenLabel);
-            this.Name = "CalibrationDataForm";
+            this.Name = "OptimizationForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "3. Calibration Statistics and Adjust Form";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CalibrationDataForm_FormClosing);
             this.Load += new System.EventHandler(this.CalibrationDataForm_Load);
@@ -271,7 +271,9 @@
         private System.Windows.Forms.TextBox WeightBox;
         private System.Windows.Forms.TextBox FineTuneIterBox;
         private System.Windows.Forms.TextBox FineTuneSubIterBox;
+#pragma warning disable CS0108 // 'CalibrationDataForm.CancelButton' hides inherited member 'Form.CancelButton'. Use the new keyword if hiding was intended.
         private System.Windows.Forms.Button CancelButton;
+#pragma warning restore CS0108 // 'CalibrationDataForm.CancelButton' hides inherited member 'Form.CancelButton'. Use the new keyword if hiding was intended.
         private System.Windows.Forms.Button SubmitButton;
         private System.Windows.Forms.Label CurrAbsErrLabel;
         private System.Windows.Forms.Label CurrAbsErrStdDLabel;

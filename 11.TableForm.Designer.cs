@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableForm));
             this.TableBox = new System.Windows.Forms.TextBox();
             this.XArrayBox = new System.Windows.Forms.TextBox();
             this.YArrayBox = new System.Windows.Forms.TextBox();
@@ -51,9 +52,7 @@
             this.TableBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TableBox.Size = new System.Drawing.Size(370, 176);
             this.TableBox.TabIndex = 0;
-            this.TableBox.Text = "1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1" +
-    "\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1\t1\t1\t1\t1\r\n1\t1\t1\t1\t1" +
-    "\t1\t1\t1\t1\r\n";
+            this.TableBox.Text = resources.GetString("TableBox.Text");
             this.TableBox.WordWrap = false;
             // 
             // XArrayBox
@@ -94,6 +93,7 @@
             // 
             // CancelButton
             // 
+            this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelButton.Location = new System.Drawing.Point(321, 257);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
@@ -132,8 +132,10 @@
             // 
             // TableForm
             // 
+            this.AcceptButton = this.SubmitButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.CancelButton;
             this.ClientSize = new System.Drawing.Size(512, 290);
             this.Controls.Add(this.TableLabel);
             this.Controls.Add(this.XLabel);
@@ -144,6 +146,7 @@
             this.Controls.Add(this.XArrayBox);
             this.Controls.Add(this.TableBox);
             this.Name = "TableForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "1. Insert Calibration Table and Breakpoints here";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TableForm_FormClosing);
             this.ResumeLayout(false);
@@ -160,6 +163,8 @@
         private System.Windows.Forms.TextBox YArrayBox;
         private System.Windows.Forms.TextBox TableBox;
         private System.Windows.Forms.Button SubmitButton;
+#pragma warning disable CS0108 // 'TableForm.CancelButton' hides inherited member 'Form.CancelButton'. Use the new keyword if hiding was intended.
         private System.Windows.Forms.Button CancelButton;
+#pragma warning restore CS0108 // 'TableForm.CancelButton' hides inherited member 'Form.CancelButton'. Use the new keyword if hiding was intended.
     }
 }

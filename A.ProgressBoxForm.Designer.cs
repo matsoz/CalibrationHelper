@@ -53,7 +53,7 @@
             this.ProgressBar.TabIndex = 1;
             this.ProgressBar.UseWaitCursor = true;
             // 
-            // WaitBoxForm
+            // ProgressBoxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -61,8 +61,8 @@
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.FormGenLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "WaitBoxForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Name = "ProgressBoxForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WaitBoxForm";
             this.TopMost = true;
             this.UseWaitCursor = true;

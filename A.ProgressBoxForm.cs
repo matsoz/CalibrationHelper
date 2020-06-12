@@ -6,36 +6,28 @@ namespace CalibrationHelper
     public partial class ProgressBoxForm : Form
     {
         private delegate void WaitBoxDelegate(int CurrentStep);
-        private WaitBoxDelegate del;
+        private WaitBoxDelegate CurrentStepDelegate;
 
         public ProgressBoxForm()
         {
             InitializeComponent();
-            this.ProgressBar.Maximum = 100;
-            del = this.UpdateProgressInternal;
+            ProgressBar.Maximum = 100;
+            CurrentStepDelegate = UpdateProgressInternal;
         }
-
 
         private void UpdateProgressInternal(int CurrentStep)
         {
-            if (this.Handle == null)
+            if (Handle == null)
             {
                 return;
             }
-            this.ProgressBar.Value = CurrentStep;
+            ProgressBar.Value = CurrentStep;
         }
 
         public void UpdateProgress(int CurrentStep)
         {
-            try
-            {
-                this.Invoke(del, CurrentStep);
-            }
-            catch
-            {
-
-            }
-       }
+            BeginInvoke(CurrentStepDelegate, CurrentStep);
+        }
 
     }
     public class ProgressBoxInvokation
@@ -47,7 +39,7 @@ namespace CalibrationHelper
         public ProgressBoxInvokation(string threadName)
         {
             //Create new thread for showing the ProgressBoxForm containing the loading status
-            Thread ProgressBoxThread = new Thread(new ThreadStart(this.ProgressBoxRunningThread));
+            Thread ProgressBoxThread = new Thread(new ThreadStart(ProgressBoxRunningThread));
             ProgressBoxThread.Start();
             ProgressBoxThread.Name = threadName;
         }
@@ -63,12 +55,12 @@ namespace CalibrationHelper
                 Application.DoEvents();
             }
             ProgressBox.Close();
-            this.ProgressBox.Dispose();
+            ProgressBox.Dispose();
         }
 
         public void ProgressBoxUpdate(int CurrentStep) //Public ProgressBoxForm update method, manipulated directly by child method
         {
-            this.ProgressBox.UpdateProgress(CurrentStep);
+            ProgressBox.UpdateProgress(CurrentStep);
         }
 
         public void ProgressBoxStart() //Public ProgressBoxForm start method, manipulated directly by child method

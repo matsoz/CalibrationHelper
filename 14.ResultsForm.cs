@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics;
+using System;
 using System.Windows.Forms;
 
 namespace CalibrationHelper
@@ -11,12 +12,13 @@ namespace CalibrationHelper
         public ResultsForm(MainForm aParent)
         {
             InitializeComponent();
+            ParentApp = aParent;
+        }
 
-            this.ParentApp = aParent;
-         }
-
-        private void ResultsForm_Load(object sender, EventArgs e)
+        private void ResultsForm_Shown(object sender, EventArgs e)
         {
+
+            //1.1 Calculate base arrays (Ratio and Abs) for final statistics calculation
             double[] ZRatioArrayOld =
                 CalibrationMethods.CalibrationRatioArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                                                                     ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
@@ -24,12 +26,13 @@ namespace CalibrationHelper
                 CalibrationMethods.CalibrationRatioArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                                                                     ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTabOptm);
             double[] ZCalTabArrayOld =
-                CalibrationMethods.CalibrationResultingArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
+                CalibrationMethods.CalibrationAbsoluteArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                                                         ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTab);
             double[] ZCalTabArrayOptm =
-                CalibrationMethods.CalibrationResultingArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
+                CalibrationMethods.CalibrationAbsoluteArrayCalculation(ParentApp.XDataArray, ParentApp.YDataArray, ParentApp.ZDataArray,
                                                                     ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTabOptm);
 
+            //1.2 Calculate Mean and StdDev values (Ratio and Abs) from base arrays
             double ZMeanOld = Math.Round(VectorStatBasicMethods.Mean(ZRatioArrayOld), Math.Max(3, ParentApp.DataPrecision + 1));
             double ZStdDevOld = Math.Round(VectorStatBasicMethods.StdDev(ZRatioArrayOld), Math.Max(3, ParentApp.DataPrecision + 1));
             double ZAbsErrMeanOld = Math.Round(VectorStatBasicMethods.ErrorsAvg(ParentApp.ZDataArray, ZCalTabArrayOld),
@@ -44,25 +47,33 @@ namespace CalibrationHelper
             double ZAbsErrStdDOptm = Math.Round(VectorStatBasicMethods.ErrorsStdDev(ParentApp.ZDataArray, ZCalTabArrayOptm),
                                 Math.Max(3, ParentApp.DataPrecision + 1));
 
-            this.CurrMeanLabel.Text = ZMeanOld.ToString();
-            this.CurrStdDevLabel.Text = ZStdDevOld.ToString();
-            this.CurrAbsErrMeanLabel.Text = ZAbsErrMeanOld.ToString();
-            this.CurrAbsErrStdDLabel.Text = ZAbsErrStdDOld.ToString();
+            //1.3 Write calculated values on the corresponding labels
+            CurrMeanLabel.Text = ZMeanOld.ToString();
+            CurrStdDevLabel.Text = ZStdDevOld.ToString();
+            CurrAbsErrMeanLabel.Text = ZAbsErrMeanOld.ToString();
+            CurrAbsErrStdDLabel.Text = ZAbsErrStdDOld.ToString();
 
-            this.OptmMeanLabel.Text = ZMeanOptm.ToString();
-            this.OptmStdDevLabel.Text = ZStdDevOptm.ToString();
-            this.OptmAbsErrMeanLabel.Text = ZAbsErrMeanOptm.ToString();
-            this.OptmAbsErrStdDLabel.Text = ZAbsErrStdDOptm.ToString();
+            OptmMeanLabel.Text = ZMeanOptm.ToString();
+            OptmStdDevLabel.Text = ZStdDevOptm.ToString();
+            OptmAbsErrMeanLabel.Text = ZAbsErrMeanOptm.ToString();
+            OptmAbsErrStdDLabel.Text = ZAbsErrStdDOptm.ToString();
 
-            this.TableBox.Text = TransformationMethods.VectorTable2TextTable(ParentApp.ZCalTabOptm);
-            this.XArrayBox.Text = TransformationMethods.VectorLin2TextLin(ParentApp.XCalArray);
-            this.YArrayBox.Text = TransformationMethods.VectorCol2TextCol(ParentApp.YCalArray);
+            TableBox.Text = TransformationMethods.VectorTable2TextTable(ParentApp.ZCalTabOptm);
+            XArrayBox.Text = TransformationMethods.VectorLin2TextLin(ParentApp.XCalArray);
+            YArrayBox.Text = TransformationMethods.VectorCol2TextCol(ParentApp.YCalArray);
+
+            //2. Open the Results Convergency pattern new window
+            ResConvForm Convergency = new ResConvForm(ParentApp.FitType);
+            Convergency.Show();
+            Convergency.PlotConvergencyCurve(ParentApp.ErrStep, 
+                ParentApp.StdDStep);
         }
 
         private void ResultsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Hide();
+            Hide();
             e.Cancel = true;
         }
+
     }
 }

@@ -267,11 +267,12 @@
             this.Controls.Add(this.CurrStdDevLabel);
             this.Controls.Add(this.CurrMeanLabel);
             this.Controls.Add(this.FormGenLabel);
+            this.Location = new System.Drawing.Point(0, 100);
             this.Name = "ResultsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "4. Calibration Optimized results and comparison";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResultsForm_FormClosing);
-            this.Load += new System.EventHandler(this.ResultsForm_Load);
-            this.Shown += new System.EventHandler(this.ResultsForm_Load);
+            this.Shown += new System.EventHandler(this.ResultsForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
