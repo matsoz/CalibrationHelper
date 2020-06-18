@@ -1,5 +1,4 @@
-﻿using MathNet.Numerics;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace CalibrationHelper
@@ -65,8 +64,12 @@ namespace CalibrationHelper
             //2. Open the Results Convergency pattern new window
             ResConvForm Convergency = new ResConvForm(ParentApp.FitType);
             Convergency.Show();
-            Convergency.PlotConvergencyCurve(ParentApp.ErrStep, 
+            Convergency.PlotConvergencyCurve(ParentApp.ErrStep,
                 ParentApp.StdDStep);
+
+            HeatMapForm HeatMap = new HeatMapForm();
+            HeatMap.Show();
+            HeatMap.PlotHeatMap(ParentApp.XCalArray, ParentApp.YCalArray, ParentApp.ZCalTabOptm);
         }
 
         private void ResultsForm_FormClosing(object sender, FormClosingEventArgs e)

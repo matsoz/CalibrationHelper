@@ -34,6 +34,7 @@ namespace CalibrationHelper
         private void AbsFitBtn_CheckedChanged(object sender, EventArgs e)
         {
             FitType = (AbsFitBtn.Checked == true) ? false : true;
+            MeanTarBox.Text = (AbsFitBtn.Checked == true) ? "0" : "1";
         }
 
         private void CalibrationDataForm_Load(object sender, EventArgs e)
@@ -81,6 +82,7 @@ namespace CalibrationHelper
             ParentApp.ZCalTabOptm = ZTabOptm;
             ParentApp.ErrStep = ErrStep;
             ParentApp.StdDStep = StdDStep;
+            ParentApp.PrecisionTar = int.Parse(PrecisionTarBox.Text);
             ParentApp.FitType = FitType;
             ParentApp.FormStatus = (byte)(ParentApp.FormStatus | 0x04);
 

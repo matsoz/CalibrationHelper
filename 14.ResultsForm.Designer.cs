@@ -267,7 +267,8 @@
             this.Controls.Add(this.CurrStdDevLabel);
             this.Controls.Add(this.CurrMeanLabel);
             this.Controls.Add(this.FormGenLabel);
-            this.Location = new System.Drawing.Point(0, 100);
+            this.KeyPreview = true;
+            this.Location = new System.Drawing.Point(0, 20);
             this.Name = "ResultsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "4. Calibration Optimized results and comparison";

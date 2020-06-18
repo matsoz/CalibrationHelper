@@ -19,6 +19,7 @@ namespace CalibrationHelper
 
         //3. Optimization Related Types
         public double[] ErrStep, StdDStep;
+        public int PrecisionTar;
         public bool FitType;
 
         public MainForm()
@@ -75,7 +76,7 @@ namespace CalibrationHelper
                 Step3Form.Show();
             }
         }
-        
+
         public void Step4Button_AutoOpen()
         {
             if ((FormStatus & 0x04) == 0x04)
