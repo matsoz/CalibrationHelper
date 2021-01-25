@@ -50,7 +50,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 351);
             this.Controls.Add(this.PlotBoard);
-            this.Location = new System.Drawing.Point(900, 20);
+            this.Location = new System.Drawing.Point(900, 100);
             this.Name = "ResConvForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "4.1. Results convergency plot";

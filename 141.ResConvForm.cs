@@ -1,21 +1,27 @@
-﻿using OxyPlot;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MathNet.Numerics;
+using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using System;
-using System.Windows.Forms;
 
 namespace CalibrationHelper
 {
     public partial class ResConvForm : Form
     {
         string FitTypeString;
-        bool FitType;
 
         public ResConvForm(bool FitType)
         {
             InitializeComponent();
             FitTypeString = (FitType == false) ? "Absolute error optimization" : "Relative ratio optimization";
-            this.FitType = FitType;
         }
 
         public void PlotConvergencyCurve(double[] CurveAvg, double[] CurveErr)
@@ -23,22 +29,12 @@ namespace CalibrationHelper
             //1. PlotModel data definition
             var PlotModel = new PlotModel();
 
-            Axis Err = new LinearAxis()
-            {
-                Position = AxisPosition.Left,
-                Title = (FitType == false) ? "Absolute Error" : "Relative Ratio",
-                AxisTitleDistance = 15,
-                TitleFontSize = 16
-            };
-            Axis Step = new LinearAxis()
-            {
-                Position = AxisPosition.Top,
-                Title = "Iteration Num.",
-                AxisTitleDistance = 30,
-                TitleFontSize = 16,
-                MajorStep = 1,
-                MinorTickSize = 0
-            };
+            Axis Err = new LinearAxis() { Position = AxisPosition.Left,
+                Title = "Error", AxisTitleDistance = 15,
+                TitleFontSize = 18 };
+            Axis Step = new LinearAxis() { Position = AxisPosition.Top,
+                Title = "Iteration Num.", AxisTitleDistance = 30,
+                TitleFontSize = 18 };
 
             PlotModel.Axes.Add(Err);
             PlotModel.Axes.Add(Step);
@@ -78,10 +74,9 @@ namespace CalibrationHelper
             PlotModel.Series.Add(PlotData_CurveErr);
 
             //3. PlotModel plot on PlotBoard
-            PlotBoard.Model = PlotModel;
+            this.PlotBoard.Model = PlotModel;
             PlotModel.Title = "Convergency per Iteration - " + FitTypeString;
-            PlotModel.Subtitle = "Candlesticks Scale: 1 : " + CandleScale.ToString();
-            Err.MajorStep *= 0.25;
+            PlotModel.Subtitle = "CandleSticks Scale: 1 : " + CandleScale.ToString();
         }
     }
 }

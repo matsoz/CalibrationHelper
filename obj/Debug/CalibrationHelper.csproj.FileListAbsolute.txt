@@ -21,4 +21,3 @@ C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\OxyP
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\bin\Debug\OxyPlot.WindowsForms.xml
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.OptimizationForm.resources
 C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.ResConvForm.resources
-C:\Users\Matheus\source\repos\CalibrationHelper\CalibrationHelper\obj\Debug\CalibrationHelper.HeatMapForm.resources

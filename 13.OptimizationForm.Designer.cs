@@ -81,7 +81,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(184, 323);
+            this.CancelButton.Location = new System.Drawing.Point(184, 332);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 8;
@@ -91,7 +91,7 @@
             // 
             // SubmitButton
             // 
-            this.SubmitButton.Location = new System.Drawing.Point(66, 323);
+            this.SubmitButton.Location = new System.Drawing.Point(66, 332);
             this.SubmitButton.Name = "SubmitButton";
             this.SubmitButton.Size = new System.Drawing.Size(75, 23);
             this.SubmitButton.TabIndex = 7;
@@ -102,7 +102,7 @@
             // FormGenLabel2
             // 
             this.FormGenLabel2.AutoSize = true;
-            this.FormGenLabel2.Location = new System.Drawing.Point(12, 194);
+            this.FormGenLabel2.Location = new System.Drawing.Point(12, 165);
             this.FormGenLabel2.Name = "FormGenLabel2";
             this.FormGenLabel2.Size = new System.Drawing.Size(212, 130);
             this.FormGenLabel2.TabIndex = 9;
@@ -132,15 +132,15 @@
             // 
             // MeanTarBox
             // 
-            this.MeanTarBox.Location = new System.Drawing.Point(239, 191);
+            this.MeanTarBox.Location = new System.Drawing.Point(240, 162);
             this.MeanTarBox.Name = "MeanTarBox";
             this.MeanTarBox.Size = new System.Drawing.Size(50, 20);
             this.MeanTarBox.TabIndex = 12;
-            this.MeanTarBox.Text = "0";
+            this.MeanTarBox.Text = "1";
             // 
             // PrecisionTarBox
             // 
-            this.PrecisionTarBox.Location = new System.Drawing.Point(240, 217);
+            this.PrecisionTarBox.Location = new System.Drawing.Point(240, 188);
             this.PrecisionTarBox.Name = "PrecisionTarBox";
             this.PrecisionTarBox.Size = new System.Drawing.Size(50, 20);
             this.PrecisionTarBox.TabIndex = 13;
@@ -148,7 +148,7 @@
             // 
             // WeightBox
             // 
-            this.WeightBox.Location = new System.Drawing.Point(240, 243);
+            this.WeightBox.Location = new System.Drawing.Point(240, 214);
             this.WeightBox.Name = "WeightBox";
             this.WeightBox.Size = new System.Drawing.Size(50, 20);
             this.WeightBox.TabIndex = 14;
@@ -156,7 +156,7 @@
             // 
             // FineTuneIterBox
             // 
-            this.FineTuneIterBox.Location = new System.Drawing.Point(240, 269);
+            this.FineTuneIterBox.Location = new System.Drawing.Point(240, 240);
             this.FineTuneIterBox.Name = "FineTuneIterBox";
             this.FineTuneIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneIterBox.TabIndex = 15;
@@ -164,7 +164,7 @@
             // 
             // FineTuneSubIterBox
             // 
-            this.FineTuneSubIterBox.Location = new System.Drawing.Point(240, 295);
+            this.FineTuneSubIterBox.Location = new System.Drawing.Point(240, 266);
             this.FineTuneSubIterBox.Name = "FineTuneSubIterBox";
             this.FineTuneSubIterBox.Size = new System.Drawing.Size(50, 20);
             this.FineTuneSubIterBox.TabIndex = 16;
@@ -218,7 +218,7 @@
             this.FitTypeBox.Controls.Add(this.RelFitBtn);
             this.FitTypeBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FitTypeBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.FitTypeBox.Location = new System.Drawing.Point(0, 152);
+            this.FitTypeBox.Location = new System.Drawing.Point(0, 289);
             this.FitTypeBox.Name = "FitTypeBox";
             this.FitTypeBox.Size = new System.Drawing.Size(325, 34);
             this.FitTypeBox.TabIndex = 21;
@@ -228,7 +228,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 356);
+            this.ClientSize = new System.Drawing.Size(324, 365);
             this.Controls.Add(this.FitTypeBox);
             this.Controls.Add(this.CurrAbsErrStdDLabel);
             this.Controls.Add(this.CurrAbsErrLabel);
